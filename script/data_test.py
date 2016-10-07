@@ -120,7 +120,15 @@ if __name__ == '__main__':
     err_self = err_self ** 0.5
     plt.plot(err_self)
 
-
+    #
+    #     b: blue
+    # g: green
+    # r: red
+    # c: cyan
+    # m: magenta
+    # y: yellow
+    # k: black
+    # w: white
 
     plt.figure(4)
 
@@ -129,8 +137,8 @@ if __name__ == '__main__':
 
     plt.plot(cpp_filter_out[:,0],cpp_filter_out[:,1],'y.')
 
-    plt.plot(self_out[:, 0], self_out[:, 1], '+g')
+    plt.plot(self_out[:, 0], self_out[:, 1], '+c')
 
-    plt.plot(tg_result[:, 0], tg_result[:, 1], '.r')
+    plt.plot(tg_result[:, 0], tg_result[:, 1], '.k')
 
     plt.show()
