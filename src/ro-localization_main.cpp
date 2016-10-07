@@ -61,11 +61,16 @@ using namespace std;
 #include "../include/ro-location/CPosePDFParticlesExtended.h"
 #include "../include/ro-location/CPosePDFParticlesExtended.cpp"
 
+#include <fstream>
+
 #if MRPT_HAS_OPENGL_GLUT && MRPT_HAS_WXWIDGETS
 #	define SHOW_REAL_TIME_3D
 #endif
-
+#	define SHOW_REAL_TIME_3D
 #define STORE_3D
+
+
+fstream beacon_out;
 
 // ------------------------------------------------------
 //				Configuration
@@ -173,7 +178,7 @@ void TestParticlesLocalization()
 	rawlog.loadFromRawLogFile(RAWLOG_FILE);
 
 	rawlogEntries = rawlog.size();
-	std::cout<<"rawlog Entries: "<<rawlogEntries<<"\n";
+    std::cout << "rawlog Entries: " << rawlogEntries << "\n";
 	printf("OK\n");
 
 	// Number of beacons in the fixed, reference map:
@@ -375,8 +380,11 @@ void TestParticlesLocalization()
 				//-------------------FRANCO DATA--------------------
 				{
 					CObservationBeaconRangesPtr beaconPose = observations->getObservationByClass<CObservationBeaconRanges>();
+                    //if(beaconPose) beaconPose->getDescriptionAsText(beacon_out);
 					if (beaconPose)
 					{
+                        beacon_out << beaconPose->auxEstimatePose.x() << " " << beaconPose->auxEstimatePose.y() << " "
+                                   << beaconPose->auxEstimatePose.phi() << " ";
 						franco_matrix(step,0)=beaconPose->auxEstimatePose.x();
 						franco_matrix(step,1)=beaconPose->auxEstimatePose.y();
 						if (beaconPose->auxEstimatePose.phi()>180)
@@ -624,8 +632,10 @@ void TestParticlesLocalization()
 					CObservationBeaconRangesPtr dist=  observations->getObservationByClass<CObservationBeaconRanges>();
 					if ( metricMap.m_landmarksMap && dist.present() && !dist->sensedData.empty() )
 					{
+
 						for (size_t k=0;k<dist->sensedData.size();k++)
 						{
+                            beacon_out << dist->sensedData[k].sensedDistance << " ";
 							string beacon_name = format("ring%u",unsigned(dist->sensedData[k].beaconID));
 							const mrpt::maps::CLandmark *lm = metricMap.m_landmarksMap->landmarks.getByBeaconID( dist->sensedData[k].beaconID );
 							if (lm)
@@ -667,6 +677,7 @@ void TestParticlesLocalization()
 								}
 							}
 						}
+                        beacon_out << std::endl;
 					} // for each beacon
 
 					// Franco Position
@@ -898,6 +909,8 @@ int main(int argc, char **argv)
 		printf(" MRPT C++ Library: %s - Sources timestamp: %s\n", MRPT_getVersion().c_str(), MRPT_getCompilationDate().c_str());
 		printf("-------------------------------------------------------------------\n");
 
+        beacon_out.open("./beacon_out.txt", ios_base::out);
+
 		// Process arguments:
 		if (argc<2)
 		{
@@ -913,6 +926,7 @@ int main(int argc, char **argv)
 		TestParticlesLocalization();
 
 		delete iniFile;
+        beacon_out.close();
 
 		return 0;
 	}
@@ -928,4 +942,5 @@ int main(int argc, char **argv)
 		//pause();
 		return -1;
 	}
+
 }
