@@ -71,6 +71,7 @@ using namespace std;
 
 
 fstream beacon_out;
+fstream filter_out;
 
 // ------------------------------------------------------
 //				Configuration
@@ -731,6 +732,8 @@ void TestParticlesLocalization()
 
 						sphere->setLocation( pdfEstimation.x(), pdfEstimation.y(), 0.05);
 
+                        filter_out << pdfEstimation.x() << " " << pdfEstimation.y() << std::endl;
+
 						if( !obj.present() )
 						{
 							scene->insert( sphere );
@@ -910,6 +913,7 @@ int main(int argc, char **argv)
 		printf("-------------------------------------------------------------------\n");
 
         beacon_out.open("./beacon_out.txt", ios_base::out);
+        filter_out.open("./filter_out.txt", ios_base::out);
 
 		// Process arguments:
 		if (argc<2)
@@ -927,6 +931,7 @@ int main(int argc, char **argv)
 
 		delete iniFile;
         beacon_out.close();
+        filter_out.close();
 
 		return 0;
 	}

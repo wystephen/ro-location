@@ -5,7 +5,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 import scipy as sp
 
+import filter_fram
+
 if __name__ == '__main__':
+    '''
+    Some config data.
+    '''
     beacon_001_ID = 1
 
     beacon_001_X = 0.21
@@ -38,37 +43,77 @@ if __name__ == '__main__':
     beacon[2, 1] = beacon_003_Y
     beacon[2, 2] = beacon_003_Z
 
-    print(beacon)
-
-    gt = np.loadtxt("../datasets/uwb_ro-localization_demo_GT.txt")
-    gt = gt[:, 1:4]
+    # gt should add odometry
 
     odometry_X = 2
     odometry_Y = 4
     odometry_PHI = 0.0  # deg
     odometry_offset = [odometry_X, odometry_Y, odometry_PHI]
-    # gt should add odometry
-    # print(gt)
 
+    #Offset from robot to uwb sensor.
     robot_uwb_offset = [0.160, 0.000, 1.120]
-    # print(robot_uwb_offset)
 
+    '''
+    End config data
+    '''
+
+    gt = np.loadtxt("../datasets/uwb_ro-localization_demo_GT.txt")
+    gt = gt[:, 1:4]
+
+    #load beacon dataset
     beacon_info = np.loadtxt("../beacon_out.txt")
     # print(beacon_info)
 
+    #load ground truth
     gt = gt[0:beacon_info.shape[0], :]
 
-    print(gt.shape)
-    print(beacon_info.shape)
 
+    #load filter result by cpp
+    cpp_filter_out = np.loadtxt("../filter_out.txt")
+    cpp_filter_out = cpp_filter_out[0:beacon_info.shape[0],:]
+
+
+    #compute filter result
+    sim_filter = filter_fram.filter()
+    sim_filter.setInput(beacon_info,beacon)
+
+    self_out = sim_filter.filter()
+
+    #######################################################
+    #Plot result
+    #######################################################
+    #error between ground truth and beacon location
     beacon_pose = beacon_info[:, 0:3]
     gt[:, 0] += odometry_offset[0]
     gt[:, 1] += odometry_offset[1]
-    err_all = np.sum((beacon_pose[:, 0:2] - gt[:, 0:2]) ** 2, 1)
-
+    err_all = np.sum((beacon_pose[:, 0:2] - gt[:, 0:2]) ** 2.0, 1)
     err_all = err_all ** 0.5
-    print(err_all.shape)
 
     plt.figure(1)
     plt.plot(err_all)
+    #error between ground truth and filter output
+    plt.figure(2)
+    err_filter = np.sum((cpp_filter_out[:,0:2]-gt[:,0:2]) ** 2.0 ,1)
+    err_filter = err_filter ** 0.5
+
+    plt.plot(err_filter)
+
+    #error between ground truth and self filter
+
+    plt.figure(3)
+    err_self = np.sum((self_out[:,0:2]-gt[:,0:2])**2.0,1)
+    err_self = err_self ** 0.5
+    plt.plot(err_self)
+
+
+
+    plt.figure(4)
+
+    plt.plot(gt[:,0],gt[:,1],'+r')
+    plt.plot(beacon_info[:,0],beacon_info[:,1],'*b')
+
+    plt.plot(cpp_filter_out[:,0],cpp_filter_out[:,1],'y.')
+
+    plt.plot(self_out[:,0],self_out[:,1],'g*')
+
     plt.show()
