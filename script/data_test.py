@@ -28,8 +28,8 @@ if __name__ == '__main__':
     beacon_003_X = 6.7023
     beacon_003_Y = 4.3185
     beacon_003_Z = 1.33
-
     beacon = np.zeros([3, 3])
+
 
     beacon[0, 0] = beacon_001_X
     beacon[0, 1] = beacon_001_Y
@@ -77,7 +77,22 @@ if __name__ == '__main__':
     sim_filter = filter_fram.filter()
     sim_filter.setInput(beacon_info,beacon)
 
+
     self_out = sim_filter.filter()
+
+    #######################################
+    # try to compute pose by self
+    ######################################
+    import triangle
+
+    tg = triangle.triangle(beacon_info, beacon)
+    tg.setRealvar(gt)
+
+    tg_result = tg.localization()
+
+    ######################################
+    # end Trye to compoute pose by range
+    ######################################
 
     #######################################################
     #Plot result
@@ -114,6 +129,8 @@ if __name__ == '__main__':
 
     plt.plot(cpp_filter_out[:,0],cpp_filter_out[:,1],'y.')
 
-    plt.plot(self_out[:,0],self_out[:,1],'g*')
+    plt.plot(self_out[:, 0], self_out[:, 1], '+g')
+
+    plt.plot(tg_result[:, 0], tg_result[:, 1], '.r')
 
     plt.show()
