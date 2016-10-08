@@ -5,7 +5,7 @@ import numpy as np
 import scipy as sp
 
 
-class filter:
+class filter_frame:
     def __init__(self):
         self.pose = np.zeros(3)
         self.last_pose = np.zeros(3)

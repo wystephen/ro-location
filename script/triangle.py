@@ -30,7 +30,10 @@ class triangle:
     def localization(self):
         for i in range(self.beacon_pose.shape[0]):
             self.the_range = self.beacon_range[i, :]
-            self.result[i, :] = self.get_pose(self.gt[i, :])
+            if i < 1:
+                self.result[i, :] = self.get_pose(self.gt[0, :])
+            else:
+                self.result[i, :] = self.get_pose(self.result[i - 1, :])
             print(np.linalg.norm(self.result[i, :] - self.beacon_pose[i, :]))
 
         return self.result
@@ -46,10 +49,10 @@ class triangle:
 
         tmp_pose = minimize(self.cost_func,
                             # default_pose[0:2],
-                            [4.0, 4.0],
+                            default_pose[0:2],
                             # method='Newton-CG',
                             jac=False)
-
+        if tmp_pose.
         re_pose = tmp_pose.x[0:2]
 
         return re_pose

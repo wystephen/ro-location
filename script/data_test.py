@@ -74,7 +74,7 @@ if __name__ == '__main__':
 
 
     #compute filter result
-    sim_filter = filter_fram.filter()
+    sim_filter = filter_fram.filter_frame()
     sim_filter.setInput(beacon_info,beacon)
 
 
@@ -103,9 +103,16 @@ if __name__ == '__main__':
     gt[:, 1] += odometry_offset[1]
     err_all = np.sum((beacon_pose[:, 0:2] - gt[:, 0:2]) ** 2.0, 1)
     err_all = err_all ** 0.5
+    # err between ground truth and self triangle
+    err_tri = np.sum((tg_result[:, 0:2] - gt[:, 0:2]) ** 2.0, 1)
+    err_tri = err_tri ** 0.5
 
     plt.figure(1)
-    plt.plot(err_all)
+    plt.plot(err_all, 'y')
+    plt.plot(err_tri, 'r')
+
+
+
     #error between ground truth and filter output
     plt.figure(2)
     err_filter = np.sum((cpp_filter_out[:,0:2]-gt[:,0:2]) ** 2.0 ,1)
@@ -130,14 +137,15 @@ if __name__ == '__main__':
     # k: black
     # w: white
 
-    plt.figure(4)
+    plt.figure(10)
 
     plt.plot(gt[:,0],gt[:,1],'+r')
-    plt.plot(beacon_info[:,0],beacon_info[:,1],'*b')
 
-    plt.plot(cpp_filter_out[:,0],cpp_filter_out[:,1],'y.')
+    plt.plot(beacon_info[:, 0], beacon_info[:, 1], '*y')
 
-    plt.plot(self_out[:, 0], self_out[:, 1], '+c')
+    # plt.plot(cpp_filter_out[:,0],cpp_filter_out[:,1],'y.')
+
+    #plt.plot(self_out[:, 0], self_out[:, 1], '+c')
 
     plt.plot(tg_result[:, 0], tg_result[:, 1], '.k')
 
