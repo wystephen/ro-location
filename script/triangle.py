@@ -24,7 +24,7 @@ class triangle:
 
         self.the_range = np.zeros(3)
 
-        self.ign = 10
+        self.ign = 10000
 
     def setRealvar(self, ground_truth):
         self.gt = ground_truth
@@ -73,7 +73,7 @@ class triangle:
                                     jac=False)
                 mul_re[i, 0:2] = tmp_pose.x[0:2]
                 mul_re[i, 2] = tmp_pose.fun
-            self.ign = 4
+            self.ign = 1000
             min_index = np.argmin(mul_re[:, 2])
 
             re_pose = mul_re[min_index, 0:2]
@@ -91,7 +91,7 @@ class triangle:
         t_pose[2] = 1.12
         tmp_sum = np.sum(self.the_range)
 
-        for i in range(3):
+        for i in range(self.beacon_set.shape[0]):
 
             dis_err[i] = (np.linalg.norm(t_pose - self.beacon_set[i, :]) - self.the_range[i]) / np.sqrt(
                 self.the_range[i] + 0.01)
@@ -109,7 +109,7 @@ class triangle:
         t_pose[0:2] = pose
         t_pose[2] = 1.12
 
-        for i in range(3):
+        for i in range(self.beacon_set.shape[0]):
             dis[i] = np.linalg.norm(t_pose - self.beacon_set[i, :]) - self.the_range[i]
 
         return np.linalg.norm(dis)
