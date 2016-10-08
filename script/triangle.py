@@ -50,7 +50,7 @@ class triangle:
 
         re_pose = np.zeros(2)
 
-        tmp_pose = minimize(self.simple_cost_func,
+        tmp_pose = minimize(self.cost_func,
                             # default_pose[0:2],
                             default_pose[0:2],
                             # method='Newton-CG',
@@ -98,6 +98,8 @@ class triangle:
             if i == self.ign:
                 dis_err[i] = 0.0
                 tmp_sum -= self.the_range[i]
+
+                # TODO!!!! checke this equation normalize parameter.
         return np.linalg.norm(dis_err) * tmp_sum
 
     def simple_cost_func(self, pose):
