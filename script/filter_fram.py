@@ -29,4 +29,5 @@ class filter_frame:
 
         return self.filter_result
 
-
+    def uniform_rand(self, low_bnd, hei_bnd):
+        return low_bnd + (hei_bnd - low_bnd) * np.random.sample()

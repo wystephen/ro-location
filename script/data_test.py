@@ -159,12 +159,12 @@ if __name__ == '__main__':
 
     plt.plot(gt[:, 0], gt[:, 1], '-r')
 
-    plt.plot(beacon_info[:, 0], beacon_info[:, 1], '*y')
+    plt.plot(beacon_info[:, 0], beacon_info[:, 1], '.y')
 
     # plt.plot(cpp_filter_out[:,0],cpp_filter_out[:,1],'y.')
 
     #plt.plot(self_out[:, 0], self_out[:, 1], '+c')
 
-    plt.plot(tg_result[:, 0], tg_result[:, 1], '.k')
+    plt.plot(tg_result[:, 0], tg_result[:, 1], '*k')
 
     plt.show()
