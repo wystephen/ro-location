@@ -57,6 +57,9 @@ if __name__ == '__main__':
     End config data
     '''
 
+    '''
+    Load Data
+    '''
     gt = np.loadtxt("../datasets/uwb_ro-localization_demo_GT.txt")
     gt = gt[:, 1:4]
 
@@ -72,17 +75,15 @@ if __name__ == '__main__':
     cpp_filter_out = np.loadtxt("../filter_out.txt")
     cpp_filter_out = cpp_filter_out[0:beacon_info.shape[0],:]
 
+    '''
+    End Load Data
+    '''
 
-    #compute filter result
-    sim_filter = filter_fram.filter_frame()
-    sim_filter.setInput(beacon_info,beacon)
-
-
-    self_out = sim_filter.filter()
-
+    '''
     #######################################
     # try to compute pose by self
-    ######################################
+    #######################################
+    '''
     import triangle
 
     tg = triangle.triangle(beacon_info, beacon)
@@ -94,9 +95,19 @@ if __name__ == '__main__':
     # end Trye to compoute pose by range
     ######################################
 
+
+    # compute filter result
+    sim_filter = filter_fram.filter_frame()
+    sim_filter.setInput(beacon_info, beacon)
+
+    self_out = sim_filter.filter()
+
+    '''
     #######################################################
     #Plot result
     #######################################################
+    '''
+
     #error between ground truth and beacon location
     beacon_pose = beacon_info[:, 0:3]
     gt[:, 0] += odometry_offset[0]
@@ -108,17 +119,24 @@ if __name__ == '__main__':
     err_tri = err_tri ** 0.5
 
     plt.figure(1)
-    plt.plot(err_all, 'y+')
-    plt.plot(err_tri, 'r+')
+    plt.plot(err_all, 'y+-')
+    plt.plot(err_tri, 'r+-')
+
+    print("system beacon error:", np.mean(err_all))
+    print("self compute pose error:", np.mean(err_tri))
 
 
 
     #error between ground truth and filter output
-    plt.figure(2)
+    #plt.figure(2)
     err_filter = np.sum((cpp_filter_out[:,0:2]-gt[:,0:2]) ** 2.0 ,1)
     err_filter = err_filter ** 0.5
 
-    plt.plot(err_filter)
+    plt.plot(err_filter, 'b*-')
+
+    print("cpp filter error:", np.mean(err_filter))
+
+
 
     #error between ground truth and self filter
 

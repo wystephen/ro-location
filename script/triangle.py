@@ -38,6 +38,7 @@ class triangle:
                 self.result[i, :] = self.get_pose(self.result[i - 1, :])
                 # print(np.linalg.norm(self.result[i, :] - self.beacon_pose[i, :]))
 
+
         return self.result
 
     def get_pose(self, default_pose):
@@ -54,19 +55,21 @@ class triangle:
                             default_pose[0:2],
                             # method='Newton-CG',
                             jac=False)
-        if tmp_pose.fun < 0.1:
+        if tmp_pose.fun < 0.05:
             re_pose = tmp_pose.x[0:2]
-            print(tmp_pose.fun)
+            # print(tmp_pose.fun)
         else:
             mul_re = np.zeros([3, 3])
             for i in range(3):
                 self.ign = i
+
+                dis_range = 1.0
                 tmp_pose = minimize(self.cost_func,
                                     # default_pose[0:2],
                                     default_pose[0:2],
                                     method='L-BFGS-B',
-                                    bounds=((default_pose[0] - 1.0, default_pose[0] + 1.0),
-                                            (default_pose[1] - 1.0, default_pose[1] + 1.0)),
+                                    bounds=((default_pose[0] - dis_range, default_pose[0] + dis_range),
+                                            (default_pose[1] - dis_range, default_pose[1] + dis_range)),
                                     jac=False)
                 mul_re[i, 0:2] = tmp_pose.x[0:2]
                 mul_re[i, 2] = tmp_pose.fun
@@ -74,13 +77,13 @@ class triangle:
             min_index = np.argmin(mul_re[:, 2])
 
             re_pose = mul_re[min_index, 0:2]
-            print(mul_re[min_index,2])
+            #print(mul_re[min_index,2])
 
 
         return re_pose
 
     def cost_func(self, pose):
-        dis = np.zeros(3)
+        dis_err = np.zeros(3)
 
 
         t_pose = np.zeros(3)
@@ -89,7 +92,8 @@ class triangle:
 
         for i in range(3):
 
-            dis[i] = np.linalg.norm(t_pose - self.beacon_set[i, :])
+            dis_err[i] = (np.linalg.norm(t_pose - self.beacon_set[i, :]) - self.the_range[i]) / np.sqrt(
+                self.the_range[i] + 0.01)
             if i == self.ign:
-                dis[i] = 0.0
-        return np.linalg.norm(dis - self.the_range)
+                dis_err[i] = 0.0
+        return np.linalg.norm(dis_err)
