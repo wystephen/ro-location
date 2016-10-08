@@ -33,7 +33,7 @@ class triangle:
         for i in range(self.beacon_pose.shape[0]):
             self.the_range = self.beacon_range[i, :]
             if i < 1:
-                self.result[i, :] = self.get_pose(self.gt[0, :])
+                self.result[i, :] = self.get_pose((0, 0))
             else:
                 self.result[i, :] = self.get_pose(self.result[i - 1, :])
                 # print(np.linalg.norm(self.result[i, :] - self.beacon_pose[i, :]))
@@ -50,7 +50,7 @@ class triangle:
 
         re_pose = np.zeros(2)
 
-        tmp_pose = minimize(self.cost_func,
+        tmp_pose = minimize(self.simple_cost_func,
                             # default_pose[0:2],
                             default_pose[0:2],
                             # method='Newton-CG',
@@ -99,3 +99,15 @@ class triangle:
                 dis_err[i] = 0.0
                 tmp_sum -= self.the_range[i]
         return np.linalg.norm(dis_err) * tmp_sum
+
+    def simple_cost_func(self, pose):
+        dis = np.zeros(3)
+
+        t_pose = np.zeros(3)
+        t_pose[0:2] = pose
+        t_pose[2] = 1.12
+
+        for i in range(3):
+            dis[i] = np.linalg.norm(t_pose - self.beacon_set[i, :]) - self.the_range[i]
+
+        return np.linalg.norm(dis)
