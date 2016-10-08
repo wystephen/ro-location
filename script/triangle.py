@@ -55,7 +55,7 @@ class triangle:
                             default_pose[0:2],
                             # method='Newton-CG',
                             jac=False)
-        if tmp_pose.fun < 0.3:
+        if tmp_pose.fun < 0.4:
             re_pose = tmp_pose.x[0:2]
             # print(tmp_pose.fun)
         else:
