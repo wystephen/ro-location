@@ -108,8 +108,8 @@ if __name__ == '__main__':
     err_tri = err_tri ** 0.5
 
     plt.figure(1)
-    plt.plot(err_all, 'y')
-    plt.plot(err_tri, 'r')
+    plt.plot(err_all, 'y+')
+    plt.plot(err_tri, 'r+')
 
 
 
@@ -139,7 +139,7 @@ if __name__ == '__main__':
 
     plt.figure(10)
 
-    plt.plot(gt[:,0],gt[:,1],'+r')
+    plt.plot(gt[:, 0], gt[:, 1], '-r')
 
     plt.plot(beacon_info[:, 0], beacon_info[:, 1], '*y')
 
