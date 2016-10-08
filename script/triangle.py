@@ -55,7 +55,7 @@ class triangle:
                             default_pose[0:2],
                             # method='Newton-CG',
                             jac=False)
-        if tmp_pose.fun < 0.05:
+        if tmp_pose.fun < 0.3:
             re_pose = tmp_pose.x[0:2]
             # print(tmp_pose.fun)
         else:
@@ -63,7 +63,7 @@ class triangle:
             for i in range(3):
                 self.ign = i
 
-                dis_range = 1.0
+                dis_range = 0.6
                 tmp_pose = minimize(self.cost_func,
                                     # default_pose[0:2],
                                     default_pose[0:2],
@@ -89,6 +89,7 @@ class triangle:
         t_pose = np.zeros(3)
         t_pose[0:2] = pose
         t_pose[2] = 1.12
+        tmp_sum = np.sum(self.the_range)
 
         for i in range(3):
 
@@ -96,4 +97,5 @@ class triangle:
                 self.the_range[i] + 0.01)
             if i == self.ign:
                 dis_err[i] = 0.0
-        return np.linalg.norm(dis_err)
+                tmp_sum -= self.the_range[i]
+        return np.linalg.norm(dis_err) * tmp_sum
