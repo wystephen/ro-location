@@ -93,6 +93,7 @@ class PFONE:
         '''
 
         first_pose = np.zeros(2)
+        self.currentRange = beacon_range
 
         res = minimize(self.standart_cost_func,
                        first_pose,
@@ -141,6 +142,7 @@ class PFONE:
         self.weight_vector = tmp_weight_vector
         self.sample_vector = tmp_sample_vector
 
+
     def StateEqu(self, delta_sample_vec):
         '''
 
@@ -149,8 +151,8 @@ class PFONE:
 
         for i in range(self.sample_vector.shape[0]):
             for j in range(self.sample_vector.shape[1]):
-                # self.sample_vector[i, j] += np.random.normal(delta_sample_vec[j], self.state_var[j])
-                self.sample_vector[i, j] += np.random.normal(0.0, self.state_var[j])
+                self.sample_vector[i, j] += np.random.normal(delta_sample_vec[j], self.state_var[j])
+                # self.sample_vector[i, j] += np.random.normal(0.0, self.state_var[j])
 
     def GetResult(self):
         '''
@@ -158,7 +160,7 @@ class PFONE:
         :return:
         '''
         result = np.zeros_like(self.sample_vector[0, :])
-        # TODO: USE
+        # TODO: USE NUMPY BOADCAST TO SPEED UP THIS STEP
         for i in range(self.sample_vector.shape[0]):
             result += self.sample_vector[i, :] * self.weight_vector[i]
 
@@ -176,7 +178,7 @@ class PFONE:
             self.weight_vector[i] = (self.weight_vector[i]) * (self.score[i])
 
         # normlized
-        #print(np.linalg.norm(self.score))
+        #print(np.linalg.norm(self.weight_vector))
         self.weight_vector = self.weight_vector / np.linalg.norm(self.weight_vector)
 
     def GetScore(self, state_vec, all_range):
@@ -197,7 +199,17 @@ class PFONE:
         for i in range(the_range.shape[0]):
             dis[i] = np.linalg.norm(pose - self.beaconPose[i, :])
         #print(dis)
-        return np.linalg.norm(dis - the_range)
+        return 10.0 / np.linalg.norm(dis - all_range)
+
+    def GetComplexScore(self, state_vec, all_range):
+        '''
+        all range
+        :param state_vec:
+        :param all_range:
+        :return:
+        '''
+
+        return state_vec
 
 
 

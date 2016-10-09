@@ -96,13 +96,17 @@ if __name__ == '__main__':
     ######################################
 
 
-    # compute filter result
+    '''
+    ####################################
+    #Try to use filter
+    ####################################
+    '''
     # sim_filter = filter_fram.filter_frame()
     sim_filter = RangPf()
 
 
     sim_filter.setInput(beacon_info, beacon)
-    sim_filter.initial_filter(1000)
+    sim_filter.initial_filter(2000)
     self_out = sim_filter.filter()
 
 
@@ -164,7 +168,7 @@ if __name__ == '__main__':
 
     # plt.plot(cpp_filter_out[:,0],cpp_filter_out[:,1],'y.')
 
-    # plt.plot(self_out[:, 0], self_out[:, 1], '+c')
+    plt.plot(self_out[:, 0], self_out[:, 1], '+c')
 
     plt.plot(tg_result[:, 0], tg_result[:, 1], '*k')
 

@@ -38,7 +38,7 @@ class RangPf(filter_frame):
         self.range_num = self.beacon_range.shape[1]
         self.all_result = np.zeros([self.beacon_pose.shape[0], self.pose_num + self.range_num])
         self.pfone.setBeaconPose(self.beacon_set)
-        self.pfone.setPFParameter(1.5, 1.5, 1.12)
+        self.pfone.setPFParameter(0.5, 0.5, 1.12)
         return True
 
     def filter(self):
@@ -54,11 +54,14 @@ class RangPf(filter_frame):
             # Sampling
             if i < 2:
                 delta_vec = np.zeros(self.pose_num + self.range_num)
-                for j in range(delta_vec.shape[0]):
-                    delta_vec[j] = np.random.normal(0.0, self.pfone.state_var.mean() * 0.3)
+                # for j in range(delta_vec.shape[0]):
+                #     delta_vec[j] = np.random.normal(0.0, self.pfone.state_var.mean() * 0.3)
                 self.pfone.StateEqu(delta_vec)
             else:
                 delta_vec = self.all_result[i - 1, :] - self.all_result[i - 2, :]
+                # delta_vec[0:2] = delta_vec[0:2] / np.linalg.norm(delta_vec[0:2]) * 0.01
+                # delta_vec[2:] = delta_vec[2:] / np.linalg.norm(delta_vec[2:])
+                delta_vec = np.zeros_like(delta_vec)
                 self.pfone.StateEqu(delta_vec)
 
             # Evaluated
