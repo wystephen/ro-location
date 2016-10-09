@@ -124,7 +124,7 @@ class PFONE:
 
         # normlized
         # print(np.linalg.norm(self.weight_vector))
-        self.weight_vector = self.weight_vector / np.linalg.norm(self.weight_vector)
+        self.weight_vector = self.weight_vector / np.sum(self.weight_vector)
 
         beta = np.zeros_like(self.weight_vector)
         for i in range(self.weight_vector.shape[0]):
@@ -139,7 +139,7 @@ class PFONE:
         tmp_weight_vector = np.zeros_like(self.weight_vector)
         for i in range(tmp_sample_vector.shape[0]):
             rnd = np.random.uniform()
-            print(rnd)
+            # print(rnd)
             for j in range(beta.shape[0]):
                 if rnd < beta[j]:
                     # print("EE!")
@@ -176,7 +176,7 @@ class PFONE:
 
         # normlized
         # print(np.linalg.norm(self.weight_vector))
-        self.weight_vector = self.weight_vector / np.linalg.norm(self.weight_vector)
+        self.weight_vector = self.weight_vector / np.sum(self.weight_vector)
 
         result = np.zeros_like(self.sample_vector[0, :])
         # print("norm weight ",np.linalg.norm(self.weight_vector))
@@ -245,7 +245,7 @@ class PFONE:
 
             cost = 2.0 / cost
 
-        return cost ** 0.3
+        return cost
 
 
 
