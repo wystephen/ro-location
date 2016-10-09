@@ -38,13 +38,12 @@ class triangle:
                 self.result[i, :] = self.get_pose(self.result[i - 1, :])
                 # print(np.linalg.norm(self.result[i, :] - self.beacon_pose[i, :]))
 
-
         return self.result
 
     def get_pose(self, default_pose):
         '''
         compute pose based on the three distance
-        :param dis_array:
+        :param default_pose:
         :return:
         '''
 
@@ -77,14 +76,12 @@ class triangle:
             min_index = np.argmin(mul_re[:, 2])
 
             re_pose = mul_re[min_index, 0:2]
-            #print(mul_re[min_index,2])
-
+            # print(mul_re[min_index,2])
 
         return re_pose
 
     def cost_func(self, pose):
         dis_err = np.zeros(3)
-
 
         t_pose = np.zeros(3)
         t_pose[0:2] = pose
@@ -99,7 +96,7 @@ class triangle:
                 dis_err[i] = 0.0
                 tmp_sum -= self.the_range[i]
 
-                # TODO!!!! checke this equation normalize parameter.
+                # TODO!!!! check normalize parameter in this equation.
         return np.linalg.norm(dis_err) * tmp_sum
 
     def simple_cost_func(self, pose):

@@ -30,7 +30,6 @@ if __name__ == '__main__':
     beacon_003_Z = 1.33
     beacon = np.zeros([3, 3])
 
-
     beacon[0, 0] = beacon_001_X
     beacon[0, 1] = beacon_001_Y
     beacon[0, 2] = beacon_002_Z
@@ -43,14 +42,14 @@ if __name__ == '__main__':
     beacon[2, 1] = beacon_003_Y
     beacon[2, 2] = beacon_003_Z
 
-    # gt should add odometry
+    # gt should add odometry offset.
 
     odometry_X = 2
     odometry_Y = 4
     odometry_PHI = 0.0  # deg
     odometry_offset = [odometry_X, odometry_Y, odometry_PHI]
 
-    #Offset from robot to uwb sensor.
+    # Offset from robot to uwb sensor.
     robot_uwb_offset = [0.160, 0.000, 1.120]
 
     '''
@@ -63,17 +62,16 @@ if __name__ == '__main__':
     gt = np.loadtxt("../datasets/uwb_ro-localization_demo_GT.txt")
     gt = gt[:, 1:4]
 
-    #load beacon dataset
+    # load beacon dataset
     beacon_info = np.loadtxt("../beacon_out.txt")
     # print(beacon_info)
 
-    #load ground truth
+    # load ground truth
     gt = gt[0:beacon_info.shape[0], :]
 
-
-    #load filter result by cpp
+    # load filter result by cpp
     cpp_filter_out = np.loadtxt("../filter_out.txt")
-    cpp_filter_out = cpp_filter_out[0:beacon_info.shape[0],:]
+    cpp_filter_out = cpp_filter_out[0:beacon_info.shape[0], :]
 
     '''
     End Load Data
@@ -108,7 +106,7 @@ if __name__ == '__main__':
     #######################################################
     '''
 
-    #error between ground truth and beacon location
+    # error between ground truth and beacon location
     beacon_pose = beacon_info[:, 0:3]
     gt[:, 0] += odometry_offset[0]
     gt[:, 1] += odometry_offset[1]
@@ -125,23 +123,19 @@ if __name__ == '__main__':
     print("system beacon error:", np.mean(err_all))
     print("self compute pose error:", np.mean(err_tri))
 
-
-
-    #error between ground truth and filter output
-    #plt.figure(2)
-    err_filter = np.sum((cpp_filter_out[:,0:2]-gt[:,0:2]) ** 2.0 ,1)
+    # error between ground truth and filter output
+    # plt.figure(2)
+    err_filter = np.sum((cpp_filter_out[:, 0:2] - gt[:, 0:2]) ** 2.0, 1)
     err_filter = err_filter ** 0.5
 
     plt.plot(err_filter, 'b*-')
 
     print("cpp filter error:", np.mean(err_filter))
 
-
-
-    #error between ground truth and self filter
+    # error between ground truth and self filter
 
     plt.figure(3)
-    err_self = np.sum((self_out[:,0:2]-gt[:,0:2])**2.0,1)
+    err_self = np.sum((self_out[:, 0:2] - gt[:, 0:2]) ** 2.0, 1)
     err_self = err_self ** 0.5
     plt.plot(err_self)
 
@@ -163,7 +157,7 @@ if __name__ == '__main__':
 
     # plt.plot(cpp_filter_out[:,0],cpp_filter_out[:,1],'y.')
 
-    #plt.plot(self_out[:, 0], self_out[:, 1], '+c')
+    # plt.plot(self_out[:, 0], self_out[:, 1], '+c')
 
     plt.plot(tg_result[:, 0], tg_result[:, 1], '*k')
 
