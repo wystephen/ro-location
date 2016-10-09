@@ -26,21 +26,21 @@ class filter_frame:
 
         self.filter_result = np.zeros_like(self.beacon_pose)
 
-    def filter(self):
-        '''
-        Every sub Class should have the same return(return a filter result numpy.array).
-        :return:
-        '''
-        for i in range(self.beacon_pose.shape[0]):
-            if i < 3:
-                self.filter_result[i, :] = self.beacon_pose[i, :]
-            else:
-                if np.linalg.norm(self.filter_result[i - 1, :] - self.beacon_pose[i, :]) > 15.0:
-                    self.filter_result[i, :] = 2 * self.filter_result[i - 1, :] - self.filter_result[i - 2, :]
-                else:
-                    self.filter_result[i, :] = self.beacon_pose[i, :]
-
-        return self.filter_result
+    # def filter(self):
+    #     '''
+    #     Every sub Class should have the same return(return a filter result numpy.array).
+    #     :return:
+    #     '''
+    #     for i in range(self.beacon_pose.shape[0]):
+    #         if i < 3:
+    #             self.filter_result[i, :] = self.beacon_pose[i, :]
+    #         else:
+    #             if np.linalg.norm(self.filter_result[i - 1, :] - self.beacon_pose[i, :]) > 15.0:
+    #                 self.filter_result[i, :] = 2 * self.filter_result[i - 1, :] - self.filter_result[i - 2, :]
+    #             else:
+    #                 self.filter_result[i, :] = self.beacon_pose[i, :]
+    #
+    #     return self.filter_result
 
     def uniform_rand(self, low_bnd, hei_bnd):
         '''

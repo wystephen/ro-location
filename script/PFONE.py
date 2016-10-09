@@ -26,6 +26,8 @@ class PFONE:
         self.position_num = position_num
         self.beacon_num = beacon_num
 
+        self.ign = 100
+
         # self.history_pose = np.zeros([2, position_num])
         # self.history_range = np.zeros([2, beacon_num])
         #
@@ -119,6 +121,11 @@ class PFONE:
 
         :return:
         '''
+
+        # normlized
+        # print(np.linalg.norm(self.weight_vector))
+        self.weight_vector = self.weight_vector / np.linalg.norm(self.weight_vector)
+
         beta = np.zeros_like(self.weight_vector)
         for i in range(self.weight_vector.shape[0]):
             if i == 0:
@@ -132,13 +139,20 @@ class PFONE:
         tmp_weight_vector = np.zeros_like(self.weight_vector)
         for i in range(tmp_sample_vector.shape[0]):
             rnd = np.random.uniform()
+            print(rnd)
             for j in range(beta.shape[0]):
                 if rnd < beta[j]:
-                    tmp_sample_vector[i] = self.sample_vector[j]
-                    tmp_weight_vector[i] = self.weight_vector[j]
-                elif rnd == beta.shape[0] - 1:
-                    tmp_sample_vector[i] = self.sample_vector[j]
-                    tmp_weight_vector[i] = self.weight_vector[j]
+                    # print("EE!")
+                    tmp_sample_vector[i, :] = self.sample_vector[j, :]
+                    tmp_weight_vector[i, :] = self.weight_vector[j, :]
+                elif j == beta.shape[0] - 1:
+                    # print("EE2")
+                    tmp_sample_vector[i, :] = self.sample_vector[j, :]
+                    tmp_weight_vector[i, :] = self.weight_vector[j, :]
+                else:
+                    # print("ERROR")
+                    tmp_sample_vector[i, :] = self.sample_vector[j, :]
+                    tmp_weight_vector[i, :] = self.weight_vector[j, :]
         self.weight_vector = tmp_weight_vector
         self.sample_vector = tmp_sample_vector
 
@@ -159,10 +173,21 @@ class PFONE:
 
         :return:
         '''
+
+        # normlized
+        # print(np.linalg.norm(self.weight_vector))
+        self.weight_vector = self.weight_vector / np.linalg.norm(self.weight_vector)
+
         result = np.zeros_like(self.sample_vector[0, :])
+        # print("norm weight ",np.linalg.norm(self.weight_vector))
         # TODO: USE NUMPY BOADCAST TO SPEED UP THIS STEP
         for i in range(self.sample_vector.shape[0]):
             result += self.sample_vector[i, :] * self.weight_vector[i]
+
+        # print("std:",np.std(self.sample_vector[:,0]),np.std(self.sample_vector[:,1]))
+
+        # max_index = np.argmax(self.weight_vector)
+        # result = self.sample_vector[max_index,:]
 
         return result
 
@@ -174,12 +199,11 @@ class PFONE:
         '''
 
         for i in range(self.weight_vector.shape[0]):
-            self.score[i] = self.GetScore(self.sample_vector[i, :], all_range)
+            # self.score[i] = self.GetScore(self.sample_vector[i, :], all_range)
+            self.score[i] = self.GetComplexScore(self.sample_vector[i, :], all_range)
             self.weight_vector[i] = (self.weight_vector[i]) * (self.score[i])
 
-        # normlized
-        #print(np.linalg.norm(self.weight_vector))
-        self.weight_vector = self.weight_vector / np.linalg.norm(self.weight_vector)
+
 
     def GetScore(self, state_vec, all_range):
         '''
@@ -194,12 +218,10 @@ class PFONE:
         the_range = state_vec[self.position_num:]
 
         dis = np.zeros_like(the_range)
-
-
         for i in range(the_range.shape[0]):
             dis[i] = np.linalg.norm(pose - self.beaconPose[i, :])
-        #print(dis)
-        return 10.0 / np.linalg.norm(dis - all_range)
+
+        return 1 / np.linalg.norm(dis - all_range)
 
     def GetComplexScore(self, state_vec, all_range):
         '''
@@ -209,7 +231,21 @@ class PFONE:
         :return:
         '''
 
-        return state_vec
+        self.currentRange = all_range
+
+        cost = self.standart_cost_func(state_vec[0:2])
+        if cost < 0.1:
+            cost = 3.0 / cost
+        else:
+            cost_vector = np.zeros(3)
+            for i in range(3):
+                self.ign = i
+                cost_vector[i] = self.standart_cost_func(state_vec[0:2])
+            cost = np.min(cost_vector)
+
+            cost = 2.0 / cost
+
+        return cost ** 0.3
 
 
 
@@ -230,5 +266,7 @@ class PFONE:
         dis = np.ones(self.beaconPose.shape[0])
         for i in range(self.beaconPose.shape[0]):
             dis[i] = np.linalg.norm(pose_3d - self.beaconPose[i, :])
+            if i == self.ign:
+                dis[i] = self.currentRange[i]
 
         return np.linalg.norm(dis - self.currentRange)
