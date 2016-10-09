@@ -7,6 +7,8 @@ import scipy as sp
 
 import filter_fram
 
+from pf_location import RangPf
+
 if __name__ == '__main__':
     '''
     Some config data.
@@ -95,10 +97,14 @@ if __name__ == '__main__':
 
 
     # compute filter result
-    sim_filter = filter_fram.filter_frame()
-    sim_filter.setInput(beacon_info, beacon)
+    # sim_filter = filter_fram.filter_frame()
+    sim_filter = RangPf()
 
+
+    sim_filter.setInput(beacon_info, beacon)
+    sim_filter.initial_filter(100)
     self_out = sim_filter.filter()
+
 
     '''
     #######################################################
@@ -137,6 +143,7 @@ if __name__ == '__main__':
     plt.figure(3)
     err_self = np.sum((self_out[:, 0:2] - gt[:, 0:2]) ** 2.0, 1)
     err_self = err_self ** 0.5
+    print("err of filter:", np.mean(err_self[0:100]))
     plt.plot(err_self)
 
     #

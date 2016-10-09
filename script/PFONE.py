@@ -21,19 +21,57 @@ class PFONE:
         '''
         self.sample_vector = np.zeros([particle_num, position_num + beacon_num])
         self.weight_vector = np.ones([particle_num, 1])
+        self.score = np.zeros_like(self.weight_vector)
 
-        self.history_pose = np.zeros([2, position_num])
-        self.history_range = np.zeros([2, beacon_num])
+        self.position_num = position_num
+        self.beacon_num = beacon_num
 
-        for i in range(position_num):
-            self.history_pose[0, i] = np.random.normal(0.0, 1.0)
-        for i in range(beacon_num):
-            self.history_range[0, i] = np.random.normal(0.0, 1.0)
+        # self.history_pose = np.zeros([2, position_num])
+        # self.history_range = np.zeros([2, beacon_num])
+        #
+        # for i in range(position_num):
+        #     self.history_pose[0, i] = np.random.normal(0.0, 1.0)
+        # for i in range(beacon_num):
+        #     self.history_range[0, i] = np.random.normal(0.0, 1.0)
+
+    def reset(self, position_num,
+              beacon_num,
+              particle_num):
+        '''
+
+        :param position_num:
+        :param beacon_num:
+        :param particle_num:
+        :return:
+        '''
+
+        self.sample_vector = np.zeros([particle_num, position_num + beacon_num])
+        self.weight_vector = np.ones([particle_num, 1])
+        self.score = np.zeros_like(self.weight_vector)
+
+        self.position_num = position_num
+        self.beacon_num = beacon_num
+
 
     def setPFParameter(self, pose_var=0.5, beacon_var=0.5, z_offset=1.12):
+        '''
+
+        :param pose_var:
+        :param beacon_var:
+        :param z_offset:
+        :return:
+        '''
         self.pose_var = pose_var
         self.beacon_var = beacon_var
         self.z_offset = z_offset
+
+        self.state_var = np.zeros_like(self.sample_vector[0, :])
+        for i in range(self.state_var.shape[0]):
+            if i < self.position_num:
+                self.state_var[i] = self.pose_var
+            else:
+                self.state_var[i] = self.beacon_var
+
 
     def setBeaconPose(self, beaconpose):
         '''
@@ -47,41 +85,117 @@ class PFONE:
 
         return True
 
-    # def InitialValue(self,beacon_range):
-    #     '''
-    #
-    #     :param beacon_range:
-    #     :return:
-    #     '''
-    #
-    #     first_pose = np.zeros(2)
-    #
-    #     res = minimize(self.standart_cost_func,
-    #                    first_pose,
-    #                    method='L-BFGS-B',
-    #                    jac = False)
-    #     self.history_pose[1,:] = first_pose
-    #     if res.fun < 0.5:
-    #         for i in range(self.sample_vector.shape[0]):
-    #             for j in range(first_pose.shape[0]):
-    #                 self.sample_vector[i,j] = first_pose[j] + np.random.normal(0.0,self.pose_var)
-    #             for j in range(beacon_range.shape[0]):
-    #                 self.sample_vector[i,first_pose.shape[0]+j] = beacon_range[j] + np.random.normal(0.0,self.beacon_var)
-    #
-    #     else:
-    #         for i in range(self.sample_vector.shape[0]):
-    #             for j in range(first_pose.shape[0]):
-    #                 self.sample_vector[i,j] = first_pose[j] + np.random.normal(0.0,self.pose_var*2)
-    #             for j in range(beacon_range.shape[0]):
-    #                 self.sample_vector[i,first_pose.shape[0]+j] = beacon_range[j] + np.random.normal(0.0,self.beacon_var*2)
+    def InitialValue(self, beacon_range):
+        '''
 
+        :param beacon_range:
+        :return:
+        '''
 
+        first_pose = np.zeros(2)
 
-    def StateEqu(self):
+        res = minimize(self.standart_cost_func,
+                       first_pose,
+                       method='L-BFGS-B',
+                       jac=False)
+        # self.history_pose[1,:] = first_pose
+        # if res.fun < 0.5:
+        #     for i in range(self.sample_vector.shape[0]):
+        #         for j in range(first_pose.shape[0]):
+        #             self.sample_vector[i,j] = first_pose[j] + np.random.normal(0.0,self.pose_var)
+        #         for j in range(beacon_range.shape[0]):
+        #             self.sample_vector[i,first_pose.shape[0]+j] = beacon_range[j] + np.random.normal(0.0,self.beacon_var)
+        #
+        # else:
+        #     for i in range(self.sample_vector.shape[0]):
+        #         for j in range(first_pose.shape[0]):
+        #             self.sample_vector[i,j] = first_pose[j] + np.random.normal(0.0,self.pose_var*2)
+        #         for j in range(beacon_range.shape[0]):
+        #             self.sample_vector[i,first_pose.shape[0]+j] = beacon_range[j] + np.random.normal(0.0,self.beacon_var*2)
+
+    def ReSample(self):
         '''
 
         :return:
         '''
+        beta = np.zeros_like(self.weight_vector)
+        for i in range(self.weight_vector.shape[0]):
+            if i == 0:
+                beta[i] = self.weight_vector[i]
+            else:
+                beta[i] = beta[i - 1] + self.weight_vector[i]
+
+        # TODO:Check the beta[last_index] is it similar to 1
+
+        tmp_sample_vector = np.zeros_like(self.sample_vector)
+        tmp_weight_vector = np.zeros_like(self.weight_vector)
+        for i in range(tmp_sample_vector.shape[0]):
+            rnd = np.random.uniform()
+            for j in range(beta.shape[0]):
+                if rnd < beta[j]:
+                    tmp_sample_vector[i] = self.sample_vector[j]
+                    tmp_weight_vector[i] = self.weight_vector[j]
+                elif rnd == beta.shape[0] - 1:
+                    tmp_sample_vector[i] = self.sample_vector[j]
+                    tmp_weight_vector[i] = self.weight_vector[j]
+        self.weight_vector = tmp_weight_vector
+        self.sample_vector = tmp_sample_vector
+
+    def StateEqu(self, delta_sample_vec):
+        '''
+
+        :return:
+        '''
+
+        for i in range(self.sample_vector.shape[0]):
+            for j in range(self.sample_vector.shape[1]):
+                self.sample_vector[i, j] += np.random.normal(delta_sample_vec[j], self.state_var[j])
+
+    def GetResult(self):
+        '''
+
+        :return:
+        '''
+        result = np.zeros_like(self.sample_vector[0, :])
+        # TODO: USE
+        for i in range(self.sample_vector.shape[0]):
+            result += self.sample_vector[i, :] * self.weight_vector[i]
+
+        return result
+
+    def ObserveEva(self, all_range):
+        '''
+
+        :param all_range:
+        :return:
+        '''
+
+        for i in range(self.weight_vector.shape[0]):
+            self.score[i] = self.GetScore(self.sample_vector[i], all_range)
+            self.weight_vector[i] = (self.weight_vector[i] + 1e-8) * (self.weight_vector[i] + 1e-8)
+
+        # normlized
+        self.weight_vector = self.weight_vector / np.linalg.norm(self.weight_vector)
+
+    def GetScore(self, state_vec, all_range):
+        '''
+
+        :param state_vec:
+        :param all_range:
+        :return:
+        '''
+        pose = np.zeros(3)
+        pose[2] = self.z_offset
+        pose[0:2] = state_vec[0:self.position_num]
+        the_range = state_vec[self.position_num:]
+
+        dis = np.zeros_like(the_range)
+
+        for i in range(the_range.shape[0]):
+            dis[i] = np.linalg.norm(pose - self.beaconPose[i, :])
+        return np.linalg.norm(dis - the_range)
+
+
 
     def standart_cost_func(self, pose):
         '''

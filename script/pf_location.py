@@ -14,16 +14,15 @@ from PFONE import PFONE
 class RangPf(filter_frame):
     def __init__(self):
         filter_frame.__init__(self)
-        # self.pfone = PFONE(2,3,100)
+        self.pfone = PFONE(2, 3, 100)
 
-    # def setInput(self, beacon_info, beacon_set):
-    #     self.beacon_pose = beacon_info[:,0:2]
-    #
-    #     self.beacon_range = beacon_info[:,3:6]
-    #     self.beacon_set = beacon_set
-    #
-    #
-    #     self.filter_result = np.zeros_like(self.beacon_pose)
+    def setInput(self, beacon_info, beacon_set):
+        self.beacon_pose = beacon_info[:, 0:2]
+
+        self.beacon_range = beacon_info[:, 3:6]
+        self.beacon_set = beacon_set
+
+        self.filter_result = np.zeros_like(self.beacon_pose)
 
 
 
@@ -34,19 +33,12 @@ class RangPf(filter_frame):
         :return:
         '''
 
-        self.pfone(self.beacon_pose.shape[1], self.beacon_set.shape[0], N_praticles)
+        self.pfone.reset(self.beacon_pose.shape[1], self.beacon_set.shape[0], N_praticles)
+        self.pose_num = self.beacon_pose.shape[1]
+        self.range_num = self.beacon_range.shape[1]
+        self.all_result = np.zeros([self.beacon_pose.shape[0], self.pose_num + self.range_num])
         self.pfone.setBeaconPose(self.beacon_set)
         self.pfone.setPFParameter(0.5, 0.5, 1.12)
-
-
-
-
-
-
-
-
-
-
         return True
 
     def filter(self):
@@ -57,7 +49,27 @@ class RangPf(filter_frame):
         self.initial_filter(100)
 
         self.pfone.InitialValue(self.beacon_range[0, :])
+        for i in range(self.beacon_range.shape[0]):
 
+            # Sampling
+            if i < 2:
+                delta_vec = np.zeros(self.pose_num + self.range_num)
+                for j in range(delta_vec.shape[0]):
+                    delta_vec[j] = np.random.normal(0.0, self.pfone.state_var.mean() * 0.3)
+                self.pfone.StateEqu(delta_vec)
+            else:
+                delta_vec = self.all_result[i - 1, :] - self.all_result[i - 2, :]
+                self.pfone.StateEqu(delta_vec)
 
+            # Evaluated
+            self.pfone.ObserveEva(self.beacon_range[i, :])
+
+            # get Result
+            self.all_result[i, :] = self.pfone.GetResult()
+
+            # Resample
+            self.pfone.ReSample()
+
+        self.filter_result = self.all_result[:, 0:2]
 
         return self.filter_result
