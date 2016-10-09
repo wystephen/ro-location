@@ -149,7 +149,8 @@ class PFONE:
 
         for i in range(self.sample_vector.shape[0]):
             for j in range(self.sample_vector.shape[1]):
-                self.sample_vector[i, j] += np.random.normal(delta_sample_vec[j], self.state_var[j])
+                # self.sample_vector[i, j] += np.random.normal(delta_sample_vec[j], self.state_var[j])
+                self.sample_vector[i, j] += np.random.normal(0.0, self.state_var[j])
 
     def GetResult(self):
         '''
@@ -171,10 +172,11 @@ class PFONE:
         '''
 
         for i in range(self.weight_vector.shape[0]):
-            self.score[i] = self.GetScore(self.sample_vector[i], all_range)
-            self.weight_vector[i] = (self.weight_vector[i] + 1e-8) * (self.weight_vector[i] + 1e-8)
+            self.score[i] = self.GetScore(self.sample_vector[i, :], all_range)
+            self.weight_vector[i] = (self.weight_vector[i]) * (self.score[i])
 
         # normlized
+        #print(np.linalg.norm(self.score))
         self.weight_vector = self.weight_vector / np.linalg.norm(self.weight_vector)
 
     def GetScore(self, state_vec, all_range):
@@ -191,8 +193,10 @@ class PFONE:
 
         dis = np.zeros_like(the_range)
 
+
         for i in range(the_range.shape[0]):
             dis[i] = np.linalg.norm(pose - self.beaconPose[i, :])
+        #print(dis)
         return np.linalg.norm(dis - the_range)
 
 

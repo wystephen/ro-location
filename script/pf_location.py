@@ -38,7 +38,7 @@ class RangPf(filter_frame):
         self.range_num = self.beacon_range.shape[1]
         self.all_result = np.zeros([self.beacon_pose.shape[0], self.pose_num + self.range_num])
         self.pfone.setBeaconPose(self.beacon_set)
-        self.pfone.setPFParameter(0.5, 0.5, 1.12)
+        self.pfone.setPFParameter(1.5, 1.5, 1.12)
         return True
 
     def filter(self):
