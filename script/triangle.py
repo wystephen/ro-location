@@ -92,10 +92,16 @@ class triangle:
 
             dis_err[i] = (np.linalg.norm(t_pose - self.beacon_set[i, :]) - self.the_range[i]) / np.sqrt(
                 self.the_range[i] + 0.01)
+
+            # if self.ign > self.beacon_set.shape[0]:
+            #     # if dis_err[i] < 0.0:
+            #     #     dis_err[i] *= 0.5
+            #     # else:
+            #     #     dis_err[i] *= 1.0
+
             if i == self.ign:
                 dis_err[i] = 0.0
                 tmp_sum -= self.the_range[i]
-
                 # TODO!!!! check normalize parameter in this equation.
         return np.linalg.norm(dis_err) * tmp_sum
 
