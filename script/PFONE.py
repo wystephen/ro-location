@@ -101,6 +101,8 @@ class PFONE:
                        first_pose,
                        method='L-BFGS-B',
                        jac=False)
+        self.sample_vector[:, 0] = first_pose[0]
+        self.sample_vector[:, 1] = first_pose[1]
         # self.history_pose[1,:] = first_pose
         # if res.fun < 0.5:
         #     for i in range(self.sample_vector.shape[0]):
@@ -140,6 +142,7 @@ class PFONE:
         for i in range(tmp_sample_vector.shape[0]):
             rnd = np.random.uniform()
             # print(rnd)
+
             for j in range(beta.shape[0]):
                 if rnd < beta[j]:
                     # print("EE!")
@@ -156,17 +159,20 @@ class PFONE:
         self.weight_vector = tmp_weight_vector
         self.sample_vector = tmp_sample_vector
 
-
-    def StateEqu(self, delta_sample_vec):
+    def StateEqu(self, delta_sample_vec, the_current_range):
         '''
 
         :return:
         '''
 
-        for i in range(self.sample_vector.shape[0]):
-            for j in range(self.sample_vector.shape[1]):
-                self.sample_vector[i, j] += np.random.normal(delta_sample_vec[j], self.state_var[j])
+        # for i in range(self.sample_vector.shape[0]):
+        #     for j in range(self.sample_vector.shape[1]):
+        #         self.sample_vector[i, j] += np.random.normal(delta_sample_vec[j] , self.state_var[j])
                 # self.sample_vector[i, j] += np.random.normal(0.0, self.state_var[j])
+
+        self.currentRange = the_current_range
+        for i in range(self.sample_vector.shape[0]):
+            self.sample_vector[i, 0:2] = self.get_pose(self.sample_vector[i, 0:2])
 
     def GetResult(self):
         '''
@@ -234,16 +240,20 @@ class PFONE:
         self.currentRange = all_range
 
         cost = self.standart_cost_func(state_vec[0:2])
-        if cost < 0.1:
+        if cost == 1000:
             cost = 3.0 / cost
         else:
-            cost_vector = np.zeros(3)
-            for i in range(3):
+            cost_vector = np.zeros(4)
+            for i in range(4):
                 self.ign = i
-                cost_vector[i] = self.standart_cost_func(state_vec[0:2])
-            cost = np.min(cost_vector)
+                cost_vector[i] = self.cost_func(state_vec[0:2])
+                if i < 4:
+                    cost_vector[i] = 2.0 / (cost_vector[i] + 0.000001)
+                else:
+                    cost_vector[i] = 3.0 / (cost_vector[i] + 0.000001)
 
-            cost = 2.0 / cost
+            cost = np.max(cost_vector)
+            # cost = np.mean(cost_vector)
 
         return cost
 
@@ -270,3 +280,69 @@ class PFONE:
                 dis[i] = self.currentRange[i]
 
         return np.linalg.norm(dis - self.currentRange)
+
+    def cost_func(self, pose):
+        dis_err = np.zeros(3)
+
+        t_pose = np.zeros(3)
+        t_pose[0:2] = pose
+        t_pose[2] = 1.12
+        tmp_sum = np.sum(self.currentRange)
+
+        for i in range(self.beaconPose.shape[0]):
+
+            dis_err[i] = (np.linalg.norm(t_pose - self.beaconPose[i, :]) - self.currentRange[i]) / np.sqrt(
+                self.currentRange[i] + 0.01)
+
+            # if self.ign > self.beacon_set.shape[0]:
+            #     # if dis_err[i] < 0.0:
+            #     #     dis_err[i] *= 0.5
+            #     # else:
+            #     #     dis_err[i] *= 1.0
+
+            if i == self.ign:
+                dis_err[i] = 0.0
+                tmp_sum -= self.currentRange[i]
+                # TODO!!!! check normalize parameter in this equation.
+        return np.linalg.norm(dis_err) * tmp_sum
+
+    def get_pose(self, default_pose):
+        '''
+        compute pose based on the three distance
+        :param default_pose:
+        :return:
+        '''
+
+        re_pose = np.zeros(2)
+
+        tmp_pose = minimize(self.cost_func,
+                            # default_pose[0:2],
+                            default_pose[0:2],
+                            # method='Newton-CG',
+                            jac=False)
+        if tmp_pose.fun < -1.0:
+            re_pose = tmp_pose.x[0:2]
+            print("ERROR : THIS FORK SHOUDN'T BE RUN.")
+            # print(tmp_pose.fun)
+        else:
+            mul_re = np.zeros([3, 3])
+            for i in range(3):
+                self.ign = i
+
+                dis_range = 0.3
+                tmp_pose = minimize(self.cost_func,
+                                    # default_pose[0:2],
+                                    default_pose[0:2],
+                                    method='L-BFGS-B',
+                                    bounds=((default_pose[0] - dis_range, default_pose[0] + dis_range),
+                                            (default_pose[1] - dis_range, default_pose[1] + dis_range)),
+                                    jac=False)
+                mul_re[i, 0:2] = tmp_pose.x[0:2]
+                mul_re[i, 2] = tmp_pose.fun
+            self.ign = 1000
+            min_index = np.argmin(mul_re[:, 2])
+
+            re_pose = mul_re[min_index, 0:2]
+            # print(mul_re[min_index,2])
+
+            return re_pose

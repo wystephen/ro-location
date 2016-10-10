@@ -34,7 +34,7 @@ if __name__ == '__main__':
 
     beacon[0, 0] = beacon_001_X
     beacon[0, 1] = beacon_001_Y
-    beacon[0, 2] = beacon_002_Z
+    beacon[0, 2] = beacon_001_Z
 
     beacon[1, 0] = beacon_002_X
     beacon[1, 1] = beacon_002_Y
@@ -87,7 +87,8 @@ if __name__ == '__main__':
     import triangle
 
     tg = triangle.triangle(beacon_info, beacon)
-    tg.setRealvar(gt)
+    print("first beacon:", beacon)
+    # tg.setRealvar(gt)
 
     tg_result = tg.localization()
 
@@ -106,7 +107,8 @@ if __name__ == '__main__':
 
 
     sim_filter.setInput(beacon_info, beacon)
-    sim_filter.initial_filter(4000)
+    print("second beacon:", beacon)
+    sim_filter.initial_filter(400)
     self_out = sim_filter.filter()
 
 
