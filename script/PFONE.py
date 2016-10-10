@@ -185,12 +185,13 @@ class PFONE:
 
         for i in range(self.weight_vector.shape[0]):
             # self.score[i] = self.GetScore(self.sample_vector[i, :], all_range)
-            self.score[i] = self.GetComplexScore(self.sample_vector[i, :], all_range)
+            self.score[i] = self.GetScore2(self.sample_vector[i, :], all_range)
+            # self.score[i] = self.GetComplexScore(self.sample_vector[i, :], all_range)
             # self.weight_vector[i] = (self.weight_vector[i]) * (self.score[i])
 
         # print ("a",np.mean(self.score))
 
-        self.score /= np.sum(self.score + 0.00001)
+        self.score /= np.sum(self.score + 0.000000001)
         self.weight_vector = self.weight_vector * self.score
         # print ("b",np.mean(self.score))
 
@@ -204,6 +205,25 @@ class PFONE:
         :return:
         '''
         self.currentRange = all_range
+        pose = np.zeros(3)
+        pose[2] = self.z_offset
+        pose[0:2] = state_vec[0:self.position_num]
+        the_range = state_vec[self.position_num:]
+
+        dis = np.zeros_like(the_range)
+        dis_err = dis
+        for i in range(the_range.shape[0]):
+            dis[i] = np.linalg.norm(pose - self.beaconPose[i, :])
+        dis_err = np.abs(dis - self.currentRange)
+        for i in range(dis_err.shape[0]):
+            if np.sum(dis_err) < 2 * dis_err[i]:
+                dis_err[i] = np.sum(dis_err) - dis_err[i]
+                break
+        score = 1 / (0.00001 + np.linalg.norm(dis_err))
+        # print("stata:",state_vec[0:2])
+        # print(np.linalg.norm(dis-self.currentRange))
+
+        return score
 
     def GetScore(self, state_vec, all_range):
         '''
