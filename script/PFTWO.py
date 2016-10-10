@@ -1,13 +1,12 @@
 # -*- coding:utf-8 -*-
-# Create by steve in 16-10-9 at 上午9:38
-
+# Create by steve in 16-10-10 at 下午1:23
 import numpy as np
 import scipy as sp
 
 from scipy.optimize import minimize
 
 
-class PFONE:
+class PFTWO:
     def __init__(self, position_num,
                  beacon_num,
                  particle_num
@@ -54,7 +53,6 @@ class PFONE:
         self.position_num = position_num
         self.beacon_num = beacon_num
 
-
     def setPFParameter(self, pose_var=0.5, beacon_var=0.5, z_offset=1.12):
         '''
 
@@ -73,7 +71,6 @@ class PFONE:
                 self.state_var[i] = self.pose_var
             else:
                 self.state_var[i] = self.beacon_var
-
 
     def setBeaconPose(self, beaconpose):
         '''
@@ -105,20 +102,20 @@ class PFONE:
         for i in range(self.sample_vector.shape[0]):
             self.sample_vector[i, 0] = first_pose[0] + np.random.normal(0.0, 0.05)
             self.sample_vector[i, 1] = first_pose[1] + np.random.normal(0.0, 0.05)
-        # self.history_pose[1,:] = first_pose
-        # if res.fun < 0.5:
-        #     for i in range(self.sample_vector.shape[0]):
-        #         for j in range(first_pose.shape[0]):
-        #             self.sample_vector[i,j] = first_pose[j] + np.random.normal(0.0,self.pose_var)
-        #         for j in range(beacon_range.shape[0]):
-        #             self.sample_vector[i,first_pose.shape[0]+j] = beacon_range[j] + np.random.normal(0.0,self.beacon_var)
-        #
-        # else:
-        #     for i in range(self.sample_vector.shape[0]):
-        #         for j in range(first_pose.shape[0]):
-        #             self.sample_vector[i,j] = first_pose[j] + np.random.normal(0.0,self.pose_var*2)
-        #         for j in range(beacon_range.shape[0]):
-        #             self.sample_vector[i,first_pose.shape[0]+j] = beacon_range[j] + np.random.normal(0.0,self.beacon_var*2)
+            # self.history_pose[1,:] = first_pose
+            # if res.fun < 0.5:
+            #     for i in range(self.sample_vector.shape[0]):
+            #         for j in range(first_pose.shape[0]):
+            #             self.sample_vector[i,j] = first_pose[j] + np.random.normal(0.0,self.pose_var)
+            #         for j in range(beacon_range.shape[0]):
+            #             self.sample_vector[i,first_pose.shape[0]+j] = beacon_range[j] + np.random.normal(0.0,self.beacon_var)
+            #
+            # else:
+            #     for i in range(self.sample_vector.shape[0]):
+            #         for j in range(first_pose.shape[0]):
+            #             self.sample_vector[i,j] = first_pose[j] + np.random.normal(0.0,self.pose_var*2)
+            #         for j in range(beacon_range.shape[0]):
+            #             self.sample_vector[i,first_pose.shape[0]+j] = beacon_range[j] + np.random.normal(0.0,self.beacon_var*2)
 
     def ReSample(self):
         '''
@@ -170,7 +167,7 @@ class PFONE:
         # for i in range(self.sample_vector.shape[0]):
         #     for j in range(self.sample_vector.shape[1]):
         #         self.sample_vector[i, j] += np.random.normal(delta_sample_vec[j] , self.state_var[j])
-                # self.sample_vector[i, j] += np.random.normal(0.0, self.state_var[j])
+        # self.sample_vector[i, j] += np.random.normal(0.0, self.state_var[j])
 
         self.currentRange = the_current_range
         for i in range(self.sample_vector.shape[0]):
@@ -219,8 +216,6 @@ class PFONE:
             self.score[i] = self.GetComplexScore(self.sample_vector[i, :], all_range)
             self.weight_vector[i] = (self.weight_vector[i]) * (self.score[i])
 
-
-
     def GetScore(self, state_vec, all_range):
         '''
 
@@ -266,8 +261,6 @@ class PFONE:
             # cost += np.mean(cost_vector)
 
         return cost
-
-
 
     def standart_cost_func(self, pose):
         '''
