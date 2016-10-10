@@ -20,6 +20,7 @@ class PFONE:
         :return:
         '''
         self.sample_vector = np.zeros([particle_num, position_num + beacon_num])
+        self.last_smaple_vector = self.sample_vector
         self.weight_vector = np.ones([particle_num, 1])
         self.score = np.zeros_like(self.weight_vector)
 
@@ -50,6 +51,7 @@ class PFONE:
         '''
 
         self.sample_vector = np.zeros([particle_num, position_num + beacon_num])
+        self.last_sample_vector = self.sample_vector
         self.weight_vector = np.ones([particle_num, 1])
         self.score = np.zeros_like(self.weight_vector)
 
@@ -154,7 +156,7 @@ class PFONE:
         :return:
         '''
 
-
+        self.last_sample_vector = self.sample_vector
 
         self.sample_vector[:, 0:2] += np.random.normal(0.0, self.state_var[0],
                                                        size=(self.sample_vector.shape[0], 2))
@@ -189,6 +191,7 @@ class PFONE:
         '''
 
         for i in range(self.weight_vector.shape[0]):
+            self.last_state_vec = self.last_sample_vector[i, 0:2]
             # self.score[i] = self.GetScore(self.sample_vector[i, :], all_range)
             self.score[i] = self.GetScore2(self.sample_vector[i, :], all_range)
             # self.score[i] = self.GetComplexScore(self.sample_vector[i, :], all_range)
@@ -224,7 +227,7 @@ class PFONE:
             if np.sum(dis_err) < 2 * dis_err[i]:
                 dis_err[i] = np.sum(dis_err) - dis_err[i]
                 break
-        score = 1 / (0.00001 + np.linalg.norm(dis_err))
+        score = 1 / (0.00001 + np.linalg.norm(dis_err) + np.linalg.norm(pose[0:2] - self.last_state_vec[0:2]))
         # print("stata:",state_vec[0:2])
         # print(np.linalg.norm(dis-self.currentRange))
 
