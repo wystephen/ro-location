@@ -46,7 +46,7 @@ class RangPf(filter_frame):
         main
         :return:
         '''
-        self.initial_filter(100)
+        # self.initial_filter(100)
 
         self.pfone.InitialValue(self.beacon_range[0, :])
         for i in range(self.beacon_range.shape[0]):

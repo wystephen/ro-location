@@ -54,7 +54,7 @@ class triangle:
                             default_pose[0:2],
                             # method='Newton-CG',
                             jac=False)
-        if tmp_pose.fun < 0.4:
+        if tmp_pose.fun < 0.35:
             re_pose = tmp_pose.x[0:2]
             # print(tmp_pose.fun)
         else:
@@ -62,7 +62,7 @@ class triangle:
             for i in range(3):
                 self.ign = i
 
-                dis_range = 0.6
+                dis_range = 0.5
                 tmp_pose = minimize(self.cost_func,
                                     # default_pose[0:2],
                                     default_pose[0:2],
@@ -74,6 +74,22 @@ class triangle:
                 mul_re[i, 2] = tmp_pose.fun
             self.ign = 1000
             min_index = np.argmin(mul_re[:, 2])
+            if mul_re[min_index, 2] > 0.5 and np.linalg.norm(mul_re[min_index, 0:2] - default_pose[0:2]) > 3.0:
+
+                for i in range(3):
+                    self.ign = i
+
+                    dis_range = 15.0
+                    tmp_pose = minimize(self.simple_cost_func,
+                                        # default_pose[0:2],
+                                        default_pose[0:2],
+                                        method='L-BFGS-B',
+                                        bounds=((default_pose[0] - dis_range, default_pose[0] + dis_range),
+                                                (default_pose[1] - dis_range, default_pose[1] + dis_range)),
+                                        jac=False)
+                    mul_re[i, 0:2] = tmp_pose.x[0:2]
+                    mul_re[i, 2] = tmp_pose.fun
+                self.ign = 1000
 
             re_pose = mul_re[min_index, 0:2]
             # print(mul_re[min_index,2])
@@ -91,13 +107,15 @@ class triangle:
         for i in range(self.beacon_set.shape[0]):
 
             dis_err[i] = (np.linalg.norm(t_pose - self.beacon_set[i, :]) - self.the_range[i]) / np.sqrt(
-                self.the_range[i] + 0.01)
+                self.the_range[i] + 0.000001)
 
-            # if self.ign > self.beacon_set.shape[0]:
-            #     # if dis_err[i] < 0.0:
-            #     #     dis_err[i] *= 0.5
-            #     # else:
-            #     #     dis_err[i] *= 1.0
+            if self.ign > self.beacon_set.shape[0]:
+                if dis_err[i] < 0.0:
+                    dis_err[i] *= 0.8
+                    tmp_sum -= self.the_range[i] * 0.8
+                else:
+                    dis_err[i] *= 1.0
+
 
             if i == self.ign:
                 dis_err[i] = 0.0

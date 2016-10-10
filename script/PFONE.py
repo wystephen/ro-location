@@ -101,8 +101,9 @@ class PFONE:
                        first_pose,
                        method='L-BFGS-B',
                        jac=False)
-        self.sample_vector[:, 0] = first_pose[0]
-        self.sample_vector[:, 1] = first_pose[1]
+        for i in range(self.sample_vector.shape[0]):
+            self.sample_vector[i, 0] = first_pose[0] + np.random.normal(0.0, 0.05)
+            self.sample_vector[i, 1] = first_pose[1] + np.random.normal(0.0, 0.05)
         # self.history_pose[1,:] = first_pose
         # if res.fun < 0.5:
         #     for i in range(self.sample_vector.shape[0]):
@@ -173,6 +174,12 @@ class PFONE:
         self.currentRange = the_current_range
         for i in range(self.sample_vector.shape[0]):
             self.sample_vector[i, 0:2] = self.get_pose(self.sample_vector[i, 0:2])
+            # + \
+            # [np.random.normal(0.0,self.state_var[0] / 10.0),
+            #  np.random.normal(0.0,self.state_var[1]/10.0)]
+        # self.sample_vector[:,0:2] += self.get_pose(self.sample_vector[0:2])
+        self.sample_vector[:, 0:2] += np.random.normal(0.0, self.state_var[0] / 10.0,
+                                                       size=(self.sample_vector.shape[0], 2))
 
     def GetResult(self):
         '''
@@ -187,8 +194,9 @@ class PFONE:
         result = np.zeros_like(self.sample_vector[0, :])
         # print("norm weight ",np.linalg.norm(self.weight_vector))
         # TODO: USE NUMPY BOADCAST TO SPEED UP THIS STEP
-        for i in range(self.sample_vector.shape[0]):
-            result += self.sample_vector[i, :] * self.weight_vector[i]
+        # for i in range(self.sample_vector.shape[0]):
+        #     result += self.sample_vector[i, :] * self.weight_vector[i]
+        result = np.sum(self.sample_vector * self.weight_vector, axis=0)
 
         # print("std:",np.std(self.sample_vector[:,0]),np.std(self.sample_vector[:,1]))
 
@@ -294,11 +302,11 @@ class PFONE:
             dis_err[i] = (np.linalg.norm(t_pose - self.beaconPose[i, :]) - self.currentRange[i]) / np.sqrt(
                 self.currentRange[i] + 0.01)
 
-            # if self.ign > self.beacon_set.shape[0]:
-            #     # if dis_err[i] < 0.0:
-            #     #     dis_err[i] *= 0.5
-            #     # else:
-            #     #     dis_err[i] *= 1.0
+            if self.ign > self.beaconPose.shape[0]:
+                if dis_err[i] < 0.0:
+                    dis_err[i] *= 0.5
+                else:
+                    dis_err[i] *= 1.0
 
             if i == self.ign:
                 dis_err[i] = 0.0
