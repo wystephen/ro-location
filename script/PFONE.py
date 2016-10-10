@@ -28,6 +28,8 @@ class PFONE:
 
         self.ign = 100
 
+        self.last_state_vec = np.zeros_like(self.sample_vector[0, :])
+
         # self.history_pose = np.zeros([2, position_num])
         # self.history_range = np.zeros([2, beacon_num])
         #
@@ -152,14 +154,17 @@ class PFONE:
         :return:
         '''
 
-        self.currentRange = the_current_range
-        # print("a",self.sample_vector[0,0:2])
-        for i in range(self.sample_vector.shape[0]):
-            self.sample_vector[i, 0:2] = self.get_pose(self.sample_vector[i, 0:2])
-        # print("b",self.sample_vector[0,0:2])
+
 
         self.sample_vector[:, 0:2] += np.random.normal(0.0, self.state_var[0],
                                                        size=(self.sample_vector.shape[0], 2))
+        self.currentRange = the_current_range
+        # print("a",self.sample_vector[0,0:2])
+        for i in range(self.sample_vector.shape[0]):
+            self.last_state_vec = self.sample_vector[i, :]
+            self.sample_vector[i, 0:2] = self.get_pose(self.sample_vector[i, 0:2])
+            # print("b",self.sample_vector[0,0:2])
+
 
     def GetResult(self):
         '''
@@ -326,7 +331,7 @@ class PFONE:
                 dis_err[i] = 0.0
                 tmp_sum -= self.currentRange[i]
                 # TODO!!!! check normalize parameter in this equation.
-        return np.linalg.norm(dis_err) * tmp_sum
+        return np.linalg.norm(dis_err) * tmp_sum  # + (np.linalg.norm(pose-self.last_state_vec[0:2]) * 0.5) ** 2.0
 
     def get_pose(self, default_pose):
         '''

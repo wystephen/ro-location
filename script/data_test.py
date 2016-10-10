@@ -108,7 +108,7 @@ if __name__ == '__main__':
 
     sim_filter.setInput(beacon_info, beacon)
     # print("second beacon:", beacon)
-    sim_filter.initial_filter(20)
+    sim_filter.initial_filter(30)
     self_out = sim_filter.filter()
 
 
@@ -149,7 +149,7 @@ if __name__ == '__main__':
     # plt.figure(3)
     err_self = np.sum((self_out[:, 0:2] - gt[:, 0:2]) ** 2.0, 1)
     err_self = err_self ** 0.5
-    print("err of filter:", np.mean(err_self[0:100]))
+    print("err of filter:", np.mean(err_self))
     plt.plot(err_self, 'r*-')
 
     #
