@@ -85,8 +85,6 @@ class PFONE:
         self.beaconPose = beaconpose
         self.currentRange = np.zeros(beaconpose.shape[0])
 
-        return True
-
     def InitialValue(self, beacon_range):
         '''
 
@@ -105,20 +103,7 @@ class PFONE:
         for i in range(self.sample_vector.shape[0]):
             self.sample_vector[i, 0] = first_pose[0] + np.random.normal(0.0, 0.05)
             self.sample_vector[i, 1] = first_pose[1] + np.random.normal(0.0, 0.05)
-        # self.history_pose[1,:] = first_pose
-        # if res.fun < 0.5:
-        #     for i in range(self.sample_vector.shape[0]):
-        #         for j in range(first_pose.shape[0]):
-        #             self.sample_vector[i,j] = first_pose[j] + np.random.normal(0.0,self.pose_var)
-        #         for j in range(beacon_range.shape[0]):
-        #             self.sample_vector[i,first_pose.shape[0]+j] = beacon_range[j] + np.random.normal(0.0,self.beacon_var)
-        #
-        # else:
-        #     for i in range(self.sample_vector.shape[0]):
-        #         for j in range(first_pose.shape[0]):
-        #             self.sample_vector[i,j] = first_pose[j] + np.random.normal(0.0,self.pose_var*2)
-        #         for j in range(beacon_range.shape[0]):
-        #             self.sample_vector[i,first_pose.shape[0]+j] = beacon_range[j] + np.random.normal(0.0,self.beacon_var*2)
+
 
     def ReSample(self):
         '''
@@ -167,19 +152,11 @@ class PFONE:
         :return:
         '''
 
-        # for i in range(self.sample_vector.shape[0]):
-        #     for j in range(self.sample_vector.shape[1]):
-        #         self.sample_vector[i, j] += np.random.normal(delta_sample_vec[j] , self.state_var[j])
-                # self.sample_vector[i, j] += np.random.normal(0.0, self.state_var[j])
-
         self.currentRange = the_current_range
         for i in range(self.sample_vector.shape[0]):
             self.sample_vector[i, 0:2] = self.get_pose(self.sample_vector[i, 0:2])
-            # + \
-            # [np.random.normal(0.0,self.state_var[0] / 10.0),
-            #  np.random.normal(0.0,self.state_var[1]/10.0)]
-        # self.sample_vector[:,0:2] += self.get_pose(self.sample_vector[0:2])
-        self.sample_vector[:, 0:2] += np.random.normal(0.0, self.state_var[0] / 10.0,
+
+        self.sample_vector[:, 0:2] += np.random.normal(0.0, self.state_var[0],
                                                        size=(self.sample_vector.shape[0], 2))
 
     def GetResult(self):
@@ -189,20 +166,11 @@ class PFONE:
         '''
 
         # normlized
-        # print(np.linalg.norm(self.weight_vector))
         self.weight_vector = self.weight_vector / np.sum(self.weight_vector)
 
         result = np.zeros_like(self.sample_vector[0, :])
-        # print("norm weight ",np.linalg.norm(self.weight_vector))
         # TODO: USE NUMPY BOADCAST TO SPEED UP THIS STEP
-        # for i in range(self.sample_vector.shape[0]):
-        #     result += self.sample_vector[i, :] * self.weight_vector[i]
         result = np.sum(self.sample_vector * self.weight_vector, axis=0)
-
-        # print("std:",np.std(self.sample_vector[:,0]),np.std(self.sample_vector[:,1]))
-
-        # max_index = np.argmax(self.weight_vector)
-        # result = self.sample_vector[max_index,:]
 
         return result
 
@@ -213,12 +181,12 @@ class PFONE:
         :return:
         '''
 
-        self.currentRange = all_range
         for i in range(self.weight_vector.shape[0]):
-            # self.score[i] = self.GetScore(self.sample_vector[i, :], all_range)
-            self.score[i] = self.GetComplexScore(self.sample_vector[i, :], all_range)
-            self.weight_vector[i] = (self.weight_vector[i]) * (self.score[i])
-
+            self.score[i] = self.GetScore(self.sample_vector[i, :], all_range)
+            # self.score[i] = self.GetComplexScore(self.sample_vector[i, :], all_range)
+            # self.weight_vector[i] = (self.weight_vector[i]) * (self.score[i])
+        self.score /= np.sum(self.score)
+        self.weight_vector = self.weight_vector * self.score
 
 
     def GetScore(self, state_vec, all_range):
@@ -228,6 +196,9 @@ class PFONE:
         :param all_range:
         :return:
         '''
+
+        # self.currentRange = all_range
+
         pose = np.zeros(3)
         pose[2] = self.z_offset
         pose[0:2] = state_vec[0:self.position_num]
@@ -237,7 +208,10 @@ class PFONE:
         for i in range(the_range.shape[0]):
             dis[i] = np.linalg.norm(pose - self.beaconPose[i, :])
 
-        return 1 / np.linalg.norm(dis - all_range)
+        score = 1 / np.linalg.norm(dis - all_range)
+        score = np.exp(score * 10.0)
+
+        return score
 
     def GetComplexScore(self, state_vec, all_range):
         '''
@@ -264,6 +238,7 @@ class PFONE:
 
             cost = np.max(cost_vector)
             # cost += np.mean(cost_vector)
+        cost = np.exp(cost * 10.0)
 
         return cost
 
@@ -325,7 +300,7 @@ class PFONE:
 
         re_pose = np.zeros(2)
 
-        dis_range = 0.1
+        dis_range = 0.5
 
         tmp_pose = minimize(self.cost_func,
                             default_pose[0:2],
@@ -335,14 +310,14 @@ class PFONE:
                             jac=False)
         if tmp_pose.fun < 0.15:
             re_pose = tmp_pose.x[0:2]
-            print("ERROR : THIS FORK SHOUDN'T BE RUN.")
+            #print("ERROR : THIS FORK SHOUDN'T BE RUN.")
             # print(tmp_pose.fun)
         else:
             mul_re = np.zeros([3, 3])
             for i in range(3):
                 self.ign = i
 
-                dis_range = 0.2
+                dis_range = 0.5
                 tmp_pose = minimize(self.cost_func,
                                     default_pose[0:2],
                                     method='L-BFGS-B',

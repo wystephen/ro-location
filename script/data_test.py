@@ -84,13 +84,13 @@ if __name__ == '__main__':
     # try to compute pose by self
     #######################################
     '''
-    import triangle
-
-    tg = triangle.triangle(beacon_info, beacon)
-    # print("first beacon:", beacon)
-    # tg.setRealvar(gt)
-
-    tg_result = tg.localization()
+    # import triangle
+    #
+    # tg = triangle.triangle(beacon_info, beacon)
+    # # print("first beacon:", beacon)
+    # # tg.setRealvar(gt)
+    #
+    # tg_result = tg.localization()
 
     ######################################
     # end Trye to compoute pose by range
@@ -108,7 +108,7 @@ if __name__ == '__main__':
 
     sim_filter.setInput(beacon_info, beacon)
     # print("second beacon:", beacon)
-    sim_filter.initial_filter(55)
+    sim_filter.initial_filter(66)
     self_out = sim_filter.filter()
 
 
@@ -125,15 +125,15 @@ if __name__ == '__main__':
     err_all = np.sum((beacon_pose[:, 0:2] - gt[:, 0:2]) ** 2.0, 1)
     err_all = err_all ** 0.5
     # err between ground truth and self triangle
-    err_tri = np.sum((tg_result[:, 0:2] - gt[:, 0:2]) ** 2.0, 1)
-    err_tri = err_tri ** 0.5
+    # err_tri = np.sum((tg_result[:, 0:2] - gt[:, 0:2]) ** 2.0, 1)
+    # err_tri = err_tri ** 0.5
 
     plt.figure(1)
     plt.plot(err_all, 'y+-')
-    plt.plot(err_tri, 'r+-')
+    # plt.plot(err_tri, 'r+-')
 
     print("system beacon error:", np.mean(err_all))
-    print("self compute pose error:", np.mean(err_tri))
+    # print("self compute pose error:", np.mean(err_tri))
 
     # error between ground truth and filter output
     # plt.figure(2)
@@ -146,11 +146,11 @@ if __name__ == '__main__':
 
     # error between ground truth and self filter
 
-    plt.figure(3)
+    # plt.figure(3)
     err_self = np.sum((self_out[:, 0:2] - gt[:, 0:2]) ** 2.0, 1)
     err_self = err_self ** 0.5
     print("err of filter:", np.mean(err_self[0:100]))
-    plt.plot(err_self)
+    plt.plot(err_self, 'r*-')
 
     #
     #     b: blue
@@ -172,6 +172,6 @@ if __name__ == '__main__':
 
     plt.plot(self_out[:, 0], self_out[:, 1], '-+c')
 
-    plt.plot(tg_result[:, 0], tg_result[:, 1], '*k')
+    # plt.plot(tg_result[:, 0], tg_result[:, 1], '*k')
 
     plt.show()
