@@ -153,8 +153,10 @@ class PFONE:
         '''
 
         self.currentRange = the_current_range
+        # print("a",self.sample_vector[0,0:2])
         for i in range(self.sample_vector.shape[0]):
             self.sample_vector[i, 0:2] = self.get_pose(self.sample_vector[i, 0:2])
+        # print("b",self.sample_vector[0,0:2])
 
         self.sample_vector[:, 0:2] += np.random.normal(0.0, self.state_var[0],
                                                        size=(self.sample_vector.shape[0], 2))
@@ -182,12 +184,26 @@ class PFONE:
         '''
 
         for i in range(self.weight_vector.shape[0]):
-            self.score[i] = self.GetScore(self.sample_vector[i, :], all_range)
-            # self.score[i] = self.GetComplexScore(self.sample_vector[i, :], all_range)
+            # self.score[i] = self.GetScore(self.sample_vector[i, :], all_range)
+            self.score[i] = self.GetComplexScore(self.sample_vector[i, :], all_range)
             # self.weight_vector[i] = (self.weight_vector[i]) * (self.score[i])
-        self.score /= np.sum(self.score)
-        self.weight_vector = self.weight_vector * self.score
 
+        # print ("a",np.mean(self.score))
+
+        self.score /= np.sum(self.score + 0.00001)
+        self.weight_vector = self.weight_vector * self.score
+        # print ("b",np.mean(self.score))
+
+        # self.weight_vector = self.score
+
+    def GetScore2(self, state_vec, all_range):
+        '''
+
+        :param state_vec:
+        :param all_range:
+        :return:
+        '''
+        self.currentRange = all_range
 
     def GetScore(self, state_vec, all_range):
         '''
@@ -208,8 +224,9 @@ class PFONE:
         for i in range(the_range.shape[0]):
             dis[i] = np.linalg.norm(pose - self.beaconPose[i, :])
 
-        score = 1 / np.linalg.norm(dis - all_range)
-        score = np.exp(score * 10.0)
+        score = 1 / (0.00001 + np.linalg.norm(dis - self.currentRange))
+        # print("stata:",state_vec[0:2])
+        # print(np.linalg.norm(dis-self.currentRange))
 
         return score
 
@@ -238,7 +255,7 @@ class PFONE:
 
             cost = np.max(cost_vector)
             # cost += np.mean(cost_vector)
-        cost = np.exp(cost * 10.0)
+        cost = np.exp(cost * 3.0)
 
         return cost
 
@@ -264,7 +281,7 @@ class PFONE:
             if i == self.ign:
                 dis[i] = self.currentRange[i]
 
-        return np.linalg.norm((dis - self.currentRange) / self.currentRange)
+        return np.linalg.norm((dis - self.currentRange))
 
     def cost_func(self, pose):
         dis_err = np.zeros(3)
@@ -300,7 +317,7 @@ class PFONE:
 
         re_pose = np.zeros(2)
 
-        dis_range = 0.5
+        dis_range = 3.5
 
         tmp_pose = minimize(self.cost_func,
                             default_pose[0:2],
@@ -308,7 +325,7 @@ class PFONE:
                             bounds=((default_pose[0] - dis_range, default_pose[0] + dis_range),
                                     (default_pose[1] - dis_range, default_pose[1] + dis_range)),
                             jac=False)
-        if tmp_pose.fun < 0.15:
+        if tmp_pose.fun < 0.35:
             re_pose = tmp_pose.x[0:2]
             #print("ERROR : THIS FORK SHOUDN'T BE RUN.")
             # print(tmp_pose.fun)
@@ -332,4 +349,4 @@ class PFONE:
             re_pose = mul_re[min_index, 0:2]
             # print(mul_re[min_index,2])
 
-            return re_pose
+        return re_pose
