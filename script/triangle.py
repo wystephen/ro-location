@@ -33,7 +33,7 @@ class triangle:
         for i in range(self.beacon_pose.shape[0]):
             self.the_range = self.beacon_range[i, :]
             if i < 1:
-                self.result[i, :] = self.get_pose((0, 0))
+                self.result[i, :] = self.get_pose((1.98119, 4.07225))
             else:
                 self.result[i, :] = self.get_pose(self.result[i - 1, :])
                 # print(np.linalg.norm(self.result[i, :] - self.beacon_pose[i, :]))

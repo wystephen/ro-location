@@ -101,6 +101,7 @@ class PFONE:
                        first_pose,
                        method='L-BFGS-B',
                        jac=False)
+        first_pose = res.x
         for i in range(self.sample_vector.shape[0]):
             self.sample_vector[i, 0] = first_pose[0] + np.random.normal(0.0, 0.05)
             self.sample_vector[i, 1] = first_pose[1] + np.random.normal(0.0, 0.05)
@@ -256,9 +257,9 @@ class PFONE:
                 self.ign = i
                 cost_vector[i] = self.cost_func(state_vec[0:2])
                 if i < 4:
-                    cost_vector[i] = 2.0 / (cost_vector[i] + 0.000001)
+                    cost_vector[i] = (cost_vector[i] + 0.000001)
                 else:
-                    cost_vector[i] = 3.0 / (cost_vector[i] + 0.000001)
+                    cost_vector[i] = (cost_vector[i] + 0.000001)
 
             cost = np.max(cost_vector)
             # cost = np.mean(cost_vector)
