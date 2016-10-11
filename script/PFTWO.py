@@ -284,6 +284,10 @@ class PFTWO:
 
         return np.linalg.norm((dis - self.currentRange) / self.currentRange)
 
+    '''
+
+    '''
+
     def cost_func(self, pose):
         dis_err = np.zeros(3)
 

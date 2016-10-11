@@ -161,11 +161,9 @@ class PFONE:
         self.sample_vector[:, 0:2] += np.random.normal(0.0, self.state_var[0],
                                                        size=(self.sample_vector.shape[0], 2))
         self.currentRange = the_current_range
-        # print("a",self.sample_vector[0,0:2])
         for i in range(self.sample_vector.shape[0]):
             self.last_state_vec = self.sample_vector[i, :]
             self.sample_vector[i, 0:2] = self.get_pose(self.sample_vector[i, 0:2])
-            # print("b",self.sample_vector[0,0:2])
 
 
     def GetResult(self):
