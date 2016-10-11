@@ -49,7 +49,7 @@ if __name__ == '__main__':
     cost = T.dscalar('cost')
     gc = T.dvector('gc')
 
-    cost = T.sum(T.sqr(T.sum(T.sqr(pose - gpu_set), axis=1) - gpu_range))
+    cost = T.sum((T.sum((pose - gpu_set) ** 2, axis=1) - gpu_range) ** 2)
 
     cost_f = theano.function(outputs=cost, inputs=[pose, gpu_range, gpu_set])
 
@@ -57,11 +57,13 @@ if __name__ == '__main__':
 
     all_fun = theano.function(outputs=gc, inputs=[pose, gpu_range, gpu_set])
 
+    print("First val: ", cost_f(real_pose, all_range, beacon))
+
     z_pose = [2.0, 3.0, 1.0]
     for i in range(10000):
         grad_pose = all_fun(z_pose, all_range, beacon)
         f_val = cost_f(z_pose, all_range, beacon)
-        z_pose = z_pose - 0.05 * grad_pose
+        z_pose = z_pose + 0.1 * grad_pose
 
         print(f_val)
         print(grad_pose, z_pose)
