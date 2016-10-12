@@ -214,8 +214,8 @@ class PFONE:
         # TODO: USE NUMPY BOADCAST TO SPEED UP THIS STEP
         result = np.sum(self.sample_vector * self.weight_vector, axis=0)
 
-        self.last_state_vec = result
-
+        # self.last_state_vec = result
+        result[0:2] = self.last_state_vec[0:2]
         return result
 
     def ObserveEva(self, all_range):
@@ -264,7 +264,7 @@ class PFONE:
             if np.sum(dis_err) < 2 * dis_err[i]:
                 dis_err[i] = np.sum(dis_err) - 2.0 * dis_err[i]
                 break
-        score = 1 / (0.00001 + np.linalg.norm(dis_err) + np.linalg.norm(pose[0:2] - self.last_state_vec[0:2]))
+        score = 1 / (0.00001 + np.linalg.norm(dis_err) + 5.0 * np.linalg.norm(pose[0:2] - self.last_state_vec[0:2]))
         # print("stata:",state_vec[0:2])
         # print(np.linalg.norm(dis-self.currentRange))
 
