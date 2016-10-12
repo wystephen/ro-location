@@ -108,7 +108,7 @@ if __name__ == '__main__':
 
     sim_filter.setInput(beacon_info, beacon)
     # print("second beacon:", beacon)
-    sim_filter.initial_filter(300)
+    sim_filter.initial_filter(5000)
     self_out = sim_filter.filter()
 
 

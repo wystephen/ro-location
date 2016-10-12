@@ -6,6 +6,8 @@ import scipy as sp
 
 from scipy.optimize import minimize
 
+from multiprocessing import Pool
+
 
 class PFONE:
     def __init__(self, position_num,
@@ -108,6 +110,23 @@ class PFONE:
             self.sample_vector[i, 0] = first_pose[0] + np.random.normal(0.0, 0.05)
             self.sample_vector[i, 1] = first_pose[1] + np.random.normal(0.0, 0.05)
 
+    def sample_in_problity(self, i):
+        for j in range(self.beta.shape[0]):
+            if self.rnd[i] < self.beta[j]:
+                # print("EE!")
+                self.tmp_sample_vector[i, :] = self.sample_vector[j, :]
+                self.tmp_weight_vector[i, :] = self.weight_vector[j, :]
+                break
+            # elif j == beta.shape[0] - 1:
+            #     # print("EE2")
+            #     tmp_sample_vector[i, :] = self.sample_vector[j, :]
+            #     tmp_weight_vector[i, :] = self.weight_vector[j, :]
+            else:
+                # print("ERROR")
+                self.tmp_sample_vector[i, :] = self.sample_vector[j, :]
+                self.tmp_weight_vector[i, :] = self.weight_vector[j, :]
+                break
+
 
     def ReSample(self):
         '''
@@ -119,36 +138,40 @@ class PFONE:
         # print(np.linalg.norm(self.weight_vector))
         self.weight_vector = self.weight_vector / np.sum(self.weight_vector)
 
-        beta = np.zeros_like(self.weight_vector)
+        self.beta = np.zeros_like(self.weight_vector)
         for i in range(self.weight_vector.shape[0]):
             if i == 0:
-                beta[i] = self.weight_vector[i]
+                self.beta[i] = self.weight_vector[i]
             else:
-                beta[i] = beta[i - 1] + self.weight_vector[i]
+                self.beta[i] = self.beta[i - 1] + self.weight_vector[i]
 
         # TODO:Check the beta[last_index] is it similar to 1
 
-        tmp_sample_vector = np.zeros_like(self.sample_vector)
-        tmp_weight_vector = np.zeros_like(self.weight_vector)
-        for i in range(tmp_sample_vector.shape[0]):
-            rnd = np.random.uniform()
-            # print(rnd)
+        self.tmp_sample_vector = np.zeros_like(self.sample_vector)
+        self.tmp_weight_vector = np.zeros_like(self.weight_vector)
+        self.rnd = np.random.uniform(size=self.sample_vector.shape[0])
 
-            for j in range(beta.shape[0]):
-                if rnd < beta[j]:
-                    # print("EE!")
-                    tmp_sample_vector[i, :] = self.sample_vector[j, :]
-                    tmp_weight_vector[i, :] = self.weight_vector[j, :]
-                elif j == beta.shape[0] - 1:
-                    # print("EE2")
-                    tmp_sample_vector[i, :] = self.sample_vector[j, :]
-                    tmp_weight_vector[i, :] = self.weight_vector[j, :]
-                else:
-                    # print("ERROR")
-                    tmp_sample_vector[i, :] = self.sample_vector[j, :]
-                    tmp_weight_vector[i, :] = self.weight_vector[j, :]
-        self.weight_vector = tmp_weight_vector
-        self.sample_vector = tmp_sample_vector
+        # for i in range(tmp_sample_vector.shape[0]):
+        #
+        #     # print(rnd)
+        #     for j in range(self.beta.shape[0]):
+        #         if rnd[i] < self.beta[j]:
+        #             # print("EE!")
+        #             tmp_sample_vector[i, :] = self.sample_vector[j, :]
+        #             tmp_weight_vector[i, :] = self.weight_vector[j, :]
+        #             break
+        #         # elif j == beta.shape[0] - 1:
+        #         #     # print("EE2")
+        #         #     tmp_sample_vector[i, :] = self.sample_vector[j, :]
+        #         #     tmp_weight_vector[i, :] = self.weight_vector[j, :]
+        #         else:
+        #             # print("ERROR")
+        #             tmp_sample_vector[i, :] = self.sample_vector[j, :]
+        #             tmp_weight_vector[i, :] = self.weight_vector[j, :]
+        #             break
+        map(self.sample_in_problity, range(self.tmp_sample_vector.shape[0]))
+        self.weight_vector = self.tmp_weight_vector
+        self.sample_vector = self.tmp_sample_vector
 
     def StateEqu(self, delta_sample_vec, the_current_range):
         '''
@@ -161,9 +184,9 @@ class PFONE:
         self.sample_vector[:, 0:2] += np.random.normal(0.0, self.state_var[0],
                                                        size=(self.sample_vector.shape[0], 2))
         self.currentRange = the_current_range
-        for i in range(self.sample_vector.shape[0]):
-            self.last_state_vec = self.sample_vector[i, :]
-            self.sample_vector[i, 0:2] = self.get_pose(self.sample_vector[i, 0:2])
+        # for i in range(self.sample_vector.shape[0]):
+        #     self.last_state_vec = self.sample_vector[i, :]
+        #     self.sample_vector[i, 0:2] = self.get_pose(self.sample_vector[i, 0:2])
 
 
     def GetResult(self):
@@ -175,7 +198,7 @@ class PFONE:
         # normlized
         self.weight_vector = self.weight_vector / np.sum(self.weight_vector)
 
-        result = np.zeros_like(self.sample_vector[0, :])
+        # result = np.zeros_like(self.sample_vector[0, :])
         # TODO: USE NUMPY BOADCAST TO SPEED UP THIS STEP
         result = np.sum(self.sample_vector * self.weight_vector, axis=0)
 
@@ -223,7 +246,7 @@ class PFONE:
         dis_err = np.abs(dis - self.currentRange)
         for i in range(dis_err.shape[0]):
             if np.sum(dis_err) < 2 * dis_err[i]:
-                dis_err[i] = np.sum(dis_err) - dis_err[i]
+                dis_err[i] = np.sum(dis_err) - 2.0 * dis_err[i]
                 break
         score = 1 / (0.00001 + np.linalg.norm(dis_err) + np.linalg.norm(pose[0:2] - self.last_state_vec[0:2]))
         # print("stata:",state_vec[0:2])
