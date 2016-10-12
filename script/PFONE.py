@@ -60,7 +60,6 @@ class PFONE:
         self.position_num = position_num
         self.beacon_num = beacon_num
 
-
     def setPFParameter(self, pose_var=0.5, beacon_var=0.5, z_offset=1.12):
         '''
 
@@ -79,7 +78,6 @@ class PFONE:
                 self.state_var[i] = self.pose_var
             else:
                 self.state_var[i] = self.beacon_var
-
 
     def setBeaconPose(self, beaconpose):
         '''
@@ -127,7 +125,6 @@ class PFONE:
                 self.tmp_weight_vector[i, :] = self.weight_vector[j, :]
                 break
 
-
     def ReSample(self):
         '''
 
@@ -151,25 +148,31 @@ class PFONE:
         self.tmp_weight_vector = np.zeros_like(self.weight_vector)
         self.rnd = np.random.uniform(size=self.sample_vector.shape[0])
 
-        # for i in range(tmp_sample_vector.shape[0]):
-        #
-        #     # print(rnd)
-        #     for j in range(self.beta.shape[0]):
-        #         if rnd[i] < self.beta[j]:
-        #             # print("EE!")
-        #             tmp_sample_vector[i, :] = self.sample_vector[j, :]
-        #             tmp_weight_vector[i, :] = self.weight_vector[j, :]
-        #             break
-        #         # elif j == beta.shape[0] - 1:
-        #         #     # print("EE2")
-        #         #     tmp_sample_vector[i, :] = self.sample_vector[j, :]
-        #         #     tmp_weight_vector[i, :] = self.weight_vector[j, :]
-        #         else:
-        #             # print("ERROR")
-        #             tmp_sample_vector[i, :] = self.sample_vector[j, :]
-        #             tmp_weight_vector[i, :] = self.weight_vector[j, :]
-        #             break
-        map(self.sample_in_problity, range(self.tmp_sample_vector.shape[0]))
+        for i in range(self.tmp_sample_vector.shape[0]):
+
+            # print(rnd)
+            for j in range(self.beta.shape[0]):
+                if self.rnd[i] < self.beta[j]:
+                    # print("EE!")
+                    self.tmp_sample_vector[i, :] = self.sample_vector[j, :]
+                    self.tmp_weight_vector[i, :] = self.weight_vector[j, :]
+                    break
+                # elif j == beta.shape[0] - 1:
+                #     # print("EE2")
+                #     tmp_sample_vector[i, :] = self.sample_vector[j, :]
+                #     tmp_weight_vector[i, :] = self.weight_vector[j, :]
+                else:
+                    # print("ERROR")
+                    self.tmp_sample_vector[i, :] = self.sample_vector[j, :]
+                    self.tmp_weight_vector[i, :] = self.weight_vector[j, :]
+                    break
+        # map(self.sample_in_problity, range(self.tmp_sample_vector.shape[0]))
+        # pool = Pool(processes=4)
+
+        # pool.map(self.sample_in_problity,range(self.tmp_sample_vector.shape[0]),)
+        # pool.close()
+        # pool.join()
+
         self.weight_vector = self.tmp_weight_vector
         self.sample_vector = self.tmp_sample_vector
 
@@ -179,6 +182,8 @@ class PFONE:
         :return:
         '''
 
+        the_pose = self.get_pose(self.last_state_vec)
+        self.last_state_vec[0:2] = the_pose
         self.last_sample_vector = self.sample_vector
 
         self.sample_vector[:, 0:2] += np.random.normal(0.0, self.state_var[0],
@@ -187,7 +192,6 @@ class PFONE:
         # for i in range(self.sample_vector.shape[0]):
         #     self.last_state_vec = self.sample_vector[i, :]
         #     self.sample_vector[i, 0:2] = self.get_pose(self.sample_vector[i, 0:2])
-
 
     def GetResult(self):
         '''
@@ -202,6 +206,8 @@ class PFONE:
         # TODO: USE NUMPY BOADCAST TO SPEED UP THIS STEP
         result = np.sum(self.sample_vector * self.weight_vector, axis=0)
 
+        self.last_state_vec = result
+
         return result
 
     def ObserveEva(self, all_range):
@@ -213,14 +219,14 @@ class PFONE:
 
         for i in range(self.weight_vector.shape[0]):
             self.last_state_vec = self.last_sample_vector[i, 0:2]
-            # self.score[i] = self.GetScore(self.sample_vector[i, :], all_range)
-            self.score[i] = self.GetScore2(self.sample_vector[i, :], all_range)
+            self.score[i] = self.GetScore(self.sample_vector[i, :], all_range)
+            # self.score[i] = self.GetScore2(self.sample_vector[i, :], all_range)
             # self.score[i] = self.GetComplexScore(self.sample_vector[i, :], all_range)
-            # self.weight_vector[i] = (self.weight_vector[i]) * (self.score[i])
+            self.weight_vector[i] = (self.weight_vector[i]) * (self.score[i])
 
         # print ("a",np.mean(self.score))
 
-        self.score /= np.sum(self.score + 0.000000001)
+        self.score /= np.sum(self.score)
         self.weight_vector = self.weight_vector * self.score
         # print ("b",np.mean(self.score))
 
@@ -265,8 +271,8 @@ class PFONE:
         # self.currentRange = all_range
 
         pose = np.zeros(3)
-        pose[2] = self.z_offset
-        pose[0:2] = state_vec[0:self.position_num]
+        pose[self.position_num] = self.z_offset
+        pose[0:self.position_num] = state_vec[0:self.position_num]
         the_range = state_vec[self.position_num:]
 
         dis = np.zeros_like(the_range)
@@ -298,17 +304,15 @@ class PFONE:
                 self.ign = i
                 cost_vector[i] = self.cost_func(state_vec[0:2])
                 if i < 4:
-                    cost_vector[i] = (cost_vector[i] + 0.000001)
+                    cost_vector[i] = (cost_vector[i])
                 else:
-                    cost_vector[i] = (cost_vector[i] + 0.000001)
+                    cost_vector[i] = (cost_vector[i])
 
             cost = np.max(cost_vector)
             # cost += np.mean(cost_vector)
         cost = np.exp(cost * 3.0)
 
         return cost
-
-
 
     def standart_cost_func(self, pose):
         '''
@@ -376,7 +380,7 @@ class PFONE:
                             jac=False)
         if tmp_pose.fun < 0.35:
             re_pose = tmp_pose.x[0:2]
-            #print("ERROR : THIS FORK SHOUDN'T BE RUN.")
+            # print("ERROR : THIS FORK SHOUDN'T BE RUN.")
             # print(tmp_pose.fun)
         else:
             mul_re = np.zeros([3, 3])
