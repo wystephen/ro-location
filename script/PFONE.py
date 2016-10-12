@@ -114,6 +114,8 @@ class PFONE:
         for i in range(self.sample_vector.shape[0]):
             self.sample_vector[i, 0] = first_pose[0] + np.random.normal(0.0, 0.05)
             self.sample_vector[i, 1] = first_pose[1] + np.random.normal(0.0, 0.05)
+        self.large_size = 1000000000
+        self.range_array = np.zeros(self.large_size)
 
     def sample_in_problity(self, i):
         for j in range(self.beta.shape[0]):
@@ -145,6 +147,7 @@ class PFONE:
         # print(np.std(self.sample_vector[:,0]),np.std(self.sample_vector[:,1]))
 
         self.beta = np.zeros_like(self.weight_vector)
+
         for i in range(self.weight_vector.shape[0]):
             if i == 0:
                 self.beta[i] = self.weight_vector[i]
@@ -154,17 +157,31 @@ class PFONE:
 
         # TODO:Check the beta[last_index] is it similar to 1
 
+        '''
+        Resample way 1
+        '''
+        # DON'T FORGET TO DELETE SAMPLE_VECTOR
+
         self.tmp_sample_vector = np.zeros_like(self.sample_vector)
         self.tmp_weight_vector = np.zeros_like(self.weight_vector)
         self.rnd = np.random.uniform(size=self.sample_vector.shape[0])
 
+        for i in range(self.beta.shape[0] - 1):
+            self.range_array[int(self.beta[i] * self.large_size):int(self.beta[i + 1] * self.large_size)] = i
+
         for i in range(self.tmp_sample_vector.shape[0]):
-            for j in range(self.beta.shape[0]):
-                if self.rnd[i] < self.beta[j]:
-                    # print("EE!",j)
-                    self.tmp_sample_vector[i, :] = self.sample_vector[j, :]
-                    self.tmp_weight_vector[i, :] = self.weight_vector[j, :]
-                    break
+            self.tmp_sample_vector[i, :] = self.sample_vector[self.range_array[(self.rnd[i] * self.large_size)], :]
+            self.tmp_weight_vector[i, :] = self.weight_vector[self.range_array[int(self.rnd[i] * self.large_size)], :]
+        '''
+        RESAMPLE way 2(old)'''
+        #
+        # for i in range(self.tmp_sample_vector.shape[0]):
+        #     for j in range(self.beta.shape[0]):
+        #         if self.rnd[i] < self.beta[j]:
+        #             # print("EE!",j)
+        #             self.tmp_sample_vector[i, :] = self.sample_vector[j, :]
+        #             self.tmp_weight_vector[i, :] = self.weight_vector[j, :]
+        #             break
                     # else:
                     #     print("ERROR",j)
                     #     self.tmp_sample_vector[i, :] = self.sample_vector[j, :]
@@ -177,6 +194,9 @@ class PFONE:
         # pool.close()
         # pool.join()
 
+        '''
+        End resample
+        '''
         self.weight_vector = self.tmp_weight_vector
         self.sample_vector = self.tmp_sample_vector
         print(np.std(self.sample_vector[:, 0]), np.std(self.sample_vector[:, 1]))
@@ -189,7 +209,7 @@ class PFONE:
         '''
 
         self.currentRange = the_current_range
-        the_pose = self.get_pose(self.last_state_vec)
+        # the_pose = self.get_pose(self.last_state_vec)
         # self.last_state_vec[0:2] = 0.5 * self.last_state_vec[0:2] + 0.5 * the_pose
         self.last_sample_vector = self.sample_vector
 
