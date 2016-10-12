@@ -6,7 +6,7 @@ import scipy as sp
 
 from scipy.optimize import minimize
 
-from EKFONE import EKFONE as ekf
+from script.EKFONE import EKFONE as ekf
 
 from multiprocessing import Pool
 
@@ -142,6 +142,8 @@ class PFONE:
         # print(np.linalg.norm(self.weight_vector))
         self.weight_vector = self.weight_vector / np.sum(self.weight_vector)
 
+        # print(np.std(self.sample_vector[:,0]),np.std(self.sample_vector[:,1]))
+
         self.beta = np.zeros_like(self.weight_vector)
         for i in range(self.weight_vector.shape[0]):
             if i == 0:
@@ -189,8 +191,8 @@ class PFONE:
         :return:
         '''
 
-        the_pose = self.get_pose(self.last_state_vec)
-        self.last_state_vec[0:2] = the_pose
+        # the_pose = self.get_pose(self.last_state_vec)
+        # self.last_state_vec[0:2] = 0.5 * self.last_state_vec[0:2] + 0.5 * the_pose
         self.last_sample_vector = self.sample_vector
 
         self.sample_vector[:, 0:2] += np.random.normal(0.0, self.state_var[0],
@@ -211,11 +213,11 @@ class PFONE:
         self.weight_vector = self.weight_vector / np.sum(self.weight_vector)
 
         # result = np.zeros_like(self.sample_vector[0, :])
-        # TODO: USE NUMPY BOADCAST TO SPEED UP THIS STEP
+        # ODO: USE NUMPY BOARDCAST TO SPEED UP THIS STEP
         result = np.sum(self.sample_vector * self.weight_vector, axis=0)
 
         # self.last_state_vec = result
-        result[0:2] = self.last_state_vec[0:2]
+        # result[0:2] = self.last_state_vec[0:2]
         return result
 
     def ObserveEva(self, all_range):
@@ -225,8 +227,8 @@ class PFONE:
         :return:
         '''
 
-        for i in range(len(self.ekf_list)):
-            all_range[i] = self.ekf_list[i].filter(all_range[i])
+        # for i in range(len(self.ekf_list)):
+        #     all_range[i] = self.ekf_list[i].filter(all_range[i])
         for i in range(self.weight_vector.shape[0]):
             self.last_state_vec = self.last_sample_vector[i, 0:2]
             # self.score[i] = self.GetScore(self.sample_vector[i, :], all_range)
@@ -262,9 +264,9 @@ class PFONE:
         dis_err = np.abs(dis - self.currentRange)
         for i in range(dis_err.shape[0]):
             if np.sum(dis_err) < 2 * dis_err[i]:
-                dis_err[i] = np.sum(dis_err) - 2.0 * dis_err[i]
+                dis_err[i] = np.sum(dis_err) - dis_err[i]
                 break
-        score = 1 / (0.00001 + np.linalg.norm(dis_err) + 5.0 * np.linalg.norm(pose[0:2] - self.last_state_vec[0:2]))
+        score = np.exp(-(0.00001 + np.linalg.norm(dis_err)))
         # print("stata:",state_vec[0:2])
         # print(np.linalg.norm(dis-self.currentRange))
 
@@ -295,6 +297,21 @@ class PFONE:
 
         return score
 
+    def GetSocre_range_confidence(self, state_vec, all_range):
+        '''
+        compute range confidence
+        :param state_vec:
+        :param all_range:
+        :return:
+        '''
+        self.currentRange = all_range
+
+        return self.cost_func(state_vec[0:2])
+
+
+
+
+
     def GetComplexScore(self, state_vec, all_range):
         '''
         all range
@@ -318,9 +335,9 @@ class PFONE:
                 else:
                     cost_vector[i] = (cost_vector[i])
 
-            cost = np.max(cost_vector)
+            cost = np.sum(cost_vector) - np.max(cost_vector) - np.min(cost_vector)
             # cost += np.mean(cost_vector)
-        cost = np.exp(cost * 3.0)
+        cost = np.exp(-cost)
 
         return cost
 
@@ -384,7 +401,7 @@ class PFONE:
 
         tmp_pose = minimize(self.cost_func,
                             default_pose[0:2],
-                            method='L-BFGS-B',
+                            # method='L-BFGS-B',
                             bounds=((default_pose[0] - dis_range, default_pose[0] + dis_range),
                                     (default_pose[1] - dis_range, default_pose[1] + dis_range)),
                             jac=False)

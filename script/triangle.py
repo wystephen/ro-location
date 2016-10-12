@@ -5,7 +5,6 @@ import scipy as sp
 import numpy as np
 
 from scipy.optimize import minimize
-from scipy.optimize import root
 
 import matplotlib.pyplot as plt
 
