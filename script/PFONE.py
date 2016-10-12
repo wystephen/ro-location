@@ -6,6 +6,8 @@ import scipy as sp
 
 from scipy.optimize import minimize
 
+from EKFONE import EKFONE as ekf
+
 from multiprocessing import Pool
 
 
@@ -32,6 +34,8 @@ class PFONE:
         self.ign = 100
 
         self.last_state_vec = np.zeros_like(self.sample_vector[0, :])
+
+        self.ekf_list = [ekf(), ekf(), ekf()]
 
         # self.history_pose = np.zeros([2, position_num])
         # self.history_range = np.zeros([2, beacon_num])
@@ -95,6 +99,9 @@ class PFONE:
         :param beacon_range:
         :return:
         '''
+
+        for i in range(len(self.ekf_list)):
+            self.ekf_list[i].Initial = beacon_range[i]
 
         first_pose = np.zeros(2)
         self.currentRange = beacon_range
@@ -189,6 +196,7 @@ class PFONE:
         self.sample_vector[:, 0:2] += np.random.normal(0.0, self.state_var[0],
                                                        size=(self.sample_vector.shape[0], 2))
         self.currentRange = the_current_range
+
         # for i in range(self.sample_vector.shape[0]):
         #     self.last_state_vec = self.sample_vector[i, :]
         #     self.sample_vector[i, 0:2] = self.get_pose(self.sample_vector[i, 0:2])
@@ -217,10 +225,12 @@ class PFONE:
         :return:
         '''
 
+        for i in range(len(self.ekf_list)):
+            all_range[i] = self.ekf_list[i].filter(all_range[i])
         for i in range(self.weight_vector.shape[0]):
             self.last_state_vec = self.last_sample_vector[i, 0:2]
-            self.score[i] = self.GetScore(self.sample_vector[i, :], all_range)
-            # self.score[i] = self.GetScore2(self.sample_vector[i, :], all_range)
+            # self.score[i] = self.GetScore(self.sample_vector[i, :], all_range)
+            self.score[i] = self.GetScore2(self.sample_vector[i, :], all_range)
             # self.score[i] = self.GetComplexScore(self.sample_vector[i, :], all_range)
             self.weight_vector[i] = (self.weight_vector[i]) * (self.score[i])
 
