@@ -5,9 +5,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import scipy as sp
 
-import filter_fram
+import script.filter_fram
 
-from pf_location import RangPf
+from script.pf_location import RangPf
 
 if __name__ == '__main__':
     '''
@@ -108,7 +108,7 @@ if __name__ == '__main__':
 
     sim_filter.setInput(beacon_info, beacon)
     # print("second beacon:", beacon)
-    sim_filter.initial_filter(1100)
+    sim_filter.initial_filter(8888)
     self_out = sim_filter.filter()
 
 

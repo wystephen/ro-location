@@ -150,6 +150,7 @@ class PFONE:
                 self.beta[i] = self.weight_vector[i]
             else:
                 self.beta[i] = self.beta[i - 1] + self.weight_vector[i]
+        # print("self.beta",self.beta)
 
         # TODO:Check the beta[last_index] is it similar to 1
 
@@ -158,23 +159,17 @@ class PFONE:
         self.rnd = np.random.uniform(size=self.sample_vector.shape[0])
 
         for i in range(self.tmp_sample_vector.shape[0]):
-
-            # print(rnd)
             for j in range(self.beta.shape[0]):
                 if self.rnd[i] < self.beta[j]:
-                    # print("EE!")
+                    # print("EE!",j)
                     self.tmp_sample_vector[i, :] = self.sample_vector[j, :]
                     self.tmp_weight_vector[i, :] = self.weight_vector[j, :]
                     break
-                # elif j == beta.shape[0] - 1:
-                #     # print("EE2")
-                #     tmp_sample_vector[i, :] = self.sample_vector[j, :]
-                #     tmp_weight_vector[i, :] = self.weight_vector[j, :]
-                else:
-                    # print("ERROR")
-                    self.tmp_sample_vector[i, :] = self.sample_vector[j, :]
-                    self.tmp_weight_vector[i, :] = self.weight_vector[j, :]
-                    break
+                    # else:
+                    #     print("ERROR",j)
+                    #     self.tmp_sample_vector[i, :] = self.sample_vector[j, :]
+                    #     self.tmp_weight_vector[i, :] = self.weight_vector[j, :]
+                    #     break
         # map(self.sample_in_problity, range(self.tmp_sample_vector.shape[0]))
         # pool = Pool(processes=4)
 
@@ -184,6 +179,8 @@ class PFONE:
 
         self.weight_vector = self.tmp_weight_vector
         self.sample_vector = self.tmp_sample_vector
+        print(np.std(self.sample_vector[:, 0]), np.std(self.sample_vector[:, 1]))
+
 
     def StateEqu(self, delta_sample_vec, the_current_range):
         '''
@@ -191,7 +188,8 @@ class PFONE:
         :return:
         '''
 
-        # the_pose = self.get_pose(self.last_state_vec)
+        self.currentRange = the_current_range
+        the_pose = self.get_pose(self.last_state_vec)
         # self.last_state_vec[0:2] = 0.5 * self.last_state_vec[0:2] + 0.5 * the_pose
         self.last_sample_vector = self.sample_vector
 
@@ -232,9 +230,10 @@ class PFONE:
         for i in range(self.weight_vector.shape[0]):
             self.last_state_vec = self.last_sample_vector[i, 0:2]
             # self.score[i] = self.GetScore(self.sample_vector[i, :], all_range)
-            self.score[i] = self.GetScore2(self.sample_vector[i, :], all_range)
+            self.score[i] = self.GetSocre_ob(self.sample_vector[i, :], all_range)
+            # self.score[i] = self.GetScore2(self.sample_vector[i, :], all_range)
             # self.score[i] = self.GetComplexScore(self.sample_vector[i, :], all_range)
-            self.weight_vector[i] = (self.weight_vector[i]) * (self.score[i])
+            # self.weight_vector[i] = (self.weight_vector[i]) * (self.score[i])
 
         # print ("a",np.mean(self.score))
 
@@ -266,7 +265,7 @@ class PFONE:
             if np.sum(dis_err) < 2 * dis_err[i]:
                 dis_err[i] = np.sum(dis_err) - dis_err[i]
                 break
-        score = np.exp(-(0.00001 + np.linalg.norm(dis_err)))
+        score = 1.0 / ((0.00001 + np.linalg.norm(dis_err)))
         # print("stata:",state_vec[0:2])
         # print(np.linalg.norm(dis-self.currentRange))
 
@@ -291,7 +290,7 @@ class PFONE:
         for i in range(the_range.shape[0]):
             dis[i] = np.linalg.norm(pose - self.beaconPose[i, :])
 
-        score = 1 / (0.00001 + np.linalg.norm(dis - self.currentRange))
+        score = 1 / np.sqrt(0.00001 + np.linalg.norm(dis - self.currentRange))
         # print("stata:",state_vec[0:2])
         # print(np.linalg.norm(dis-self.currentRange))
 
@@ -308,7 +307,24 @@ class PFONE:
 
         return self.cost_func(state_vec[0:2])
 
+    def GetSocre_ob(self, state_vec, all_range):
+        '''
 
+        :param state_vec:
+        :param all_range:
+        :return:
+        '''
+        pose = np.zeros(3)
+        pose[self.position_num] = self.z_offset
+        pose[0:self.position_num] = state_vec[0:self.position_num]
+
+        sigma = 0.1
+        cost = 0.0
+        dis = np.zeros_like(all_range)
+        for i in range(all_range.shape[0]):
+            dis[i] = np.linalg.norm(pose - self.beaconPose[i, :])
+            cost += 1 / sigma * np.exp(-0.5 * ((all_range[i] - dis[i]) / sigma) ** 2.0)
+        return cost
 
 
 
@@ -405,6 +421,10 @@ class PFONE:
                             bounds=((default_pose[0] - dis_range, default_pose[0] + dis_range),
                                     (default_pose[1] - dis_range, default_pose[1] + dis_range)),
                             jac=False)
+
+        if tmp_pose.fun < 0.25:
+            self.sample_vector[:, 0:2] = tmp_pose.x
+
         if tmp_pose.fun < 0.35:
             re_pose = tmp_pose.x[0:2]
             # print("ERROR : THIS FORK SHOUDN'T BE RUN.")
