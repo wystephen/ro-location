@@ -114,7 +114,7 @@ class PFONE:
         for i in range(self.sample_vector.shape[0]):
             self.sample_vector[i, 0] = first_pose[0] + np.random.normal(0.0, 0.05)
             self.sample_vector[i, 1] = first_pose[1] + np.random.normal(0.0, 0.05)
-        self.large_size = 1000000000
+        self.large_size = 100000
         self.range_array = np.zeros(self.large_size)
 
     def sample_in_problity(self, i):
@@ -156,17 +156,21 @@ class PFONE:
         # print("self.beta",self.beta)
 
         # TODO:Check the beta[last_index] is it similar to 1
-
+        self.tmp_sample_vector = np.zeros_like(self.sample_vector)
+        self.tmp_weight_vector = np.zeros_like(self.weight_vector)
+        self.rnd = np.random.uniform(size=self.sample_vector.shape[0])
         '''
         Resample way 1
         '''
         # DON'T FORGET TO DELETE SAMPLE_VECTOR
 
-        self.tmp_sample_vector = np.zeros_like(self.sample_vector)
-        self.tmp_weight_vector = np.zeros_like(self.weight_vector)
-        self.rnd = np.random.uniform(size=self.sample_vector.shape[0])
 
+        #
+        # print(self.beta)
         for i in range(self.beta.shape[0] - 1):
+            if self.beta[i + 1] - self.beta[i] < 1e-6:
+                break
+
             self.range_array[int(self.beta[i] * self.large_size):int(self.beta[i + 1] * self.large_size)] = i
 
         for i in range(self.tmp_sample_vector.shape[0]):
@@ -182,11 +186,11 @@ class PFONE:
         #             self.tmp_sample_vector[i, :] = self.sample_vector[j, :]
         #             self.tmp_weight_vector[i, :] = self.weight_vector[j, :]
         #             break
-                    # else:
-                    #     print("ERROR",j)
-                    #     self.tmp_sample_vector[i, :] = self.sample_vector[j, :]
-                    #     self.tmp_weight_vector[i, :] = self.weight_vector[j, :]
-                    #     break
+        # else:
+        #     print("ERROR",j)
+        #     self.tmp_sample_vector[i, :] = self.sample_vector[j, :]
+        #     self.tmp_weight_vector[i, :] = self.weight_vector[j, :]
+        #     break
         # map(self.sample_in_problity, range(self.tmp_sample_vector.shape[0]))
         # pool = Pool(processes=4)
 
@@ -199,7 +203,7 @@ class PFONE:
         '''
         self.weight_vector = self.tmp_weight_vector
         self.sample_vector = self.tmp_sample_vector
-        print(np.std(self.sample_vector[:, 0]), np.std(self.sample_vector[:, 1]))
+        # print(np.std(self.sample_vector[:, 0]), np.std(self.sample_vector[:, 1]))
 
 
     def StateEqu(self, delta_sample_vec, the_current_range):
@@ -209,8 +213,8 @@ class PFONE:
         '''
 
         self.currentRange = the_current_range
-        # the_pose = self.get_pose(self.last_state_vec)
-        # self.last_state_vec[0:2] = 0.5 * self.last_state_vec[0:2] + 0.5 * the_pose
+        the_pose = self.get_pose(self.last_state_vec)
+        self.last_state_vec[0:2] = 0.5 * self.last_state_vec[0:2] + 0.5 * the_pose
         self.last_sample_vector = self.sample_vector
 
         self.sample_vector[:, 0:2] += np.random.normal(0.0, self.state_var[0],
@@ -250,12 +254,15 @@ class PFONE:
         for i in range(self.weight_vector.shape[0]):
             self.last_state_vec = self.last_sample_vector[i, 0:2]
             # self.score[i] = self.GetScore(self.sample_vector[i, :], all_range)
-            self.score[i] = self.GetSocre_ob(self.sample_vector[i, :], all_range)
+            # self.score[i] = self.GetSocre_ob(self.sample_vector[i, :], all_range)
             # self.score[i] = self.GetScore2(self.sample_vector[i, :], all_range)
-            # self.score[i] = self.GetComplexScore(self.sample_vector[i, :], all_range)
+            self.score[i] = self.GetComplexScore(self.sample_vector[i, :], all_range)
             # self.weight_vector[i] = (self.weight_vector[i]) * (self.score[i])
+            if np.isnan(self.score[i]):
+                print("ERROR", self.score)
 
         # print ("a",np.mean(self.score))
+
 
         self.score /= np.sum(self.score)
         self.weight_vector = self.weight_vector * self.score
