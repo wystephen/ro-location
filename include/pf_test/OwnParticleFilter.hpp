@@ -37,7 +37,7 @@ namespace OPF {
             sigma_.resize(state_.rows());
 
             for (int i(0); i < sigma_.rows(); ++i) {
-                sigma_(i) = 0.25;
+                sigma_(i) = 0.15;
             }
 
 
@@ -54,6 +54,8 @@ namespace OPF {
         Eigen::VectorXd GetResult();
 
         bool ReSample();
+
+        bool ComputeCPoint(Eigen::VectorXd range);
 
 
     protected:
@@ -80,6 +82,8 @@ namespace OPF {
 
         Eigen::VectorXd sigma_;//sigma of state_
 
+        Eigen::Matrx<6, 2, double> con_point_;
+
 
     private:
         /*
@@ -92,6 +96,56 @@ namespace OPF {
 
 
     };
+
+    bool OwnParticleFilter::ComputeCPoint(Eigen::VectorXd range) {
+        /*
+         * Step 1: convert range in 3d to range_2d.
+         */
+        Eigen::VectorXd range2d;
+        for (int i(0); i < range.rows(); ++i) {
+            range2d(i) = std::pow(range(i) * range(i) - std::pow(beacon_pose_(i, 2) - z_offset_, 2.0), 0.5);
+        }
+        /*
+         * Step 2: Compute beacon to beacon 2d distance
+         */
+        Eigen::MatrixXd dis_mat(range.rows(), range.rows());
+        for (int i(0); i < range.rows(); ++i) {
+            for (int j(0); j < range.rows(); ++j) {
+                if (i == j) {
+                    continue;
+                } else {
+                    dis_mat(i, j) = (beacon_pose_.block(i, 0, 1, 2) - beacon_pose_.block(j, 0, 1, 2)).norm();
+                    dis_mat(j, i) = dis_mat(i, j);
+                }
+            }
+        }
+
+        /*
+         * Step 3: Compute points
+         */
+
+        int index(0);
+
+        for (int i(0); i < range.rows; ++i) {
+            for (int j(0); j < i; ++j) {
+                if (range2d(j) + range2d(i) < dis_mat(i, j)) {
+                    //without common point
+                    con_point_(index, 0) = 11111111;
+                    con_point_(index, 1) = 11111111;
+                    ++index;
+                    con_point_(index, 0) = 111111111;
+                    con_point_(index, 1) = 111111111;
+                } else {
+                    double the_angle = range2d(j) / (range2d(j) + range2d(i) + dis_mat(i, j)) * M_PI;
+
+                }
+
+
+            }
+        }
+
+        return true;
+    }
 
 
     bool OwnParticleFilter::InitialState(Eigen::Vector2d real_pose) {
@@ -210,7 +264,7 @@ namespace OPF {
 //            }
 //        }
 
-        return 1 / std::pow(dis_err.norm(), 5.0);
+        return std::pow(1 / dis_err.norm(), 4.0);
 
     }
 
@@ -271,6 +325,7 @@ namespace OPF {
                     break;
                 }
                 if (j == Beta.rows() - 1) {
+
                     MYERROR("Unexpected run fork.")
                 }
             }

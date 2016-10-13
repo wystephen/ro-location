@@ -61,7 +61,7 @@ int main() {
         uwb_range_vec.push_back(Eigen::Vector3d(*range(i, 0), *range(i, 1), *range(i, 2)));
     }
 
-    OPF::OwnParticleFilter opf(50000, apose, 1.12, 10);
+    OPF::OwnParticleFilter opf(20000, apose, 1.12, 10);
     opf.InitialState(Eigen::Vector2d(gt_x[0], gt_y[0]));
 
 
@@ -73,15 +73,16 @@ int main() {
         opf.Sample();
 
         //Test if use a real range.
-        Eigen::Vector3d real_range(0, 0, 0);
-        Eigen::Vector3d rp(gt_x[i], gt_y[i], 1.12);
-        for (int k(0); k < 3; ++k) {
-            real_range(k) = (rp - apose.block(k, 0, 1, 3)).norm();
-        }
+//        Eigen::Vector3d real_range(0, 0, 0);
+//        Eigen::Vector3d rp(gt_x[i], gt_y[i], 1.12);
+//        for (int k(0); k < 3; ++k) {
+//            real_range(k) = (rp - apose.block(k, 0, 1, 3)).norm();
+//        }
+//
+//        opf.Evaluate(Eigen::VectorXd(real_range));
+//        std::cout << "Use Real Range:" << (real_range - uwb_range_vec[i]).norm() << std::endl;
 
-        opf.Evaluate(Eigen::VectorXd(real_range));
-        std::cout << "Use Real Range:" << (real_range - uwb_range_vec[i]).norm() << std::endl;
-//        opf.Evaluate(Eigen::VectorXd(uwb_range_vec[i]));
+        opf.Evaluate(Eigen::VectorXd(uwb_range_vec[i]));
 
         Eigen::VectorXd p(opf.GetResult());
 
