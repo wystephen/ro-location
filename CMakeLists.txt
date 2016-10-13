@@ -27,7 +27,7 @@ find_package(PCL REQUIRED)
 find_package(MRPT REQUIRED gui obs maps
         nav opengl slam vision base )
 
-
+find_package(PythonLibs REQUIRED)
 
 
 catkin_package(
@@ -50,7 +50,8 @@ include_directories(
         ${PCL_INCLUDE_DIRS}
         /usr/local/include
         /usr/include/
-        /home/steve/Cpp_Extent/Cpp_Extent
+        #        /home/steve/Cpp_Extent/Cpp_Extent
+        ${PYTHON_INCLUDE_DIRS}
 )
 
 link_directories(
@@ -67,7 +68,7 @@ target_link_libraries(ro-location ${catkin_LIBRARIES} ${PCL_LIBRARIES} ${OpenCV_
 
 add_executable(pf_test src/pf_test.cpp)
 
-target_link_libraries(pf_test ${catkin_LIBRARIES} ${PCL_LIBRARIES} ${OpenCV_LIBRARIES} ${MRPT_LIBS})
+target_link_libraries(pf_test ${catkin_LIBRARIES} ${PCL_LIBRARIES} ${OpenCV_LIBRARIES} ${MRPT_LIBS} ${PYTHON_LIBRARIES})
 
 ## Declare a C++ library
 # add_library(ro-location

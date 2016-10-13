@@ -108,7 +108,7 @@ if __name__ == '__main__':
 
     sim_filter.setInput(beacon_info, beacon)
     # print("second beacon:", beacon)
-    sim_filter.initial_filter(1000)
+    sim_filter.initial_filter(1)
     self_out = sim_filter.filter()
 
 
@@ -130,7 +130,7 @@ if __name__ == '__main__':
 
     np.savetxt("../gt.csv", gt, delimiter=',')
     np.savetxt("../beacon_set.csv", beacon, delimiter=',')
-    np.savetxt("../uwb_range.csv", beacon_info[3:5])
+    np.savetxt("../uwb_range.csv", beacon_info[:, 3:6], delimiter=',')
 
     plt.figure(1)
     plt.plot(err_all, 'y+-')
