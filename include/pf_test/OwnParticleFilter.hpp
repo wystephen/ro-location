@@ -37,7 +37,7 @@ namespace OPF {
             sigma_.resize(state_.rows());
 
             for (int i(0); i < sigma_.rows(); ++i) {
-                sigma_(i) = 0.15;
+                sigma_(i) = 0.18;
             }
 
 
@@ -82,7 +82,7 @@ namespace OPF {
 
         Eigen::VectorXd sigma_;//sigma of state_
 
-        Eigen::Matrx<6, 2, double> con_point_;
+        Eigen::Matrix<double, 6, 2> con_point_;
 
 
     private:
@@ -94,20 +94,43 @@ namespace OPF {
             return Eigen::Vector3d(pose(0), pose(1), z_offset_);
         }
 
+        double TwoDnormal(double x, double y, double miu1, double miu2, double rho, double sigma1, double sigma2);
+
 
     };
+
+    double OwnParticleFilter::TwoDnormal(double x,
+                                         double y,
+                                         double miu1,
+                                         double miu2,
+                                         double rho,
+                                         double sigma1,
+                                         double sigma2) {
+
+        double para1, para2;
+        para1 = 2 * M_PI * sigma1 * sigma2 * std::pow(1 - rho * rho, 0.5);
+
+        para2 = -1 / 2 / (1 - rho * rho) *
+                (std::pow(x - miu1, 2) / sigma1 / sigma1 + 2 * rho * (x - miu1) * (y - miu2) / sigma1 / sigma2
+                 + std::pow(y - miu2, 2) / sigma2 / sigma2);
+
+        return 1 / para1 * std::exp(para2);
+    }
 
     bool OwnParticleFilter::ComputeCPoint(Eigen::VectorXd range) {
         /*
          * Step 1: convert range in 3d to range_2d.
          */
-        Eigen::VectorXd range2d;
+        Eigen::VectorXd range2d(range);
+
         for (int i(0); i < range.rows(); ++i) {
             range2d(i) = std::pow(range(i) * range(i) - std::pow(beacon_pose_(i, 2) - z_offset_, 2.0), 0.5);
         }
+
         /*
          * Step 2: Compute beacon to beacon 2d distance
          */
+
         Eigen::MatrixXd dis_mat(range.rows(), range.rows());
         for (int i(0); i < range.rows(); ++i) {
             for (int j(0); j < range.rows(); ++j) {
@@ -121,25 +144,47 @@ namespace OPF {
         }
 
         /*
-         * Step 3: Compute points
+         * Step 3: Compute common points
          */
+
 
         int index(0);
 
-        for (int i(0); i < range.rows; ++i) {
+        for (int i(0); i < range.rows(); ++i) {
             for (int j(0); j < i; ++j) {
                 if (range2d(j) + range2d(i) < dis_mat(i, j)) {
                     //without common point
-                    con_point_(index, 0) = 11111111;
-                    con_point_(index, 1) = 11111111;
+                    con_point_(index, 0) = 111111111;
+                    con_point_(index, 1) = 111111111;
                     ++index;
                     con_point_(index, 0) = 111111111;
                     con_point_(index, 1) = 111111111;
+                    ++index;
                 } else {
                     double the_angle = range2d(j) / (range2d(j) + range2d(i) + dis_mat(i, j)) * M_PI;
 
-                }
+                    Eigen::Vector2d A, B;
+                    double r1(0.0);
+                    if (beacon_pose_(i, 0) < beacon_pose_(j, 0)) {
+                        A = beacon_pose_.block(i, 0, 1, 2);
+                        B = beacon_pose_.block(j, 0, 1, 2);
+                        r1 = range2d(i);
 
+                    } else {
+                        A = beacon_pose_.block(j, 0, 1, 2);
+                        B = beacon_pose_.block(i, 0, 1, 2);
+                        r1 = range2d(j);
+                    }
+                    double theta = std::atan2(B(1) - A(1), B(0) - A(0));
+
+                    con_point_(index, 0) = A(0) + std::sin(theta + the_angle) * r1;
+                    con_point_(index, 1) = A(1) + std::cos(theta + the_angle) * r1;
+                    ++index;
+                    con_point_(index, 0) = A(0) + std::sin(theta - the_angle) * r1;
+                    con_point_(index, 1) = A(1) + std::cos(theta - the_angle) * r1;
+                    ++index;
+
+                }
 
             }
         }
@@ -190,12 +235,10 @@ namespace OPF {
     }
 
     bool OwnParticleFilter::Sample() {
-        std::vector<std::uniform_real_distribution<>> normal_dis_vec;
 
-//        std::vector<std::normal_distribution<>> normal_dis_vec;
+        std::vector<std::normal_distribution<>> normal_dis_vec;
         for (int i(0); i < sigma_.rows(); ++i) {
-//            normal_dis_vec.push_back(std::normal_distribution<>(0.0, sigma_(i)));
-            normal_dis_vec.push_back(std::uniform_real_distribution<>(-sigma_(i) * 2, sigma_(i) * 2));
+            normal_dis_vec.push_back(std::normal_distribution<>(0.0, sigma_(i)));
 
         }
 
@@ -209,6 +252,11 @@ namespace OPF {
 
 
     bool OwnParticleFilter::Evaluate(Eigen::VectorXd range_vec) {
+
+        ComputeCPoint(range_vec);
+
+        std::cout << "common point:" << con_point_ << std::endl;
+
         weight_vec_ /= weight_vec_.sum();
 
         state_.block(0, 2, 1, range_vec.rows()) = range_vec.transpose();
@@ -216,7 +264,7 @@ namespace OPF {
         for (int j(0); j < Score.rows(); ++j) {
             Score(j) = Likelihood(particle_mx_.block(j, 0, 1, particle_mx_.cols()), range_vec);
         }
-        Score /= Score.sum();
+//        Score /= Score.sum();
         for (int i(0); i < weight_vec_.rows(); ++i) {
             weight_vec_(i) = weight_vec_(i) * Score(i);
         }
@@ -244,27 +292,37 @@ namespace OPF {
          * Methond 3
          */
 
-        Eigen::Vector3d dis, dis_err;
-        for (int i(0); i < 3; ++i) {
-
-            dis(i) = 0.0;
-            dis(i) += std::pow(guess_state(0) - beacon_pose_(i, 0), 2.0);
-            dis(i) += std::pow(guess_state(1) - beacon_pose_(i, 1), 2.0);
-            dis(i) += std::pow(z_offset_ - beacon_pose_(i, 2), 2.0);
-            dis(i) = std::pow(dis(i), 0.5);
-            dis_err(i) = std::abs(dis(i) - range_vec(i)) / (range_vec(i) + 0.0000000001);
-        }
-//        double the_sum = dis_err.sum();
-//        for(int i(0);i<3;++i)
-//        {
-//            if(the_sum < dis_err(i)*2)
-//            {
-//                dis_err(i) = (the_sum - dis_err(i))/2;
-//                break;
-//            }
+//        Eigen::Vector3d dis, dis_err;
+//        for (int i(0); i < 3; ++i) {
+//
+//            dis(i) = 0.0;
+//            dis(i) += std::pow(guess_state(0) - beacon_pose_(i, 0), 2.0);
+//            dis(i) += std::pow(guess_state(1) - beacon_pose_(i, 1), 2.0);
+//            dis(i) += std::pow(z_offset_ - beacon_pose_(i, 2), 2.0);
+//            dis(i) = std::pow(dis(i), 0.5);
+//            dis_err(i) = std::abs(dis(i) - range_vec(i)) / (range_vec(i) + 0.0000000001);
 //        }
-
-        return std::pow(1 / dis_err.norm(), 4.0);
+////        double the_sum = dis_err.sum();
+////        for(int i(0);i<3;++i)
+////        {
+////            if(the_sum < dis_err(i)*2)
+////            {
+////                dis_err(i) = (the_sum - dis_err(i))/2;
+////                break;
+////            }
+////        }
+//
+//        return std::pow(1 / dis_err.norm(), 4.0);
+        /*
+         * Methond 4
+         */
+        double score(0.0);
+        for (int i(0); i < con_point_.rows(); ++i) {
+            score += 1 / 6.0 *
+                     TwoDnormal(guess_state(0), guess_state(1), con_point_(i, 0), con_point_(i, 1), 0.0, sigma_(0),
+                                sigma_(1));
+        }
+        return score;
 
     }
 
@@ -311,6 +369,10 @@ namespace OPF {
 
         for (int i(1); i < Beta.rows(); ++i) {
             Beta(i) = Beta(i - 1) + weight_vec_(i);
+        }
+        if (Beta.maxCoeff() < 1.0) {
+            Beta(Beta.rows() - 1) = 1.0;
+//            std::cout << Beta << std::endl;
         }
 
         std::uniform_real_distribution<double> u(0, 1);
