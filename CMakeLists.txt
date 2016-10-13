@@ -1,7 +1,17 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(ro-location)
 
+#openmp support
+FIND_PACKAGE(OpenMP REQUIRED)
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
+
+
 set(CMAKE_BUILD_TYPE  Release)
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -lpython2.7 ")
+
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
@@ -40,6 +50,7 @@ include_directories(
         ${PCL_INCLUDE_DIRS}
         /usr/local/include
         /usr/include/
+        /home/steve/Cpp_Extent/Cpp_Extent
 )
 
 link_directories(
@@ -53,6 +64,10 @@ link_directories(
 add_executable(ro-location src/ro-localization_main.cpp)
 
 target_link_libraries(ro-location ${catkin_LIBRARIES} ${PCL_LIBRARIES} ${OpenCV_LIBRARIES} ${MRPT_LIBS})
+
+add_executable(pf_test src/pf_test.cpp)
+
+target_link_libraries(pf_test ${catkin_LIBRARIES} ${PCL_LIBRARIES} ${OpenCV_LIBRARIES} ${MRPT_LIBS})
 
 ## Declare a C++ library
 # add_library(ro-location
