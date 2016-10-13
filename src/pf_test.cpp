@@ -57,8 +57,10 @@ int main() {
         uwb_range_vec.push_back(Eigen::Vector3d(*range(i, 0), *range(i, 1), *range(i, 2)));
     }
 
-    OPF::OwnParticleFilter opf(1000, apose, 1.12, 10);
+    OPF::OwnParticleFilter opf(10000, apose, 1.12, 10);
     opf.InitialState(Eigen::Vector2d(gt_x[0], gt_y[0]));
+
+    double average(0.0);
 
     for (int i(0); i < uwb_range_vec.size(); ++i) {
         opf.Sample();
@@ -72,15 +74,17 @@ int main() {
 
         err.push_back(std::pow((std::pow(gt_x[i] - f_x[i], 2) + std::pow(gt_y[i] - f_y[i], 2.0)), 0.5));
 
+        average += err[i] / uwb_range_vec.size();
+
         opf.ReSample();
 
 
     }
 
-    std::cout << " eee" << std::endl;
+    std::cout << " average err:" << average << std::endl;
 
     plt::subplot(2, 1, 1);
-    plt::named_plot("a", f_x, f_y, "r--");
+    plt::named_plot("a", f_x, f_y, "r*");
     plt::named_plot("b", gt_x, gt_y, "g-");
     plt::subplot(2, 1, 2);
     plt::plot(err);

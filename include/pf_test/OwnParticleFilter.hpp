@@ -49,7 +49,7 @@ namespace OPF {
 
         bool Evaluate(Eigen::VectorXd range_vec);
 
-        double Likelihood(Eigen::VectorXd guess_state);
+        double Likelihood(Eigen::VectorXd guess_state, Eigen::VectorXd range_vec);
 
         Eigen::VectorXd GetResult();
 
@@ -107,12 +107,14 @@ namespace OPF {
             state_history_.push_back(state_);
         }
 
-        particle_mx_.resize(particle_num_, state_.cols());
+        particle_mx_.resize(particle_num_, state_.rows());
         weight_vec_.resize(particle_num_);
+
         std::vector<std::normal_distribution<>> normal_dis_vec;
         for (int i(0); i < sigma_.rows(); ++i) {
             normal_dis_vec.push_back(std::normal_distribution<>(0.0, sigma_(i)));
         }
+
 
         for (int i(0); i < weight_vec_.rows(); ++i) {
             weight_vec_(i) = 1.0;
@@ -120,10 +122,11 @@ namespace OPF {
             particle_mx_.block(i, 0, 1, particle_mx_.cols()) = state_.transpose();
 
             for (int j(0); j < particle_mx_.cols(); ++j) {
-                particle_mx_(i, j) += normal_dis_vec.at(j)(e_);
+                particle_mx_(i, j) = state_(j) + normal_dis_vec.at(j)(e_);
             }
 
         }
+        std::cout << particle_mx_.size() << std::endl;
 
 
         return true;
@@ -147,19 +150,74 @@ namespace OPF {
     }
 
     bool OwnParticleFilter::Evaluate(Eigen::VectorXd range_vec) {
-        weight_vec_.normalize();
-        std::cout << weight_vec_.sum() << std::endl;
+//        weight_vec_ /= weight_vec_.sum();
+
+        for (int i(0); i < weight_vec_.rows(); ++i) {
+            weight_vec_(i) *= Likelihood(particle_mx_.block(i, 0, 1, particle_mx_.cols()), range_vec);
+        }
+
+        return true;
     }
 
-    double OwnParticleFilter::Likelihood(Eigen::VectorXd guess_state) {
-        return 0.1;
+    double OwnParticleFilter::Likelihood(Eigen::VectorXd guess_state, Eigen::VectorXd range_vec) {
+        /*
+         * Methond 1
+         */
+//        return 0.1;
+        /*
+         * Methond 2
+         */
+        Eigen::Vector3d dist;
+        for (int i(0); i < 3; ++i) {
+            dist(i) = (Two2Three(guess_state.block(0, 0, 1, 2)) - beacon_pose_.block(i, 0, 1, 3)).norm();
+        }
+        return 1 / (dist - range_vec).norm();
+
     }
 
     Eigen::VectorXd OwnParticleFilter::GetResult() {
-        return state_;
+        weight_vec_ /= weight_vec_.sum();
+//        particle_mx_.rowwise() *= weight_vec_;
+        Eigen::VectorXd tmp_state(state_);
+        tmp_state.setZero();
+
+        for (int i(0); i < particle_mx_.rows(); ++i) {
+            tmp_state += particle_mx_.block(i, 0, 1, particle_mx_.cols()) * weight_vec_(i);
+        }
+
+        state_history_.push_back(tmp_state);
+        state_history_.pop_front();
+
+
+        return tmp_state;
     }
 
     bool OwnParticleFilter::ReSample() {
+
+        Eigen::MatrixXd tmp_matrix(particle_mx_);
+        Eigen::VectorXd tmp_weight(weight_vec_);
+        weight_vec_ /= weight_vec_.sum();
+
+        Eigen::VectorXd Beta(weight_vec_);
+
+        for (int i(1); i < Beta.rows(); ++i) {
+            Beta(i) = Beta(i - 1) + weight_vec_(i);
+        }
+
+        std::uniform_real_distribution<double> u(0, 1);
+        for (int i(0); i < tmp_matrix.rows(); ++i) {
+            double tmp_rnd = u(e_);
+            for (int j(0); j < Beta.rows(); ++j) {
+                if (tmp_rnd < Beta(j)) {
+                    particle_mx_.block(i, 0, 1, particle_mx_.cols()) = tmp_matrix.block(j, 0, 1, tmp_matrix.cols());
+                    weight_vec_(i) = tmp_weight(j);
+                    break;
+                }
+            }
+
+        }
+
+
         return true;
     }
 
