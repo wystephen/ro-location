@@ -45,27 +45,43 @@ int main() {
         }
     }
 
+    std::cout << "apose:" << std::endl << apose << std::endl;
+
+
+
+
+
     for (int i(0); i < gtm.GetRows(); ++i) {
         gt_x.push_back(double(*gtm(i, 0)));
         gt_y.push_back(double(*gtm(i, 1)));
-//        std::cout << gt_x.size() << "   " << gt_y.size() << std::endl;
-//        std::cout << "gt_x,gt_y: " << gt_x.at(i) << " " << gt_y.at(i) << std::endl;
-//
+
 
     }
     for (int i(0); i < range.GetRows(); ++i) {
         uwb_range_vec.push_back(Eigen::Vector3d(*range(i, 0), *range(i, 1), *range(i, 2)));
     }
 
-    OPF::OwnParticleFilter opf(10000, apose, 1.12, 10);
+    OPF::OwnParticleFilter opf(50000, apose, 1.12, 10);
     opf.InitialState(Eigen::Vector2d(gt_x[0], gt_y[0]));
+
+
+    std::cout << "iwb size:" << uwb_range_vec.size() << "gt size :" << gt_x.size() << std::endl;
 
     double average(0.0);
 
     for (int i(0); i < uwb_range_vec.size(); ++i) {
         opf.Sample();
 
-        opf.Evaluate(Eigen::VectorXd(uwb_range_vec[i]));
+        //Test if use a real range.
+        Eigen::Vector3d real_range(0, 0, 0);
+        Eigen::Vector3d rp(gt_x[i], gt_y[i], 1.12);
+        for (int k(0); k < 3; ++k) {
+            real_range(k) = (rp - apose.block(k, 0, 1, 3)).norm();
+        }
+
+        opf.Evaluate(Eigen::VectorXd(real_range));
+        std::cout << "Use Real Range:" << (real_range - uwb_range_vec[i]).norm() << std::endl;
+//        opf.Evaluate(Eigen::VectorXd(uwb_range_vec[i]));
 
         Eigen::VectorXd p(opf.GetResult());
 
@@ -78,13 +94,14 @@ int main() {
 
         opf.ReSample();
 
-
     }
+
+    std::cout << f_x[0] << "                " << f_y[0] << std::endl;
 
     std::cout << " average err:" << average << std::endl;
 
     plt::subplot(2, 1, 1);
-    plt::named_plot("a", f_x, f_y, "r*");
+    plt::named_plot("a", f_x, f_y, "r*-");
     plt::named_plot("b", gt_x, gt_y, "g-");
     plt::subplot(2, 1, 2);
     plt::plot(err);
