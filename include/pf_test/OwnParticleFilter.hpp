@@ -107,12 +107,17 @@ namespace OPF {
                                          double sigma1,
                                          double sigma2) {
 
+        if (miu1 > 1000) {
+            return 0.0;
+        }
+
         double para1, para2;
         para1 = 2 * M_PI * sigma1 * sigma2 * std::pow(1 - rho * rho, 0.5);
 
         para2 = -1 / 2 / (1 - rho * rho) *
                 (std::pow(x - miu1, 2) / sigma1 / sigma1 + 2 * rho * (x - miu1) * (y - miu2) / sigma1 / sigma2
                  + std::pow(y - miu2, 2) / sigma2 / sigma2);
+
 
         return 1 / para1 * std::exp(para2);
     }
@@ -123,8 +128,8 @@ namespace OPF {
          */
         Eigen::VectorXd range2d(range);
 
-        for (int i(0); i < range.rows(); ++i) {
-            range2d(i) = std::pow(range(i) * range(i) - std::pow(beacon_pose_(i, 2) - z_offset_, 2.0), 0.5);
+        for (int i(0); i < range.size(); ++i) {
+            range2d(i) = std::pow((range(i) * range(i) - std::pow(beacon_pose_(i, 2) - z_offset_, 2)), 0.5);
         }
 
         /*
@@ -137,11 +142,15 @@ namespace OPF {
                 if (i == j) {
                     continue;
                 } else {
-                    dis_mat(i, j) = (beacon_pose_.block(i, 0, 1, 2) - beacon_pose_.block(j, 0, 1, 2)).norm();
+                    dis_mat(i, j) = std::pow(std::pow(beacon_pose_(i, 0) - beacon_pose_(j, 0), 2) +
+                                             std::pow(beacon_pose_(i, 1) - beacon_pose_(j, 1), 2), 0.5);
                     dis_mat(j, i) = dis_mat(i, j);
                 }
             }
         }
+
+//        std::cout <<"dis mat :" << dis_mat << std::endl;
+//        std::cout << "range 2d :" << range2d.transpose() << std::endl;
 
         /*
          * Step 3: Compute common points
@@ -152,7 +161,7 @@ namespace OPF {
 
         for (int i(0); i < range.rows(); ++i) {
             for (int j(0); j < i; ++j) {
-                if (range2d(j) + range2d(i) < dis_mat(i, j)) {
+                if (range2d(j) + range2d(i) < dis_mat(i, j) * 0.98) {
                     //without common point
                     con_point_(index, 0) = 111111111;
                     con_point_(index, 1) = 111111111;
@@ -163,26 +172,80 @@ namespace OPF {
                 } else {
                     double the_angle = range2d(j) / (range2d(j) + range2d(i) + dis_mat(i, j)) * M_PI;
 
-                    Eigen::Vector2d A, B;
-                    double r1(0.0);
-                    if (beacon_pose_(i, 0) < beacon_pose_(j, 0)) {
-                        A = beacon_pose_.block(i, 0, 1, 2);
-                        B = beacon_pose_.block(j, 0, 1, 2);
-                        r1 = range2d(i);
+                    double offsetx(0.0), offsety(0.0),
+                            x2(0.0), y2(0.0),
+                            x2n(0.0), y2n(0.0),
+                            x3n(0.0), x3(0.0),
+                            y3n(0.0), y3(0.0);
+                    double l1 = range2d(i);
+
+                    offsetx = beacon_pose_(i, 0);
+                    offsety = beacon_pose_(i, 1);
+
+                    x2 = beacon_pose_(j, 0) - beacon_pose_(i, 0);
+                    y2 = beacon_pose_(j, 1) - beacon_pose_(i, 1);
+
+                    x2n = x2 / std::pow(x2 * x2 + y2 * y2, 0.5);
+                    y2n = y2 / std::pow(x2 * x2 + y2 * y2, 0.5);
+
+                    if (x2n > y2n) {
+                        y3n = std::pow(1 / (1 + (y2n * y2n / x2n / x2n)), 0.5);
+                        x3n = -y2n / x2n * y3n;
+
+                        y3 = y3n * l1;
+                        x3 = x3n * l1;
+
+                        con_point_(index, 0) = x3 + offsetx;
+                        con_point_(index, 1) = y3 + offsety;
+                        ++index;
+
+                        y3 = -y3;
+                        x3 = -x3;
+                        con_point_(index, 0) = x3 + offsetx;
+                        con_point_(index, 1) = y3 + offsety;
+                        ++index;
+
 
                     } else {
-                        A = beacon_pose_.block(j, 0, 1, 2);
-                        B = beacon_pose_.block(i, 0, 1, 2);
-                        r1 = range2d(j);
-                    }
-                    double theta = std::atan2(B(1) - A(1), B(0) - A(0));
+                        x3n = std::pow(1 / (1 + x2n * x2n / y2n / y2n), 0.5);
+                        y3n = -x2n / y2n * x3n;
 
-                    con_point_(index, 0) = A(0) + std::sin(theta + the_angle) * r1;
-                    con_point_(index, 1) = A(1) + std::cos(theta + the_angle) * r1;
-                    ++index;
-                    con_point_(index, 0) = A(0) + std::sin(theta - the_angle) * r1;
-                    con_point_(index, 1) = A(1) + std::cos(theta - the_angle) * r1;
-                    ++index;
+                        y3 = y3n * l1;
+                        x3 = x3n * l1;
+
+                        con_point_(index, 0) = x3 + offsetx;
+                        con_point_(index, 1) = y3 + offsety;
+                        ++index;
+
+                        y3 = -y3;
+                        x3 = -x3;
+                        con_point_(index, 0) = x3 + offsetx;
+                        con_point_(index, 1) = y3 + offsety;
+                        ++index;
+
+                    }
+                    if (isnan(con_point_(0, 1)) || isnan(con_point_(1, 1))) {
+                        std::cout << offsetx << std::endl;
+                        std::cout << offsetx << std::endl;
+
+                        std::cout << x2n << std::endl;
+                        std::cout << y2n << std::endl;
+
+                        std::cout << x2 << std::endl;
+                        std::cout << y2 << std::endl;
+
+                        std::cout << x3n << std::endl;
+                        std::cout << y3n << std::endl;
+
+                        std::cout << x3 << std::endl;
+                        std::cout << y3 << std::endl;
+
+                        std::cout << l1 << std::endl;
+
+                        std::cout << "------------------------" << std::endl;
+
+
+                    }
 
                 }
 
@@ -255,7 +318,7 @@ namespace OPF {
 
         ComputeCPoint(range_vec);
 
-        std::cout << "common point:" << con_point_ << std::endl;
+//        std::cout << "common point:" << con_point_ << std::endl;
 
         weight_vec_ /= weight_vec_.sum();
 
@@ -319,9 +382,15 @@ namespace OPF {
         double score(0.0);
         for (int i(0); i < con_point_.rows(); ++i) {
             score += 1 / 6.0 *
-                     TwoDnormal(guess_state(0), guess_state(1), con_point_(i, 0), con_point_(i, 1), 0.0, sigma_(0),
-                                sigma_(1));
+                     TwoDnormal(guess_state(0), guess_state(1), con_point_(i, 0), con_point_(i, 1), 0.0, sigma_(0) * 4,
+                                sigma_(1) * 4);
         }
+//        if(isnan(score))
+//        {
+//            std::cout << "ERROR" << std::endl;
+//            std::cout << "guess_state:"<<guess_state<<std::endl;
+//            std::cout << "con_point:" << con_point_ << std::endl;
+//        }
         return score;
 
     }
@@ -361,6 +430,7 @@ namespace OPF {
 
     bool OwnParticleFilter::ReSample() {
 
+
         weight_vec_ /= weight_vec_.sum();
         Eigen::MatrixXd tmp_matrix(particle_mx_);
         Eigen::VectorXd tmp_weight(weight_vec_);
@@ -368,6 +438,10 @@ namespace OPF {
         Eigen::VectorXd Beta(weight_vec_);
 
         for (int i(1); i < Beta.rows(); ++i) {
+//            if(isnan(weight_vec_(i)))
+//            {
+//                std::cout << "weight:" << weight_vec_ << std::endl;
+//            }
             Beta(i) = Beta(i - 1) + weight_vec_(i);
         }
         if (Beta.maxCoeff() < 1.0) {
@@ -388,7 +462,10 @@ namespace OPF {
                 }
                 if (j == Beta.rows() - 1) {
 
-                    MYERROR("Unexpected run fork.")
+                    //std::cout <<"rnd:" << tmp_rnd << "  beta:"<<Beta(j)<< std::endl;
+                    weight_vec_.setOnes();
+                    particle_mx_ = tmp_matrix;
+//                    MYERROR("Unexpected run fork.")
                 }
             }
         }
