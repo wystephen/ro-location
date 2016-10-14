@@ -131,6 +131,7 @@ namespace OPF {
 
         for (int i(0); i < range.size(); ++i) {
             range2d(i) = std::pow((range(i) * range(i) - std::pow(beacon_pose_(i, 2) - z_offset_, 2)), 0.5);
+            if (isnan(range2d(i))) range2d(i) = 0.0;//When range(i) is
         }
 
         /*
@@ -432,7 +433,7 @@ namespace OPF {
 //        return particle_mx_.block(index,0,1,particle_mx_.cols());
 
         std::cout << "Neff:" << 1 / weight_vec_.norm() / weight_vec_.norm() << std::endl;
-        while (1 / weight_vec_.norm() < 100) {
+        while (1 / weight_vec_.norm() < 60) {
             ReSample();
 
             weight_vec_.setOnes();
