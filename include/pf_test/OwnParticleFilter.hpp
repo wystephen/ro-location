@@ -37,7 +37,7 @@ namespace OPF {
             sigma_.resize(state_.rows());
 
             for (int i(0); i < sigma_.rows(); ++i) {
-                sigma_(i) = 0.15;
+                sigma_(i) = 0.22;
             }
 
 
@@ -110,6 +110,7 @@ namespace OPF {
         if (miu1 > 1000) {
             return 0.0000000001;
         }
+
 
         double para1, para2;
         para1 = 2.0 * M_PI * sigma1 * sigma2 * std::pow(1.0 - rho * rho, 0.5);
@@ -333,7 +334,7 @@ namespace OPF {
         std::cout << "max x,y:" << particle_mx_.block(0, 0, particle_mx_.rows(), 1).maxCoeff() <<
                   "," << particle_mx_.block(0, 1, particle_mx_.rows(), 1).maxCoeff() << std::endl;
         std::cout << "min score: " << Score.minCoeff() << "max score: " << Score.maxCoeff() << std::endl;
-//        Score /= Score.sum();
+        Score /= Score.sum();
         for (int i(0); i < weight_vec_.rows(); ++i) {
             weight_vec_(i) = weight_vec_(i) * Score(i);
         }
@@ -430,7 +431,13 @@ namespace OPF {
 //
 //        return particle_mx_.block(index,0,1,particle_mx_.cols());
 
-        std::cout << "Neff:" << 1 / weight_vec_.norm() << std::endl;
+        std::cout << "Neff:" << 1 / weight_vec_.norm() / weight_vec_.norm() << std::endl;
+        while (1 / weight_vec_.norm() < 100) {
+            ReSample();
+
+            weight_vec_.setOnes();
+            weight_vec_ /= weight_vec_.sum();
+        }
         std::cout.precision(20);
         std::cout << "score:" << Likelihood(tmp_state, state_.block(1, 2, 1, 3)) << std::endl;
 

@@ -84,6 +84,8 @@ int main() {
 
         std::cout << "real pose:" << gt_x[i] << " " << gt_y[i] << std::endl;
         opf.Evaluate(Eigen::VectorXd(uwb_range_vec[i]));
+        std::cout << "score of real_pose:" << opf.Likelihood(Eigen::VectorXd(Eigen::Vector3d(gt_x[i], gt_y[i], 1.0)),
+                                                             Eigen::VectorXd(uwb_range_vec[i])) << std::endl;
 
 
         Eigen::VectorXd p(opf.GetResult());
@@ -104,7 +106,7 @@ int main() {
     std::cout << " average err:" << average << std::endl;
 
     plt::subplot(2, 1, 1);
-    plt::named_plot("a", f_x, f_y, "r*-");
+    plt::named_plot("a", f_x, f_y, "r+-");
     plt::named_plot("b", gt_x, gt_y, "g-");
     plt::subplot(2, 1, 2);
     plt::plot(err);
