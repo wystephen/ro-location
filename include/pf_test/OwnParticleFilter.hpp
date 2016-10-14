@@ -37,7 +37,7 @@ namespace OPF {
             sigma_.resize(state_.rows());
 
             for (int i(0); i < sigma_.rows(); ++i) {
-                sigma_(i) = 0.22;
+                sigma_(i) = 0.25;
             }
 
 
@@ -46,6 +46,8 @@ namespace OPF {
         bool InitialState(Eigen::Vector2d real_pose);
 
         bool Sample();
+
+        bool Sample(double dx,double dy);
 
         bool Evaluate(Eigen::VectorXd range_vec);
 
@@ -78,7 +80,7 @@ namespace OPF {
 
         Eigen::VectorXd weight_vec_;//The vector saved the particle
 
-        std::default_random_engine e_;//Random generetor engine.
+        std::default_random_engine e_;//Random generator engine.
 
         Eigen::VectorXd sigma_;//sigma of state_
 
@@ -108,12 +110,13 @@ namespace OPF {
                                          double sigma2) {
 
         if (miu1 > 1000) {
-            return 0.0000000001;
+            return 0.0000000000000001;
         }
 
 
         double para1, para2;
         para1 = 2.0 * M_PI * sigma1 * sigma2 * std::pow(1.0 - rho * rho, 0.5);
+
 
         para2 = -1.0 / 2.0 / (1.0 - rho * rho) *
                 (std::pow(x - miu1, 2.0) / sigma1 / sigma1 + 2.0 * rho * (x - miu1) * (y - miu2) / sigma1 / sigma2
@@ -123,6 +126,9 @@ namespace OPF {
         return 1 / para1 * std::exp(para2);
     }
 
+    /*
+     * Compute common points of each pairs of range.
+     */
     bool OwnParticleFilter::ComputeCPoint(Eigen::VectorXd range) {
         /*
          * Step 1: convert range in 3d to range_2d.
@@ -163,7 +169,7 @@ namespace OPF {
 
         for (int i(0); i < range.rows(); ++i) {
             for (int j(0); j < i; ++j) {
-                if (range2d(j) + range2d(i) < dis_mat(i, j) * 0.98) {
+                if (range2d(j) + range2d(i) < dis_mat(i, j)) {
                     //without common point
                     con_point_(index, 0) = 111111111;
                     con_point_(index, 1) = 111111111;
@@ -315,6 +321,31 @@ namespace OPF {
         }
     }
 
+    bool OwnParticleFilter::Sample(double dx, double dy) {
+        Eigen::Vector2d delta(dx,dy);
+        delta /= delta.sum();
+        std::vector<std::normal_distribution<>> normal_dis_vec;
+        for (int i(0); i < sigma_.rows(); ++i) {
+            if(i<2)
+            {
+                normal_dis_vec.push_back(std::normal_distribution<>(delta(i), sigma_(i)));
+
+            }
+            else{
+                normal_dis_vec.push_back(std::normal_distribution<>(0.0, sigma_(i)));
+
+            }
+
+        }
+
+        for (int i(0); i < weight_vec_.rows(); ++i) {
+            for (int j(0); j < particle_mx_.cols(); ++j) {
+                particle_mx_(i, j) += normal_dis_vec.at(j)(e_);
+            }
+
+        }
+    }
+
 
     bool OwnParticleFilter::Evaluate(Eigen::VectorXd range_vec) {
 
@@ -393,8 +424,8 @@ namespace OPF {
 
             score += 1 / 6.0 *
                      TwoDnormal(guess_state(0), guess_state(1), con_point_(i, 0), con_point_(i, 1), 0.0,
-                                sigma_(0) * 2.0,
-                                sigma_(1) * 2.0);
+                                sigma_(0) ,
+                                sigma_(1) );
         }
 //        if(isnan(score))
 //        {
@@ -402,6 +433,8 @@ namespace OPF {
 //            std::cout << "guess_state:"<<guess_state<<std::endl;
 //            std::cout << "con_point:" << con_point_ << std::endl;
 //        }
+
+//        score = std::pow(4.0,score);
         return score;
 
     }
@@ -417,20 +450,23 @@ namespace OPF {
                 tmp_state(j) += particle_mx_(i, j) * weight_vec_(i);
             }
         }
-//        std::cout << tmp_state.transpose() << std::endl;
-//        std::cout << particle_mx_.colwise().sum() << std::endl;
-//        std::cout << tmp_state.transpose() << std::endl;
-//        std::cout << state_.transpose() << std::endl;
-//        std::cout << state_history_[2].transpose() << std::endl;
-//        state_ = tmp_state;
-//        std::cout << state_.transpose() << std::endl;
-//        state_history_.pop_front();
-//        state_history_.push_back(state_);
+        {
+            //        std::cout << tmp_state.transpose() << std::endl;
+            //        std::cout << particle_mx_.colwise().sum() << std::endl;
+            //        std::cout << tmp_state.transpose() << std::endl;
+            //        std::cout << state_.transpose() << std::endl;
+            //        std::cout << state_history_[2].transpose() << std::endl;
+            //        state_ = tmp_state;
+            //        std::cout << state_.transpose() << std::endl;
+            //        state_history_.pop_front();
+            //        state_history_.push_back(state_);
 
-//        int index(0);
-//        weight_vec_.maxCoeff(&index);
-//
-//        return particle_mx_.block(index,0,1,particle_mx_.cols());
+            //        int index(0);
+            //        weight_vec_.maxCoeff(&index);
+            //
+            //        return particle_mx_.block(index,0,1,particle_mx_.cols());
+        }
+
 
         std::cout << "Neff:" << 1 / weight_vec_.norm() / weight_vec_.norm() << std::endl;
         while (1 / weight_vec_.norm() < 60) {
@@ -455,10 +491,7 @@ namespace OPF {
         Eigen::VectorXd Beta(weight_vec_);
 
         for (int i(1); i < Beta.rows(); ++i) {
-//            if(isnan(weight_vec_(i)))
-//            {
-//                std::cout << "weight:" << weight_vec_ << std::endl;
-//            }
+
             Beta(i) = Beta(i - 1) + weight_vec_(i);
         }
         if (Beta.maxCoeff() < 1.0) {
@@ -472,7 +505,6 @@ namespace OPF {
             tmp_rnd = u(e_);
             for (int j(0); j < Beta.rows(); ++j) {
                 if (tmp_rnd < Beta(j)) {
-//                    std::cout << "j: " << j << std::endl;
                     particle_mx_.block(i, 0, 1, particle_mx_.cols()) = tmp_matrix.block(j, 0, 1, tmp_matrix.cols());
                     weight_vec_(i) = tmp_weight(j);
                     break;
@@ -480,9 +512,9 @@ namespace OPF {
                 if (j == Beta.rows() - 1) {
 
                     //std::cout <<"rnd:" << tmp_rnd << "  beta:"<<Beta(j)<< std::endl;
-                    weight_vec_.setOnes();
-                    particle_mx_ = tmp_matrix;
-//                    MYERROR("Unexpected run fork.")
+//                    weight_vec_.setOnes();
+//                    particle_mx_ = tmp_matrix;
+                    MYERROR("Unexpected run fork.")
                 }
             }
         }
@@ -491,8 +523,3 @@ namespace OPF {
     }
 
 }
-
-
-
-
-

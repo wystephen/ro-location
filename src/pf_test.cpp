@@ -61,7 +61,7 @@ int main() {
         uwb_range_vec.push_back(Eigen::Vector3d(*range(i, 0), *range(i, 1), *range(i, 2)));
     }
 
-    OPF::OwnParticleFilter opf(20000, apose, 1.12, 10);
+    OPF::OwnParticleFilter opf(18000, apose, 1.12, 10);
     opf.InitialState(Eigen::Vector2d(gt_x[0], gt_y[0]));
 
 
@@ -69,7 +69,10 @@ int main() {
 
     double average(0.0);
 
+    double last_dx(0.0),last_dy(0.0);
+
     for (int i(0); i < uwb_range_vec.size(); ++i) {
+//        opf.Sample(last_dx,last_dy);
         opf.Sample();
 
         //Test if use a real range.
@@ -87,11 +90,34 @@ int main() {
         std::cout << "score of real_pose:" << opf.Likelihood(Eigen::VectorXd(Eigen::Vector3d(gt_x[i], gt_y[i], 1.0)),
                                                              Eigen::VectorXd(uwb_range_vec[i])) << std::endl;
 
+        /*
+         * Generate a Probobility Map
+         */
+        std::ofstream tmp_log("p_map_"+std::to_string(100 + i)+".txt");
+
+        for(double x(-2.0);x<15.0;x+=0.05)
+        {
+            for(double y(-1.0);y<8.0;y+=0.05)
+            {
+                tmp_log<< opf.Likelihood(Eigen::VectorXd(Eigen::Vector3d(x, y, 1.0)),
+                                         Eigen::VectorXd(uwb_range_vec[i]))<< " ";
+            }
+            tmp_log << std::endl;
+        }
+        tmp_log.close();
+
 
         Eigen::VectorXd p(opf.GetResult());
 
         f_x.push_back(p(0));
         f_y.push_back(p(1));
+
+        if(i>3)
+        {
+            last_dx = f_x[i]-f_x[i-1];
+            last_dy = f_y[i]-f_x[i-1];
+        }
+
 
         err.push_back(std::pow((std::pow(gt_x[i] - f_x[i], 2) + std::pow(gt_y[i] - f_y[i], 2.0)), 0.5));
 

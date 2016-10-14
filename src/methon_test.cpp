@@ -37,7 +37,7 @@ int main() {
     std::cout.precision(29);
     for (int i(-1000); i < 1000; ++i) {
         for (int j(-1000); j < 1000; ++j) {
-            if (i == 0) {
+            if (i == 50) {
                 std::cout << double(i) / 300 << " " << double(j) / 300 << " "
                           << TwoDnormal(double(i) / 300.0, double(j) / 300.0, 0.0, 0.0, 0.0, 0.2, 0.2)
                           << std::endl;
