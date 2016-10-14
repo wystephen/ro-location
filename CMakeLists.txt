@@ -6,7 +6,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "/usr/share/cmake-2.8/Modules")#Add E
 
 set(CMAKE_BUILD_TYPE  Release)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -lpython2.7 -fopenmp -O2")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -lpython2.7 -fopenmp -O3")
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -75,6 +75,10 @@ target_link_libraries(ro-location ${catkin_LIBRARIES} ${PCL_LIBRARIES} ${OpenCV_
 add_executable(pf_test src/pf_test.cpp)
 
 target_link_libraries(pf_test ${catkin_LIBRARIES} ${PCL_LIBRARIES} ${OpenCV_LIBRARIES} ${PYTHON_LIBRARIES})
+
+add_executable(methon_test src/methon_test.cpp)
+
+target_link_libraries(methon_test ${catkin_LIBRARIES} ${PCL_LIBRARIES} ${OpenCV_LIBRARIES} ${PYTHON_LIBRARIES})
 
 ## Declare a C++ library
 # add_library(ro-location

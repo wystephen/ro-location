@@ -37,7 +37,7 @@ namespace OPF {
             sigma_.resize(state_.rows());
 
             for (int i(0); i < sigma_.rows(); ++i) {
-                sigma_(i) = 0.18;
+                sigma_(i) = 0.15;
             }
 
 
@@ -108,15 +108,15 @@ namespace OPF {
                                          double sigma2) {
 
         if (miu1 > 1000) {
-            return 0.0;
+            return 0.0000000001;
         }
 
         double para1, para2;
-        para1 = 2 * M_PI * sigma1 * sigma2 * std::pow(1 - rho * rho, 0.5);
+        para1 = 2.0 * M_PI * sigma1 * sigma2 * std::pow(1.0 - rho * rho, 0.5);
 
-        para2 = -1 / 2 / (1 - rho * rho) *
-                (std::pow(x - miu1, 2) / sigma1 / sigma1 + 2 * rho * (x - miu1) * (y - miu2) / sigma1 / sigma2
-                 + std::pow(y - miu2, 2) / sigma2 / sigma2);
+        para2 = -1.0 / 2.0 / (1.0 - rho * rho) *
+                (std::pow(x - miu1, 2.0) / sigma1 / sigma1 + 2.0 * rho * (x - miu1) * (y - miu2) / sigma1 / sigma2
+                 + std::pow(y - miu2, 2.0) / sigma2 / sigma2);
 
 
         return 1 / para1 * std::exp(para2);
@@ -185,8 +185,8 @@ namespace OPF {
                     x2 = beacon_pose_(j, 0) - beacon_pose_(i, 0);
                     y2 = beacon_pose_(j, 1) - beacon_pose_(i, 1);
 
-                    x2n = x2 / std::pow(x2 * x2 + y2 * y2, 0.5);
-                    y2n = y2 / std::pow(x2 * x2 + y2 * y2, 0.5);
+                    x2n = x2;/// std::pow(x2 * x2 + y2 * y2, 0.5);
+                    y2n = y2;/// std::pow(x2 * x2 + y2 * y2, 0.5);
 
                     if (x2n > y2n) {
                         y3n = std::pow(1 / (1 + (y2n * y2n / x2n / x2n)), 0.5);
@@ -224,28 +224,28 @@ namespace OPF {
                         ++index;
 
                     }
-                    if (isnan(con_point_(0, 1)) || isnan(con_point_(1, 1))) {
-                        std::cout << offsetx << std::endl;
-                        std::cout << offsetx << std::endl;
-
-                        std::cout << x2n << std::endl;
-                        std::cout << y2n << std::endl;
-
-                        std::cout << x2 << std::endl;
-                        std::cout << y2 << std::endl;
-
-                        std::cout << x3n << std::endl;
-                        std::cout << y3n << std::endl;
-
-                        std::cout << x3 << std::endl;
-                        std::cout << y3 << std::endl;
-
-                        std::cout << l1 << std::endl;
-
-                        std::cout << "------------------------" << std::endl;
-
-
-                    }
+//                    if (isnan(con_point_(0, 1)) || isnan(con_point_(1, 1))) {
+//                        std::cout << offsetx << std::endl;
+//                        std::cout << offsetx << std::endl;
+//
+//                        std::cout << x2n << std::endl;
+//                        std::cout << y2n << std::endl;
+//
+//                        std::cout << x2 << std::endl;
+//                        std::cout << y2 << std::endl;
+//
+//                        std::cout << x3n << std::endl;
+//                        std::cout << y3n << std::endl;
+//
+//                        std::cout << x3 << std::endl;
+//                        std::cout << y3 << std::endl;
+//
+//                        std::cout << l1 << std::endl;
+//
+//                        std::cout << "------------------------" << std::endl;
+//
+//
+//                    }
 
                 }
 
@@ -272,11 +272,11 @@ namespace OPF {
         particle_mx_.resize(particle_num_, state_.rows());
         weight_vec_.resize(particle_num_);
 
-//        std::vector<std::normal_distribution<>> normal_dis_vec;
-        std::vector<std::uniform_real_distribution<>> normal_dis_vec;
+        std::vector<std::normal_distribution<>> normal_dis_vec;
+//        std::vector<std::uniform_real_distribution<>> normal_dis_vec;
         for (int i(0); i < sigma_.rows(); ++i) {
-//            normal_dis_vec.push_back(std::normal_distribution<>(0.0, sigma_(i)));
-            normal_dis_vec.push_back(std::uniform_real_distribution<>(-sigma_(i) * 2, sigma_(i) * 2));
+            normal_dis_vec.push_back(std::normal_distribution<>(0.0, sigma_(i)));
+//            normal_dis_vec.push_back(std::uniform_real_distribution<>(-sigma_(i) * 2, sigma_(i) * 2));
         }
 
 
@@ -318,7 +318,7 @@ namespace OPF {
 
         ComputeCPoint(range_vec);
 
-//        std::cout << "common point:" << con_point_ << std::endl;
+        std::cout << "common point:" << con_point_ << std::endl;
 
         weight_vec_ /= weight_vec_.sum();
 
@@ -327,10 +327,17 @@ namespace OPF {
         for (int j(0); j < Score.rows(); ++j) {
             Score(j) = Likelihood(particle_mx_.block(j, 0, 1, particle_mx_.cols()), range_vec);
         }
+
+        std::cout << "min x,y:" << particle_mx_.block(0, 0, particle_mx_.rows(), 1).minCoeff() <<
+                  "," << particle_mx_.block(0, 1, particle_mx_.rows(), 1).minCoeff() << std::endl;
+        std::cout << "max x,y:" << particle_mx_.block(0, 0, particle_mx_.rows(), 1).maxCoeff() <<
+                  "," << particle_mx_.block(0, 1, particle_mx_.rows(), 1).maxCoeff() << std::endl;
+        std::cout << "min score: " << Score.minCoeff() << "max score: " << Score.maxCoeff() << std::endl;
 //        Score /= Score.sum();
         for (int i(0); i < weight_vec_.rows(); ++i) {
             weight_vec_(i) = weight_vec_(i) * Score(i);
         }
+        std::cout << "min weight : " << weight_vec_.minCoeff() << "max weight:" << weight_vec_.maxCoeff() << std::endl;
 
         return true;
     }
@@ -381,9 +388,11 @@ namespace OPF {
          */
         double score(0.0);
         for (int i(0); i < con_point_.rows(); ++i) {
+
             score += 1 / 6.0 *
-                     TwoDnormal(guess_state(0), guess_state(1), con_point_(i, 0), con_point_(i, 1), 0.0, sigma_(0) * 4,
-                                sigma_(1) * 4);
+                     TwoDnormal(guess_state(0), guess_state(1), con_point_(i, 0), con_point_(i, 1), 0.0,
+                                sigma_(0) * 2.0,
+                                sigma_(1) * 2.0);
         }
 //        if(isnan(score))
 //        {

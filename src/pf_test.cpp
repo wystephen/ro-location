@@ -82,7 +82,9 @@ int main() {
 //        opf.Evaluate(Eigen::VectorXd(real_range));
 //        std::cout << "Use Real Range:" << (real_range - uwb_range_vec[i]).norm() << std::endl;
 
+        std::cout << "real pose:" << gt_x[i] << " " << gt_y[i] << std::endl;
         opf.Evaluate(Eigen::VectorXd(uwb_range_vec[i]));
+
 
         Eigen::VectorXd p(opf.GetResult());
 
