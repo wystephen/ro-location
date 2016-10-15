@@ -18,7 +18,7 @@ if __name__ == "__main__":
 
     file_name_list = []
 
-    for name in os.listdir("../"):
+    for name in os.listdir("../../tmpdata"):
         if name[-1] == 't':
             file_name_list.append(name)
     print(file_name_list)
@@ -27,17 +27,18 @@ if __name__ == "__main__":
 
 
     for txt_file in file_name_list:
+        print(txt_file)
         index = get_num_re.findall(txt_file)
         if len(index) > 0:
-            tmp_mat = np.loadtxt("../" + txt_file)
-            # print(tmp_mat.shape)
+            print("../../tmpdata/" + txt_file)
+            tmp_mat = np.loadtxt("../../tmpdata/" + txt_file)
+            print(tmp_mat.shape)
 
-
-            # print(index)
+            print(index)
 
             index = int(index[0])
 
-            scipy.misc.toimage(tmp_mat).save("./" + str(index) + ".bmp")
+            scipy.misc.toimage(tmp_mat).save("../../tmpdata/" + str(index) + ".bmp")
 
         # plt.imshow(tmp_mat)
         # plt.show()

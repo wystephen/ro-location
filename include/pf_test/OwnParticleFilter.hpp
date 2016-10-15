@@ -37,7 +37,7 @@ namespace OPF {
             sigma_.resize(state_.rows());
 
             for (int i(0); i < sigma_.rows(); ++i) {
-                sigma_(i) = 0.25;
+                sigma_(i) = 0.15;
             }
 
 
@@ -441,6 +441,9 @@ namespace OPF {
          */
         double ret(0.0);
         Eigen::Vector3d dis;
+        for (int j(0); j < sigma_.rows(); ++j) {
+            sigma_(j) = 0.5;
+        }
         for (int i(0); i < 3; ++i) {
             dis(i) = 0.0;
             dis(i) += std::pow(guess_state(0) - beacon_pose_(i, 0), 2.0);
@@ -448,7 +451,7 @@ namespace OPF {
             dis(i) += std::pow(z_offset_ - beacon_pose_(i, 2), 2.0);
             dis(i) = std::pow(dis(i), 0.5);
             ret += 1 / std::sqrt(2 * M_PI) / sigma_(i + 2) * std::exp(
-                    -std::pow(dis(i) - (range_vec(i) + 0.1 * (1.01 - std::exp(-0.17 * dis(i)))), 2.0) / 2 /
+                    -std::pow(dis(i) - (range_vec(i)), 2.0) / 2 /
                     std::pow(sigma_(i + 2), 2));
 //            ret += std::log(1/std::sqrt(2*M_PI )/sigma_(i+2)) * -1.0/(std::pow(dis(i)-range_vec(i),2.0)/2/std::pow(sigma_(i+2),2));
 
@@ -494,7 +497,7 @@ namespace OPF {
             weight_vec_ /= weight_vec_.sum();
         }
         std::cout.precision(20);
-        std::cout << "score:" << Likelihood(tmp_state, state_.block(1, 2, 1, 3)) << std::endl;
+//        std::cout << "score:" << Likelihood(tmp_state, state_.block(1, 2, 1, 3)) << std::endl;
 
         return tmp_state;
     }

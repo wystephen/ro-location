@@ -93,9 +93,9 @@ int main() {
         /*
          * Generate a Probobility Map
          */
-        std::ofstream tmp_log("p_map_"+std::to_string(100 + i)+".txt");
+        std::ofstream tmp_log("../tmpdata/p_map_" + std::to_string(100 + i) + ".txt");
 
-        for (double y(-2.0); y < 10.0; y += 0.05)
+        for (double y(16.0); y > -3; y -= 0.05)
         {
             for (double x(-4.0); x < 20.0; x += 0.05)
             {
@@ -108,6 +108,9 @@ int main() {
 
 
         Eigen::VectorXd p(opf.GetResult());
+
+        std::cout << "Result score:" << opf.Likelihood(Eigen::VectorXd(Eigen::Vector3d(p(0), p(1), 1.12)),
+                                                       Eigen::VectorXd(uwb_range_vec[i])) << std::endl;
 
         f_x.push_back(p(0));
         f_y.push_back(p(1));
