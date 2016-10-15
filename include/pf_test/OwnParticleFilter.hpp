@@ -36,7 +36,7 @@ namespace OPF {
 
             sigma_.resize(state_.rows());
 
-            for (int i(0); i < sigma_.rows(); ++i) {
+            for (int i(0); i < sigma_.size(); ++i) {
                 sigma_(i) = 0.2;
             }
 
@@ -311,17 +311,19 @@ namespace OPF {
 
     bool OwnParticleFilter::Sample() {
 
-        std::vector<std::normal_distribution<>> normal_dis_vec;
-        for (int i(0); i < sigma_.rows(); ++i) {
-            normal_dis_vec.push_back(std::normal_distribution<>(0.0, sigma_(i)));
+//        std::vector<std::normal_distribution<>> normal_dis_vec;
+//        for (int i(0); i < sigma_.rows(); ++i) {
+//            normal_dis_vec.push_back(std::normal_distribution<>(0.0, sigma_(i)));
+//
+//        }
 
-        }
+        std::normal_distribution<> rnd_get(0.0, sigma_(0));
 
         for (int i(0); i < weight_vec_.rows(); ++i) {
             double dis_tance(0.0);
             double rnd_val(0.0);
             for (int j(0); j < particle_mx_.cols(); ++j) {
-                rnd_val = normal_dis_vec.at(j)(e_);
+                rnd_val = rnd_get(e_);
                 particle_mx_(i, j) += rnd_val;
                 if (j == 0 or j == 1)
                     dis_tance += rnd_val * rnd_val;
@@ -366,7 +368,12 @@ namespace OPF {
 //        std::cout << "common point:" << con_point_ << std::endl;
 
 
-        weight_vec_ /= weight_vec_.sum();
+//        weight_vec_ /= weight_vec_.sum();
+
+//        for(int i(2);i<sigma_.rows();++i)
+//        {
+//            sigma_(i) = sigma_(i) * 0.5 + std::abs(state_(i)-range_vec(i-2))*0.5;
+//        }
 
         state_.block(0, 2, 1, range_vec.rows()) = range_vec.transpose();
         Eigen::VectorXd Score(weight_vec_);
@@ -374,6 +381,8 @@ namespace OPF {
             Score(j) = Likelihood(particle_mx_.block(j, 0, 1, particle_mx_.cols()), range_vec);
 //            Score(j) = std::exp(Score(j));
         }
+
+        std::cout << "SUM OF SCORE:" << Score.sum() << std::endl;
 
         std::cout << "min x,y:" << particle_mx_.block(0, 0, particle_mx_.rows(), 1).minCoeff() <<
                   "," << particle_mx_.block(0, 1, particle_mx_.rows(), 1).minCoeff() << std::endl;
@@ -462,7 +471,7 @@ namespace OPF {
         double ret(0.0);
         Eigen::Vector3d dis;
         for (int j(0); j < 3; ++j) {
-            sigma_(j + 2) = 0.5;
+            sigma_(j + 2) = 0.6;
         }
         for (int i(0); i < 3; ++i) {
             dis(i) = 0.0;
@@ -557,9 +566,10 @@ namespace OPF {
                 if (j == Beta.rows() - 1) {
 
                     //std::cout <<"rnd:" << tmp_rnd << "  beta:"<<Beta(j)<< std::endl;
-//                    weight_vec_.setOnes();
-//                    particle_mx_ = tmp_matrix;
+                    weight_vec_.setOnes();
+                    particle_mx_ = tmp_matrix;
                     MYERROR("Unexpected run fork.")
+                    return true;
                 }
             }
         }

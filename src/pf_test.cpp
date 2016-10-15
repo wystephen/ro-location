@@ -62,7 +62,7 @@ int main() {
         uwb_range_vec.push_back(Eigen::Vector3d(*range(i, 0), *range(i, 1), *range(i, 2)));
     }
 
-    OPF::OwnParticleFilter opf(25000, apose, 1.12, 10);
+    OPF::OwnParticleFilter opf(15000, apose, 1.12, 10);
     opf.InitialState(Eigen::Vector2d(gt_x[0], gt_y[0]));
 
 
@@ -81,7 +81,9 @@ int main() {
          */
         opf.Sample();
 
-        //Test if use a real range.
+        /*
+         * Test if use a real range.
+         */
 //        Eigen::Vector3d real_range(0, 0, 0);
 //        Eigen::Vector3d rp(gt_x[i], gt_y[i], 1.12);
 //        for (int k(0); k < 3; ++k) {
@@ -94,8 +96,12 @@ int main() {
         /*
          * EVALUATE
          */
-        std::cout << "real pose:" << gt_x[i] << " " << gt_y[i] << std::endl;
         opf.Evaluate(Eigen::VectorXd(uwb_range_vec[i]));
+        /*
+         * End EVALUATE
+         */
+
+        std::cout << "real pose:" << gt_x[i] << " " << gt_y[i] << std::endl;
         real_score.push_back(opf.Likelihood(Eigen::VectorXd(Eigen::Vector3d(gt_x[i], gt_y[i], 1.0)),
                                             Eigen::VectorXd(uwb_range_vec[i])));
 
@@ -103,18 +109,16 @@ int main() {
         /*
          * Generate a Probobility Map
          */
-//        std::ofstream tmp_log("../tmpdata/p_map_" + std::to_string(100 + i) + ".txt");
-//
-//        for (double y(16.0); y > -3; y -= 0.05)
-//        {
-//            for (double x(-4.0); x < 20.0; x += 0.05)
-//            {
-//                tmp_log<< opf.Likelihood(Eigen::VectorXd(Eigen::Vector3d(x, y, 1.0)),
-//                                         Eigen::VectorXd(uwb_range_vec[i]))<< " ";
-//            }
-//            tmp_log << std::endl;
-//        }
-//        tmp_log.close();
+        std::ofstream tmp_log("../tmpdata/p_map_" + std::to_string(100 + i) + ".txt");
+
+        for (double y(16.0); y > -3; y -= 0.05) {
+            for (double x(-4.0); x < 20.0; x += 0.05) {
+                tmp_log << opf.Likelihood(Eigen::VectorXd(Eigen::Vector3d(x, y, 1.0)),
+                                          Eigen::VectorXd(uwb_range_vec[i])) << " ";
+            }
+            tmp_log << std::endl;
+        }
+        tmp_log.close();
 
 
         Eigen::VectorXd p(opf.GetResult());
@@ -142,6 +146,7 @@ int main() {
 
         opf.ReSample();
 
+
     }
 
     std::cout << f_x[0] << "                " << f_y[0] << std::endl;
@@ -154,7 +159,7 @@ int main() {
     plt::grid(true);
 
     plt::subplot(2, 2, 2);
-    plt::plot(err);
+    plt::plot(err, "r+-");
     plt::grid(true);
     plt::title("average err:" + std::to_string(average));
 
@@ -162,6 +167,7 @@ int main() {
     plt::grid(true);
     plt::plot(real_score, "g+-");
     plt::plot(result_score, "r+-");
+    plt::title("score : red:result  green:real");
 
 
     plt::show();
