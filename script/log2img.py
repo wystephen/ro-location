@@ -21,20 +21,20 @@ if __name__ == "__main__":
     for name in os.listdir("../../tmpdata"):
         if name[-1] == 't':
             file_name_list.append(name)
-    print(file_name_list)
+    # print(file_name_list)
 
     get_num_re = re.compile("\d{1,3}")
 
 
     for txt_file in file_name_list:
-        print(txt_file)
+        # print(txt_file)
         index = get_num_re.findall(txt_file)
         if len(index) > 0:
-            print("../../tmpdata/" + txt_file)
+            # print("../../tmpdata/" + txt_file)
             tmp_mat = np.loadtxt("../../tmpdata/" + txt_file)
-            print(tmp_mat.shape)
-
-            print(index)
+            # print(tmp_mat.shape)
+            #
+            # print(index)
 
             index = int(index[0])
 

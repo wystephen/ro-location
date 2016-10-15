@@ -37,7 +37,7 @@ namespace OPF {
             sigma_.resize(state_.rows());
 
             for (int i(0); i < sigma_.rows(); ++i) {
-                sigma_(i) = 0.15;
+                sigma_(i) = 0.2;
             }
 
 
@@ -97,6 +97,10 @@ namespace OPF {
         }
 
         double TwoDnormal(double x, double y, double miu1, double miu2, double rho, double sigma1, double sigma2);
+
+        double NormalPDF(double x, double miu, double sigma) {
+            return 1 / std::sqrt(2.0 * M_PI) / sigma * std::exp(-std::pow(x - miu, 2.0) / 2 / sigma / sigma);
+        }
 
 
     };
@@ -314,9 +318,15 @@ namespace OPF {
         }
 
         for (int i(0); i < weight_vec_.rows(); ++i) {
+            double dis_tance(0.0);
+            double rnd_val(0.0);
             for (int j(0); j < particle_mx_.cols(); ++j) {
-                particle_mx_(i, j) += normal_dis_vec.at(j)(e_);
+                rnd_val = normal_dis_vec.at(j)(e_);
+                particle_mx_(i, j) += rnd_val;
+                if (j == 0 or j == 1)
+                    dis_tance += rnd_val * rnd_val;
             }
+//            weight_vec_(i) *= 1/std::sqrt(2.0 * M_PI) / 0.1 * std::exp(-std::pow(dis_tance-0.15,2.0)/2/0.1/0.1);
 
         }
     }
@@ -349,9 +359,12 @@ namespace OPF {
 
     bool OwnParticleFilter::Evaluate(Eigen::VectorXd range_vec) {
 
-        ComputeCPoint(range_vec);
+        /*
+         * Compute Common points.
+         */
+//        ComputeCPoint(range_vec);
+//        std::cout << "common point:" << con_point_ << std::endl;
 
-        std::cout << "common point:" << con_point_ << std::endl;
 
         weight_vec_ /= weight_vec_.sum();
 
@@ -359,6 +372,7 @@ namespace OPF {
         Eigen::VectorXd Score(weight_vec_);
         for (int j(0); j < Score.rows(); ++j) {
             Score(j) = Likelihood(particle_mx_.block(j, 0, 1, particle_mx_.cols()), range_vec);
+//            Score(j) = std::exp(Score(j));
         }
 
         std::cout << "min x,y:" << particle_mx_.block(0, 0, particle_mx_.rows(), 1).minCoeff() <<
@@ -366,9 +380,15 @@ namespace OPF {
         std::cout << "max x,y:" << particle_mx_.block(0, 0, particle_mx_.rows(), 1).maxCoeff() <<
                   "," << particle_mx_.block(0, 1, particle_mx_.rows(), 1).maxCoeff() << std::endl;
         std::cout << "min score: " << Score.minCoeff() << "max score: " << Score.maxCoeff() << std::endl;
+
+
+        /*
+         * Update weight.
+         */
+        std::cout << "min weight : " << weight_vec_.minCoeff() << "max weight:" << weight_vec_.maxCoeff() << std::endl;
 //        Score /= Score.sum();
         for (int i(0); i < weight_vec_.rows(); ++i) {
-            weight_vec_(i) = weight_vec_(i) * Score(i);
+            weight_vec_(i) *= Score(i);
         }
         std::cout << "min weight : " << weight_vec_.minCoeff() << "max weight:" << weight_vec_.maxCoeff() << std::endl;
 
@@ -441,8 +461,8 @@ namespace OPF {
          */
         double ret(0.0);
         Eigen::Vector3d dis;
-        for (int j(0); j < sigma_.rows(); ++j) {
-            sigma_(j) = 0.5;
+        for (int j(0); j < 3; ++j) {
+            sigma_(j + 2) = 0.5;
         }
         for (int i(0); i < 3; ++i) {
             dis(i) = 0.0;
@@ -463,7 +483,7 @@ namespace OPF {
     Eigen::VectorXd OwnParticleFilter::GetResult() {
 
         Eigen::VectorXd tmp_state(state_);
-        tmp_state *= 0.0;
+        tmp_state.setZero();
         weight_vec_ /= weight_vec_.sum();
 
         for (int i(0); i < particle_mx_.rows(); ++i) {
@@ -479,8 +499,8 @@ namespace OPF {
             //        std::cout << state_history_[2].transpose() << std::endl;
             //        state_ = tmp_state;
             //        std::cout << state_.transpose() << std::endl;
-            //        state_history_.pop_front();
-            //        state_history_.push_back(state_);
+//                    state_history_.pop_front();
+//                    state_history_.push_back(state_);
 
             //        int index(0);
             //        weight_vec_.maxCoeff(&index);
@@ -490,15 +510,16 @@ namespace OPF {
 
 
         std::cout << "Neff:" << 1 / weight_vec_.norm() / weight_vec_.norm() << std::endl;
-        while (1 / weight_vec_.norm() < 60) {
-            ReSample();
+//        while (1 / weight_vec_.norm()/ weight_vec_.norm() < particle_num_ / 100.0) {
+//            std::cout << "Neff:" << 1 / weight_vec_.norm()/ weight_vec_.norm()  << std::endl;
+//            ReSample();
+//        }
 
-            weight_vec_.setOnes();
-            weight_vec_ /= weight_vec_.sum();
-        }
-        std::cout.precision(20);
-//        std::cout << "score:" << Likelihood(tmp_state, state_.block(1, 2, 1, 3)) << std::endl;
-
+//        int max_index(0);
+//        weight_vec_.maxCoeff(&max_index);
+//
+//
+//        return particle_mx_.block(max_index,0,1,5);
         return tmp_state;
     }
 
@@ -520,22 +541,25 @@ namespace OPF {
 //            std::cout << Beta << std::endl;
         }
 
-        std::uniform_real_distribution<double> u(0, 1);
+        std::uniform_real_distribution<double> uuu(0, 1);
         double tmp_rnd(0.0);
-        for (int i(0); i < tmp_matrix.rows(); ++i) {
-            tmp_rnd = u(e_);
+        for (int i(0); i < particle_mx_.rows(); ++i) {
+            tmp_rnd = uuu(e_);
             for (int j(0); j < Beta.rows(); ++j) {
                 if (tmp_rnd < Beta(j)) {
-                    particle_mx_.block(i, 0, 1, particle_mx_.cols()) = tmp_matrix.block(j, 0, 1, tmp_matrix.cols());
+                    for (int k(0); k < particle_mx_.cols(); ++k) {
+                        particle_mx_(i, k) = tmp_matrix(j, k);
+                    }
+//                    particle_mx_.block(i, 0, 1, particle_mx_.cols()) = tmp_matrix.block(j, 0, 1, tmp_matrix.cols());
                     weight_vec_(i) = tmp_weight(j);
                     break;
                 }
                 if (j == Beta.rows() - 1) {
 
                     //std::cout <<"rnd:" << tmp_rnd << "  beta:"<<Beta(j)<< std::endl;
-                    weight_vec_.setOnes();
-                    particle_mx_ = tmp_matrix;
-//                    MYERROR("Unexpected run fork.")
+//                    weight_vec_.setOnes();
+//                    particle_mx_ = tmp_matrix;
+                    MYERROR("Unexpected run fork.")
                 }
             }
         }
