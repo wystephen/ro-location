@@ -23,18 +23,21 @@ if __name__ == "__main__":
             file_name_list.append(name)
     print(file_name_list)
 
-    get_num_re = re.compile(r"\d{1,3}")
+    get_num_re = re.compile("\d{1,3}")
 
 
     for txt_file in file_name_list:
-        tmp_mat = np.loadtxt("../"+txt_file)
-
         index = get_num_re.findall(txt_file)
+        if len(index) > 0:
+            tmp_mat = np.loadtxt("../" + txt_file)
+            # print(tmp_mat.shape)
 
-        index = int(index[0])
 
+            # print(index)
 
-        scipy.misc.toimage(tmp_mat).save("./"+str(index)+".bmp")
+            index = int(index[0])
+
+            scipy.misc.toimage(tmp_mat).save("./" + str(index) + ".bmp")
 
         # plt.imshow(tmp_mat)
         # plt.show()

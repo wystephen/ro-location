@@ -95,9 +95,9 @@ int main() {
          */
         std::ofstream tmp_log("p_map_"+std::to_string(100 + i)+".txt");
 
-        for(double x(-2.0);x<15.0;x+=0.05)
+        for (double y(-2.0); y < 10.0; y += 0.05)
         {
-            for(double y(-1.0);y<8.0;y+=0.05)
+            for (double x(-4.0); x < 20.0; x += 0.05)
             {
                 tmp_log<< opf.Likelihood(Eigen::VectorXd(Eigen::Vector3d(x, y, 1.0)),
                                          Eigen::VectorXd(uwb_range_vec[i]))<< " ";
@@ -121,7 +121,9 @@ int main() {
 
         err.push_back(std::pow((std::pow(gt_x[i] - f_x[i], 2) + std::pow(gt_y[i] - f_y[i], 2.0)), 0.5));
 
-        average += err[i] / uwb_range_vec.size();
+
+        if (!isnan(err[i]))
+            average += err[i] / uwb_range_vec.size();
 
         opf.ReSample();
 

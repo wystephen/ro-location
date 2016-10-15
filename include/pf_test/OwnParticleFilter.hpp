@@ -123,7 +123,7 @@ namespace OPF {
                  + std::pow(y - miu2, 2.0) / sigma2 / sigma2);
 
 
-        return 1 / para1 * std::exp(para2);
+        return std::log(1 / para1) * (para2);
     }
 
     /*
@@ -366,7 +366,7 @@ namespace OPF {
         std::cout << "max x,y:" << particle_mx_.block(0, 0, particle_mx_.rows(), 1).maxCoeff() <<
                   "," << particle_mx_.block(0, 1, particle_mx_.rows(), 1).maxCoeff() << std::endl;
         std::cout << "min score: " << Score.minCoeff() << "max score: " << Score.maxCoeff() << std::endl;
-        Score /= Score.sum();
+//        Score /= Score.sum();
         for (int i(0); i < weight_vec_.rows(); ++i) {
             weight_vec_(i) = weight_vec_(i) * Score(i);
         }
@@ -419,23 +419,41 @@ namespace OPF {
         /*
          * Methond 4
          */
-        double score(0.0);
-        for (int i(0); i < con_point_.rows(); ++i) {
-
-            score += 1 / 6.0 *
-                     TwoDnormal(guess_state(0), guess_state(1), con_point_(i, 0), con_point_(i, 1), 0.0,
-                                sigma_(0) ,
-                                sigma_(1) );
-        }
-//        if(isnan(score))
-//        {
-//            std::cout << "ERROR" << std::endl;
-//            std::cout << "guess_state:"<<guess_state<<std::endl;
-//            std::cout << "con_point:" << con_point_ << std::endl;
+//        double score(0.0);
+//        for (int i(0); i < con_point_.rows(); ++i) {
+//
+//            score += 1 / 6.0 *
+//                     TwoDnormal(guess_state(0), guess_state(1), con_point_(i, 0), con_point_(i, 1), 0.0,
+//                                sigma_(0) ,
+//                                sigma_(1) );
 //        }
+////        if(isnan(score))
+////        {
+////            std::cout << "ERROR" << std::endl;
+////            std::cout << "guess_state:"<<guess_state<<std::endl;
+////            std::cout << "con_point:" << con_point_ << std::endl;
+////        }
+//
+////        score = std::pow(4.0,score);
+//        return score;
+        /*
+         * Methond 5 in paper
+         */
+        double ret(0.0);
+        Eigen::Vector3d dis;
+        for (int i(0); i < 3; ++i) {
+            dis(i) = 0.0;
+            dis(i) += std::pow(guess_state(0) - beacon_pose_(i, 0), 2.0);
+            dis(i) += std::pow(guess_state(1) - beacon_pose_(i, 1), 2.0);
+            dis(i) += std::pow(z_offset_ - beacon_pose_(i, 2), 2.0);
+            dis(i) = std::pow(dis(i), 0.5);
+            ret += 1 / std::sqrt(2 * M_PI) / sigma_(i + 2) * std::exp(
+                    -std::pow(dis(i) - (range_vec(i) + 0.1 * (1.01 - std::exp(-0.17 * dis(i)))), 2.0) / 2 /
+                    std::pow(sigma_(i + 2), 2));
+//            ret += std::log(1/std::sqrt(2*M_PI )/sigma_(i+2)) * -1.0/(std::pow(dis(i)-range_vec(i),2.0)/2/std::pow(sigma_(i+2),2));
 
-//        score = std::pow(4.0,score);
-        return score;
+        }
+        return ret;
 
     }
 
@@ -512,9 +530,9 @@ namespace OPF {
                 if (j == Beta.rows() - 1) {
 
                     //std::cout <<"rnd:" << tmp_rnd << "  beta:"<<Beta(j)<< std::endl;
-//                    weight_vec_.setOnes();
-//                    particle_mx_ = tmp_matrix;
-                    MYERROR("Unexpected run fork.")
+                    weight_vec_.setOnes();
+                    particle_mx_ = tmp_matrix;
+//                    MYERROR("Unexpected run fork.")
                 }
             }
         }
