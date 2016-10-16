@@ -62,7 +62,7 @@ int main() {
         uwb_range_vec.push_back(Eigen::Vector3d(*range(i, 0), *range(i, 1), *range(i, 2)));
     }
 
-    OPF::OwnParticleFilter opf(15000, apose, 1.12, 10);
+    OPF::OwnParticleFilter opf(20000, apose, 1.12, 10);
     opf.InitialState(Eigen::Vector2d(gt_x[0], gt_y[0]));
 
 
@@ -109,16 +109,16 @@ int main() {
         /*
          * Generate a Probobility Map
          */
-        std::ofstream tmp_log("../tmpdata/p_map_" + std::to_string(100 + i) + ".txt");
-
-        for (double y(16.0); y > -3; y -= 0.05) {
-            for (double x(-4.0); x < 20.0; x += 0.05) {
-                tmp_log << opf.Likelihood(Eigen::VectorXd(Eigen::Vector3d(x, y, 1.0)),
-                                          Eigen::VectorXd(uwb_range_vec[i])) << " ";
-            }
-            tmp_log << std::endl;
-        }
-        tmp_log.close();
+//        std::ofstream tmp_log("../tmpdata/p_map_" + std::to_string(100 + i) + ".txt");
+//
+//        for (double y(16.0); y > -3; y -= 0.05) {
+//            for (double x(-4.0); x < 20.0; x += 0.05) {
+//                tmp_log << opf.Likelihood(Eigen::VectorXd(Eigen::Vector3d(x, y, 1.0)),
+//                                          Eigen::VectorXd(uwb_range_vec[i])) << " ";
+//            }
+//            tmp_log << std::endl;
+//        }
+//        tmp_log.close();
 
 
         Eigen::VectorXd p(opf.GetResult());

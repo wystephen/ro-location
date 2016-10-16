@@ -37,7 +37,7 @@ namespace OPF {
             sigma_.resize(state_.rows());
 
             for (int i(0); i < sigma_.size(); ++i) {
-                sigma_(i) = 0.2;
+                sigma_(i) = 0.05;
             }
 
 
@@ -316,21 +316,58 @@ namespace OPF {
 //            normal_dis_vec.push_back(std::normal_distribution<>(0.0, sigma_(i)));
 //
 //        }
+//
+//        std::normal_distribution<> rnd_get(0.0, sigma_(0));
+//        /*
+//         * Sample Methon 1.
+//         */
+//
+//        for (int i(0); i < weight_vec_.rows(); ++i) {
+//            double dis_tance(0.0);
+//            double rnd_val(0.0);
+//            for (int j(0); j < particle_mx_.cols(); ++j) {
+//                rnd_val = rnd_get(e_);
+////                std::cout << "rnd_val:" << rnd_val << std::endl;
+//                particle_mx_(i, j) += rnd_val;
+////                if (j == 0 or j == 1)
+////                    dis_tance += rnd_val * rnd_val;
+//            }
+//        }
 
-        std::normal_distribution<> rnd_get(0.0, sigma_(0));
+////            weight_vec_(i) *= 1/std::sqrt(2.0 * M_PI) / 0.1 * std::exp(-std::pow(dis_tance-0.15,2.0)/2/0.1/0.1);
+//
+//        }
+        /*
+         * Sample Methon 2
+         */
+//        for (int i(0); i < weight_vec_.rows(); ++i) {
+//            double dis_tance(0.0);
+//            double rnd_val(0.0);
+//            for (int j(0); j < particle_mx_.cols(); ++j) {
+//                rnd_val = rnd_get(e_);
+//                particle_mx_(i,j) -= 0.5 * (particle_mx_(i,j) - state_(j));
+//                particle_mx_(i, j) += rnd_val/5.0;
+//
+//            }
+////            weight_vec_(i) *= 1/std::sqrt(2.0 * M_PI) / 0.1 * std::exp(-std::pow(dis_tance-0.15,2.0)/2/0.1/0.1);
+//
+//        }
+
+        /*
+         * Sample Methon 3
+         */
+        std::normal_distribution<> nor_get(0.1, sigma_(0));
+        std::uniform_real_distribution<double> angle_get(-M_PI, M_PI);
 
         for (int i(0); i < weight_vec_.rows(); ++i) {
-            double dis_tance(0.0);
-            double rnd_val(0.0);
-            for (int j(0); j < particle_mx_.cols(); ++j) {
-                rnd_val = rnd_get(e_);
-                particle_mx_(i, j) += rnd_val;
-                if (j == 0 or j == 1)
-                    dis_tance += rnd_val * rnd_val;
-            }
-//            weight_vec_(i) *= 1/std::sqrt(2.0 * M_PI) / 0.1 * std::exp(-std::pow(dis_tance-0.15,2.0)/2/0.1/0.1);
-
+            double dis(nor_get(e_));
+            double angle(angle_get(e_));
+            double delta_x(dis * std::cos(angle));
+            double delta_y(dis * std::sin(angle));
+            particle_mx_(i, 0) += delta_x;
+            particle_mx_(i, 1) += delta_y;
         }
+
     }
 
     bool OwnParticleFilter::Sample(double dx, double dy) {
@@ -396,8 +433,8 @@ namespace OPF {
          */
         std::cout << "min weight : " << weight_vec_.minCoeff() << "max weight:" << weight_vec_.maxCoeff() << std::endl;
 //        Score /= Score.sum();
-        for (int i(0); i < weight_vec_.rows(); ++i) {
-            weight_vec_(i) *= Score(i);
+        for (int i(0); i < weight_vec_.size(); ++i) {
+            weight_vec_(i) = weight_vec_(i) * Score(i);
         }
         std::cout << "min weight : " << weight_vec_.minCoeff() << "max weight:" << weight_vec_.maxCoeff() << std::endl;
 
@@ -454,7 +491,7 @@ namespace OPF {
 //            score += 1 / 6.0 *
 //                     TwoDnormal(guess_state(0), guess_state(1), con_point_(i, 0), con_point_(i, 1), 0.0,
 //                                sigma_(0) ,
-//                                sigma_(1) );
+//                                 sigma_(1) );
 //        }
 ////        if(isnan(score))
 ////        {
@@ -471,7 +508,7 @@ namespace OPF {
         double ret(0.0);
         Eigen::Vector3d dis;
         for (int j(0); j < 3; ++j) {
-            sigma_(j + 2) = 0.6;
+            sigma_(j + 2) = 0.2;
         }
         for (int i(0); i < 3; ++i) {
             dis(i) = 0.0;
@@ -529,6 +566,8 @@ namespace OPF {
 //
 //
 //        return particle_mx_.block(max_index,0,1,5);
+        state_(0) = tmp_state(0);
+        state_(1) = tmp_state(1);
         return tmp_state;
     }
 
@@ -573,6 +612,9 @@ namespace OPF {
                 }
             }
         }
+
+//        weight_vec_.setOnes();
+//        weight_vec_ /= weight_vec_.sum();
 
         return true;
     }
