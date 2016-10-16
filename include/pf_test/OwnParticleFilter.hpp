@@ -356,7 +356,7 @@ namespace OPF {
         /*
          * Sample Methon 3
          */
-        std::normal_distribution<> nor_get(0.1, sigma_(0));
+        std::normal_distribution<> nor_get(0.1, 0.03);
         std::uniform_real_distribution<double> angle_get(-M_PI, M_PI);
 
         for (int i(0); i < weight_vec_.rows(); ++i) {
@@ -364,6 +364,7 @@ namespace OPF {
             double angle(angle_get(e_));
             double delta_x(dis * std::cos(angle));
             double delta_y(dis * std::sin(angle));
+//            std::cout << "de x:" << delta_x << " de y: " << delta_y << std::endl;
             particle_mx_(i, 0) += delta_x;
             particle_mx_(i, 1) += delta_y;
         }
@@ -508,7 +509,7 @@ namespace OPF {
         double ret(0.0);
         Eigen::Vector3d dis;
         for (int j(0); j < 3; ++j) {
-            sigma_(j + 2) = 0.2;
+            sigma_(j + 2) = 0.8;
         }
         for (int i(0); i < 3; ++i) {
             dis(i) = 0.0;
@@ -604,14 +605,16 @@ namespace OPF {
                 }
                 if (j == Beta.rows() - 1) {
 
-                    //std::cout <<"rnd:" << tmp_rnd << "  beta:"<<Beta(j)<< std::endl;
-                    weight_vec_.setOnes();
-                    particle_mx_ = tmp_matrix;
+                    std::cout << "rnd:" << tmp_rnd << "  beta:" << Beta(j) << std::endl;
+//                    weight_vec_.setOnes();
+//                    particle_mx_ = tmp_matrix;
                     MYERROR("Unexpected run fork.")
                     return true;
                 }
             }
         }
+
+        std::cout << "min weight after resample:" << weight_vec_.minCoeff() << std::endl;
 
 //        weight_vec_.setOnes();
 //        weight_vec_ /= weight_vec_.sum();
