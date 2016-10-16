@@ -356,7 +356,7 @@ namespace OPF {
         /*
          * Sample Methon 3
          */
-        std::normal_distribution<> nor_get(0.1, 0.03);
+        std::normal_distribution<> nor_get(0.1, 0.1);
         std::uniform_real_distribution<double> angle_get(-M_PI, M_PI);
 
         for (int i(0); i < weight_vec_.rows(); ++i) {
@@ -517,9 +517,9 @@ namespace OPF {
             dis(i) += std::pow(guess_state(1) - beacon_pose_(i, 1), 2.0);
             dis(i) += std::pow(z_offset_ - beacon_pose_(i, 2), 2.0);
             dis(i) = std::pow(dis(i), 0.5);
-            ret += 1 / std::sqrt(2 * M_PI) / sigma_(i + 2) * std::exp(
-                    -std::pow(dis(i) - (range_vec(i)), 2.0) / 2 /
-                    std::pow(sigma_(i + 2), 2));
+            ret += 1 / std::sqrt(2 * M_PI) / sigma_(i + 2.0) * std::exp(
+                    -std::pow(dis(i) - (range_vec(i)), 2.0) / 2.0 /
+                    std::pow(sigma_(i + 2.0), 2.0));
 //            ret += std::log(1/std::sqrt(2*M_PI )/sigma_(i+2)) * -1.0/(std::pow(dis(i)-range_vec(i),2.0)/2/std::pow(sigma_(i+2),2));
 
         }
