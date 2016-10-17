@@ -256,8 +256,10 @@ class PFONE:
             # self.score[i] = self.GetScore(self.sample_vector[i, :], all_range)
             # self.score[i] = self.GetSocre_ob(self.sample_vector[i, :], all_range)
             # self.score[i] = self.GetScore2(self.sample_vector[i, :], all_range)
-            self.score[i] = self.GetComplexScore(self.sample_vector[i, :], all_range)
+            # self.score[i] = self.GetComplexScore(self.sample_vector[i, :], all_range)
+            self.score[i] = self.GetScoreStand(self.sample_vector[i, :], all_range)
             # self.weight_vector[i] = (self.weight_vector[i]) * (self.score[i])
+
             if np.isnan(self.score[i]):
                 print("ERROR", self.score)
 
@@ -269,6 +271,40 @@ class PFONE:
         # print ("b",np.mean(self.score))
 
         # self.weight_vector = self.score
+
+    def GetScoreStand(self, state_vec, all_range):
+        '''
+
+        :param state_vec:
+        :param all_range:
+        :return:
+        '''
+        self.currentRange = all_range
+        pose = np.zeros(3)
+        pose[2] = self.z_offset
+        pose[0:2] = state_vec[0:self.position_num]
+        the_range = state_vec[self.position_num:]
+
+        dis = np.zeros_like(the_range)
+        dis_err = dis
+
+        for i in range(the_range.shape[0]):
+            dis[i] = np.linalg.norm(pose - self.beaconPose[i, :])
+        dis_err = (dis - self.currentRange)
+
+        ret = 0.0
+        for i in range(dis_err.shape[0]):
+            ret += self.normalpdf(dis_err[i], 0.0, 0.1)
+        # print(ret)
+        if ret < 1e-10:
+            ret = 1e-10
+        return ret
+
+    def normalpdf(self, x, miu, sigma):
+        para1 = 1.0 / ((2.0 * np.pi) ** 0.5) / sigma
+        para2 = -((x - miu) ** 2.0) / (sigma ** 2.0)
+        return para1 * np.exp(para2)
+
 
     def GetScore2(self, state_vec, all_range):
         '''

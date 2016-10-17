@@ -72,6 +72,7 @@ class RangPf(filter_frame):
             # get Result
             self.all_result[i, :] = self.pfone.GetResult()
 
+            if (1 / np.linalg.norm(self.pfone.weight_vector)) ** 2.0 < self.pfone.weight_vector.shape[0] / 100:
             # Resample
             self.pfone.ReSample()
 

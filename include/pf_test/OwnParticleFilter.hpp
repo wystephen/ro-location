@@ -356,7 +356,7 @@ namespace OPF {
         /*
          * Sample Methon 3
          */
-        std::normal_distribution<> nor_get(0.1, 0.1);
+        std::normal_distribution<> nor_get(0.1, 0.03);
         std::uniform_real_distribution<double> angle_get(-M_PI, M_PI);
 
         for (int i(0); i < weight_vec_.rows(); ++i) {
@@ -406,7 +406,7 @@ namespace OPF {
 //        std::cout << "common point:" << con_point_ << std::endl;
 
 
-//        weight_vec_ /= weight_vec_.sum();
+        weight_vec_ /= weight_vec_.sum();
 
 //        for(int i(2);i<sigma_.rows();++i)
 //        {
@@ -419,6 +419,7 @@ namespace OPF {
             Score(j) = Likelihood(particle_mx_.block(j, 0, 1, particle_mx_.cols()), range_vec);
 //            Score(j) = std::exp(Score(j));
         }
+        Score /= Score.sum();
 
         std::cout << "SUM OF SCORE:" << Score.sum() << std::endl;
 
@@ -557,7 +558,7 @@ namespace OPF {
 
 
         std::cout << "Neff:" << 1 / weight_vec_.norm() / weight_vec_.norm() << std::endl;
-        while (1 / weight_vec_.norm() / weight_vec_.norm() < particle_num_ / 400.0) {
+        while (1 / weight_vec_.norm() / weight_vec_.norm() < particle_num_ / 200.0) {
             std::cout << "Neff:" << 1 / weight_vec_.norm() / weight_vec_.norm() << std::endl;
             ReSample();
         }
@@ -616,8 +617,8 @@ namespace OPF {
 
         std::cout << "min weight after resample:" << weight_vec_.minCoeff() << std::endl;
 
-//        weight_vec_.setOnes();
-//        weight_vec_ /= weight_vec_.sum();
+        weight_vec_.setOnes();
+        weight_vec_ /= weight_vec_.sum();
 
         return true;
     }
