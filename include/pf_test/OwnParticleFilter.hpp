@@ -67,6 +67,8 @@ namespace OPF {
 
         int imge_index_ = 0;
 
+        double last_best_x_, last_best_y_;
+
     protected:
 
         long particle_num_ = 1000;//particle number.
@@ -287,6 +289,9 @@ namespace OPF {
         state_(0) = real_pose(0);
         state_(1) = real_pose(1);
 
+        last_best_x_ = real_pose(0);
+        last_best_y_ = real_pose(1);
+
         for (int i(0); i < beacon_pose_.rows(); ++i) {
             state_(i + 2) = (Two2Three(real_pose) - beacon_pose_.block(i, 0, 1, 3)).norm();
         }
@@ -385,12 +390,28 @@ namespace OPF {
         /*
          * Sample Methon 4
          */
-        std::normal_distribution<> nor_get(0.0, 0.1615);
-        std::uniform_real_distribution<double> angle_get(-M_PI, M_PI);
+////        std::normal_distribution<> nor_get(0.0, 0.1615);
+//        std::normal_distribution<> nor_get(0.0, 0.2015);
+//        std::uniform_real_distribution<double> angle_get(-M_PI, M_PI);
+//
+//        for (int i(0); i < weight_vec_.rows(); ++i) {
+//            double dis(nor_get(e_));
+//            double angle(angle_get(e_));
+//            double delta_x(dis * std::cos(angle));
+//            double delta_y(dis * std::sin(angle));
+////            std::cout << "de x:" << delta_x << " de y: " << delta_y << std::endl;
+//            particle_mx_(i, 0) += delta_x;
+//            particle_mx_(i, 1) += delta_y;
+//        }
+        /*
+         * Sample Methon 5
+         */
+        std::normal_distribution<> nor_get(0.15, 0.1);
 
         for (int i(0); i < weight_vec_.rows(); ++i) {
             double dis(nor_get(e_));
-            double angle(angle_get(e_));
+            double angle(std::atan2(last_best_y_ - particle_mx_(i, 1), last_best_x_ - particle_mx_(i, 0)));
+
             double delta_x(dis * std::cos(angle));
             double delta_y(dis * std::sin(angle));
 //            std::cout << "de x:" << delta_x << " de y: " << delta_y << std::endl;
@@ -449,6 +470,12 @@ namespace OPF {
 //            Score(j) = std::exp(Score(j));
         }
         Score /= Score.sum();
+
+        int best_score_index(0.0);
+        Score.maxCoeff(&best_score_index);
+
+        last_best_x_ = particle_mx_(best_score_index, 0);
+        last_best_y_ = particle_mx_(best_score_index, 1);
 
         std::cout << "SUM OF SCORE:" << Score.sum() << std::endl;
 
@@ -539,7 +566,7 @@ namespace OPF {
         double ret(0.0);
         Eigen::Vector3d dis;
         for (int j(0); j < 3; ++j) {
-            sigma_(j + 2) = 0.2;
+            sigma_(j + 2) = 0.1;
         }
         for (int i(0); i < 3; ++i) {
             dis(i) = 0.0;
@@ -553,7 +580,8 @@ namespace OPF {
 //            ret += std::log(1/std::sqrt(2*M_PI )/sigma_(i+2)) * -1.0/(std::pow(dis(i)-range_vec(i),2.0)/2/std::pow(sigma_(i+2),2));
 
         }
-        return ret;
+
+        return (ret);
 
     }
 
@@ -656,12 +684,10 @@ namespace OPF {
 
         std::string path("particleimg/sa" + std::to_string(100 + imge_index_) + "save.jpg");
         imge_index_++;
-        MYCHECK(1);
 
         std::vector<double> lx, ly, gx, gy;
         gx.push_back(x);
         gy.push_back(y);
-        MYCHECK(1);
 
         Eigen::MatrixXd tmp_matrix(particle_mx_);
         Eigen::VectorXd tmp_weight(weight_vec_);
@@ -679,11 +705,10 @@ namespace OPF {
             Beta(Beta.rows() - 1) = 1.0;
 //            std::cout << Beta << std::endl;
         }
-        MYCHECK(1);
 
         std::uniform_real_distribution<double> uuu(0, 0.9999999999);
         double tmp_rnd(0.0);
-        for (int i(0); i < 1000; ++i) {
+        for (int i(0); i < 2100; ++i) {
             tmp_rnd = uuu(e_);
             for (int j(0); j < Beta.rows(); ++j) {
                 if (tmp_rnd < Beta(j)) {
@@ -702,29 +727,24 @@ namespace OPF {
             }
 
         }
-        MYCHECK(1);
 
 
-        std::cout << lx.size() << "     ------    " << ly.size() << std::endl;
+        std::cout << lx.size() << "     ------     " << ly.size() << std::endl;
 
-        MYCHECK(1);
 
 
         plt::named_plot("particle" + std::to_string(imge_index_), lx, ly, "+r");
 //        plt::plot(lx,ly,"+r");
-        MYCHECK(1);
 
         plt::named_plot("true" + std::to_string(imge_index_), gx, gy, "b*");
-        MYCHECK(1);
 
-        plt::xlim(-5.0, 20.0);
-        plt::ylim(-5.0, 20.0);
-        MYCHECK(1);
+        plt::xlim(-2.0, 15.0);
+        plt::ylim(-3.0, 10.0);
 
         plt::grid(true);
-        MYCHECK(1);
+//        MYCHECK(1);
 
-        plt::show();
+//        plt::show();
 //        plt::legend();
 //
 //        plt::save(path);

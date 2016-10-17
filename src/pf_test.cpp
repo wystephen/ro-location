@@ -70,7 +70,7 @@ int main() {
 
     double average(0.0);
 
-    double last_dx(0.0),last_dy(0.0);
+    double last_dx(0.0), last_dy(0.0);
 
     std::vector<double> real_score, result_score;
 
@@ -124,10 +124,36 @@ int main() {
                 plt::plot(bx[j], by[j], "y-");
             }
 
+            std::vector<double> tx, ty;
+
+            double mx(0.0), my(0.0);
+            double max_score(-100.0);
+            for (double y(16.0); y > -3; y -= 0.05) {
+                for (double x(-4.0); x < 20.0; x += 0.05) {
+                    double the_sco = opf.Likelihood(Eigen::VectorXd(Eigen::Vector3d(x, y, 1.0)),
+                                                    Eigen::VectorXd(uwb_range_vec[i]));
+                    if (the_sco > max_score) {
+                        max_score = the_sco;
+                        mx = x;
+                        my = y;
+                    }
+                }
+            }
+
+
+            tx.push_back(mx);
+            ty.push_back(my);
+
+
+
 
             plt::plot(gt_x, gt_y, "g-");
             opf.SaveParicleAsImg(gt_x[i], gt_y[i]);
+
+            plt::plot(tx, ty, "k*");
+            plt::show();
         }
+//        plt::save("test"+std::to_string(i)+"123.jpg");
 
 
 
@@ -161,10 +187,9 @@ int main() {
         f_x.push_back(p(0));
         f_y.push_back(p(1));
 
-        if(i>3)
-        {
-            last_dx = f_x[i]-f_x[i-1];
-            last_dy = f_y[i]-f_x[i-1];
+        if (i > 3) {
+            last_dx = f_x[i] - f_x[i - 1];
+            last_dy = f_y[i] - f_x[i - 1];
         }
 
 
@@ -201,7 +226,6 @@ int main() {
 
 
     plt::show();
-
 
 
     return 0;
