@@ -394,6 +394,7 @@ void  CPosePDFParticlesExtended::offsetTransitionModel(double &val )
 /*---------------------------------------------------------------
 
 			prediction_and_update_pfStandardProposal
+			//first to run.
 
  ---------------------------------------------------------------*/
 void  CPosePDFParticlesExtended::prediction_and_update_pfStandardProposal(

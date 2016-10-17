@@ -102,6 +102,10 @@ namespace OPF {
             return 1 / std::sqrt(2.0 * M_PI) / sigma * std::exp(-std::pow(x - miu, 2.0) / 2 / sigma / sigma);
         }
 
+        double GEVpdf() {
+
+        }
+
 
     };
 
@@ -356,7 +360,22 @@ namespace OPF {
         /*
          * Sample Methon 3
          */
-        std::normal_distribution<> nor_get(0.1, 0.03);
+//        std::normal_distribution<> nor_get(0.1, 0.03);
+//        std::uniform_real_distribution<double> angle_get(-M_PI, M_PI);
+//
+//        for (int i(0); i < weight_vec_.rows(); ++i) {
+//            double dis(nor_get(e_));
+//            double angle(angle_get(e_));
+//            double delta_x(dis * std::cos(angle));
+//            double delta_y(dis * std::sin(angle));
+////            std::cout << "de x:" << delta_x << " de y: " << delta_y << std::endl;
+//            particle_mx_(i, 0) += delta_x;
+//            particle_mx_(i, 1) += delta_y;
+//        }
+        /*
+         * Sample Methon 4
+         */
+        std::normal_distribution<> nor_get(0.0, 0.1615);
         std::uniform_real_distribution<double> angle_get(-M_PI, M_PI);
 
         for (int i(0); i < weight_vec_.rows(); ++i) {
@@ -510,7 +529,7 @@ namespace OPF {
         double ret(0.0);
         Eigen::Vector3d dis;
         for (int j(0); j < 3; ++j) {
-            sigma_(j + 2) = 0.8;
+            sigma_(j + 2) = 0.3;
         }
         for (int i(0); i < 3; ++i) {
             dis(i) = 0.0;
