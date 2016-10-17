@@ -390,19 +390,19 @@ namespace OPF {
         /*
          * Sample Methon 4
          */
-////        std::normal_distribution<> nor_get(0.0, 0.1615);
-        std::normal_distribution<> nor_get(0.0, 0.6015);
-        std::uniform_real_distribution<double> angle_get(-M_PI, M_PI);
-
-        for (int i(0); i < weight_vec_.rows(); ++i) {
-            double dis(nor_get(e_));
-            double angle(angle_get(e_));
-            double delta_x(dis * std::cos(angle));
-            double delta_y(dis * std::sin(angle));
-//            std::cout << "de x:" << delta_x << " de y: " << delta_y << std::endl;
-            particle_mx_(i, 0) += delta_x;
-            particle_mx_(i, 1) += delta_y;
-        }
+//////        std::normal_distribution<> nor_get(0.0, 0.1615);
+//        std::normal_distribution<> nor_get(0.0, 0.6015);
+//        std::uniform_real_distribution<double> angle_get(-M_PI, M_PI);
+//
+//        for (int i(0); i < weight_vec_.rows(); ++i) {
+//            double dis(nor_get(e_));
+//            double angle(angle_get(e_));
+//            double delta_x(dis * std::cos(angle));
+//            double delta_y(dis * std::sin(angle));
+////            std::cout << "de x:" << delta_x << " de y: " << delta_y << std::endl;
+//            particle_mx_(i, 0) += delta_x;
+//            particle_mx_(i, 1) += delta_y;
+//        }
         /*
          * Sample Methon 5
          */
@@ -422,6 +422,15 @@ namespace OPF {
 //            particle_mx_(i, 0) += delta_x;
 //            particle_mx_(i, 1) += delta_y;
 //        }
+        /*
+         * Sample Methon6
+         */
+        std::normal_distribution<> nor_get(0.0, 0.3);
+
+        for (int i(0); i < weight_vec_.rows(); ++i) {
+            particle_mx_(i, 0) = last_best_x_ + nor_get(e_);
+            particle_mx_(i, 1) = last_best_y_ + nor_get(e_);
+        }
 
     }
 
@@ -570,7 +579,7 @@ namespace OPF {
         double ret(0.0);
         Eigen::Vector3d dis;
         for (int j(0); j < 3; ++j) {
-            sigma_(j + 2) = 0.1;
+            sigma_(j + 2) = 0.3;
         }
         for (int i(0); i < 3; ++i) {
             dis(i) = 0.0;
