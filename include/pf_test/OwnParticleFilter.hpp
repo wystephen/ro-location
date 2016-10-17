@@ -391,33 +391,37 @@ namespace OPF {
          * Sample Methon 4
          */
 ////        std::normal_distribution<> nor_get(0.0, 0.1615);
-//        std::normal_distribution<> nor_get(0.0, 0.2015);
-//        std::uniform_real_distribution<double> angle_get(-M_PI, M_PI);
-//
-//        for (int i(0); i < weight_vec_.rows(); ++i) {
-//            double dis(nor_get(e_));
-//            double angle(angle_get(e_));
-//            double delta_x(dis * std::cos(angle));
-//            double delta_y(dis * std::sin(angle));
-////            std::cout << "de x:" << delta_x << " de y: " << delta_y << std::endl;
-//            particle_mx_(i, 0) += delta_x;
-//            particle_mx_(i, 1) += delta_y;
-//        }
-        /*
-         * Sample Methon 5
-         */
-        std::normal_distribution<> nor_get(0.15, 0.1);
+        std::normal_distribution<> nor_get(0.0, 0.6015);
+        std::uniform_real_distribution<double> angle_get(-M_PI, M_PI);
 
         for (int i(0); i < weight_vec_.rows(); ++i) {
             double dis(nor_get(e_));
-            double angle(std::atan2(last_best_y_ - particle_mx_(i, 1), last_best_x_ - particle_mx_(i, 0)));
-
+            double angle(angle_get(e_));
             double delta_x(dis * std::cos(angle));
             double delta_y(dis * std::sin(angle));
 //            std::cout << "de x:" << delta_x << " de y: " << delta_y << std::endl;
             particle_mx_(i, 0) += delta_x;
             particle_mx_(i, 1) += delta_y;
         }
+        /*
+         * Sample Methon 5
+         */
+//        std::normal_distribution<> nor_get(0.1, 0.2);
+//
+//        for (int i(0); i < weight_vec_.rows(); ++i) {
+//            double dis(nor_get(e_));
+//            double angle(std::atan2(last_best_y_ - particle_mx_(i, 1), last_best_x_ - particle_mx_(i, 0)));
+//            double ddx(last_best_x_ - particle_mx_(i, 0)),ddy(last_best_y_ - particle_mx_(i, 1));
+//            double val = std::pow(ddx*ddx+ddy*ddy,0.5);
+////            ddx /=val;
+////            ddy /=val;
+//
+//            double delta_x(dis * ddx);// + dis * std::cos(angle));
+//            double delta_y(dis * ddy );//+ dis * std::sin(angle));
+////            std::cout << "de x:" << delta_x << " de y: " << delta_y << std::endl;
+//            particle_mx_(i, 0) += delta_x;
+//            particle_mx_(i, 1) += delta_y;
+//        }
 
     }
 
@@ -719,10 +723,9 @@ namespace OPF {
                     break;
                 }
                 if (j == Beta.rows() - 1) {
-
-
                     MYERROR("Unexpected run fork.")
-                    return true;
+//                    return true;
+
                 }
             }
 

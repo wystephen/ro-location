@@ -26,6 +26,8 @@ namespace plt = matplotlibcpp;
  */
 
 int main() {
+    bool is_view_likelihood(false);
+    bool is_view_particle(true);
     CSVReader gt("gt.csv"), beacon_set("beacon_set.csv"), uwb_range("uwb_range.csv");
 
 //    std::cout << gt.GetMatrix().GetRows() << " " << beacon_set.GetMatrix().GetRows() << " "
@@ -62,7 +64,7 @@ int main() {
         uwb_range_vec.push_back(Eigen::Vector3d(*range(i, 0), *range(i, 1), *range(i, 2)));
     }
 
-    OPF::OwnParticleFilter opf(20000, apose, 1.12, 10);
+    OPF::OwnParticleFilter opf(30000, apose, 1.12, 10);
     opf.InitialState(Eigen::Vector2d(gt_x[0], gt_y[0]));
 
 
@@ -76,6 +78,9 @@ int main() {
 
     for (int i(0); i < uwb_range_vec.size(); ++i) {
 //        opf.Sample(last_dx,last_dy);
+
+//        opf.Evaluate(Eigen::VectorXd(uwb_range_vec[i]));
+
         /*
          * SAMPLE
          */
@@ -105,7 +110,7 @@ int main() {
         /*
          * Output particle image
          */
-        if (i % 3 == 0) {
+        if (i % 3 == 0 && is_view_particle) {
             std::vector<std::vector<double>> bx, by;
             bx.resize(3);
             by.resize(3);
@@ -144,8 +149,11 @@ int main() {
             tx.push_back(mx);
             ty.push_back(my);
 
+            if (i > 0) {
+                double dx(gt_x[i] - gt_x[i - 1]), dy(gt_y[i] - gt_y[i - 1]);
 
-
+                plt::title("distance is:" + std::to_string(std::pow(dx * dx + dy * dy, 0.5)));
+            }
 
             plt::plot(gt_x, gt_y, "g-");
             opf.SaveParicleAsImg(gt_x[i], gt_y[i]);
@@ -153,6 +161,10 @@ int main() {
             plt::plot(tx, ty, "k*");
             plt::show();
         }
+
+        /*
+        * END Output particle image
+        */
 //        plt::save("test"+std::to_string(i)+"123.jpg");
 
 
@@ -165,16 +177,19 @@ int main() {
         /*
          * Generate a Probobility Map
          */
-//        std::ofstream tmp_log("../tmpdata/p_map_" + std::to_string(100 + i) + ".txt");
-//
-//        for (double y(16.0); y > -3; y -= 0.05) {
-//            for (double x(-4.0); x < 20.0; x += 0.05) {
-//                tmp_log << opf.Likelihood(Eigen::VectorXd(Eigen::Vector3d(x, y, 1.0)),
-//                                          Eigen::VectorXd(uwb_range_vec[i])) << " ";
-//            }
-//            tmp_log << std::endl;
-//        }
-//        tmp_log.close();
+        if (is_view_likelihood) {
+            std::ofstream tmp_log("../tmpdata/p_map_" + std::to_string(100 + i) + ".txt");
+
+            for (double y(16.0); y > -3; y -= 0.05) {
+                for (double x(-4.0); x < 20.0; x += 0.05) {
+                    tmp_log << opf.Likelihood(Eigen::VectorXd(Eigen::Vector3d(x, y, 1.0)),
+                                              Eigen::VectorXd(uwb_range_vec[i])) << " ";
+                }
+                tmp_log << std::endl;
+            }
+            tmp_log.close();
+        }
+
 
 
         Eigen::VectorXd p(opf.GetResult());
@@ -199,7 +214,7 @@ int main() {
         if (!isnan(err[i]))
             average += err[i] / uwb_range_vec.size();
 
-//        opf.ReSample();
+        opf.ReSample();
 
 
     }
