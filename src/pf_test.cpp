@@ -62,7 +62,7 @@ int main() {
         uwb_range_vec.push_back(Eigen::Vector3d(*range(i, 0), *range(i, 1), *range(i, 2)));
     }
 
-    OPF::OwnParticleFilter opf(30000, apose, 1.12, 10);
+    OPF::OwnParticleFilter opf(20000, apose, 1.12, 10);
     opf.InitialState(Eigen::Vector2d(gt_x[0], gt_y[0]));
 
 
@@ -100,6 +100,36 @@ int main() {
         /*
          * End EVALUATE
          */
+
+
+        /*
+         * Output particle image
+         */
+        if (i % 3 == 0) {
+            std::vector<std::vector<double>> bx, by;
+            bx.resize(3);
+            by.resize(3);
+
+            for (double theta(-M_PI); theta < M_PI; theta += 0.05) {
+                for (int j(0); j < 3; ++j) {
+                    double dx, dy;
+                    dx = std::sin(theta) * uwb_range_vec[i](j);
+                    dy = std::cos(theta) * uwb_range_vec[i](j);
+                    bx[j].push_back(dx + apose(j, 0));
+                    by[j].push_back(dy + apose(j, 1));
+                }
+            }
+
+            for (int j(0); j < 3; ++j) {
+                plt::plot(bx[j], by[j], "y-");
+            }
+
+
+            plt::plot(gt_x, gt_y, "g-");
+            opf.SaveParicleAsImg(gt_x[i], gt_y[i]);
+        }
+
+
 
         std::cout << "real pose:" << gt_x[i] << " " << gt_y[i] << std::endl;
         real_score.push_back(opf.Likelihood(Eigen::VectorXd(Eigen::Vector3d(gt_x[i], gt_y[i], 1.0)),

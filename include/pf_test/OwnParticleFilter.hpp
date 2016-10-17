@@ -18,6 +18,10 @@
 
 #include "../Cpp_Extent/MyError.h"
 
+#include "../Cpp_Extent/matplotlib_interface.h"
+
+namespace plt = matplotlibcpp;
+
 
 namespace OPF {
     class OwnParticleFilter {
@@ -59,6 +63,9 @@ namespace OPF {
 
         bool ComputeCPoint(Eigen::VectorXd range);
 
+        bool SaveParicleAsImg(double x, double y);
+
+        int imge_index_ = 0;
 
     protected:
 
@@ -86,7 +93,6 @@ namespace OPF {
 
         Eigen::Matrix<double, 6, 2> con_point_;
 
-
     private:
         /*
          *
@@ -102,8 +108,12 @@ namespace OPF {
             return 1 / std::sqrt(2.0 * M_PI) / sigma * std::exp(-std::pow(x - miu, 2.0) / 2 / sigma / sigma);
         }
 
-        double GEVpdf() {
 
+        /*
+         * Some error.
+         */
+        double GEVpdf() {
+            return 0.0;
         }
 
 
@@ -529,7 +539,7 @@ namespace OPF {
         double ret(0.0);
         Eigen::Vector3d dis;
         for (int j(0); j < 3; ++j) {
-            sigma_(j + 2) = 0.3;
+            sigma_(j + 2) = 0.2;
         }
         for (int i(0); i < 3; ++i) {
             dis(i) = 0.0;
@@ -578,8 +588,8 @@ namespace OPF {
 
         std::cout << "Neff:" << 1 / weight_vec_.norm() / weight_vec_.norm() << std::endl;
         while (1 / weight_vec_.norm() / weight_vec_.norm() < particle_num_ / 200.0) {
-            std::cout << "Neff:" << 1 / weight_vec_.norm() / weight_vec_.norm() << std::endl;
             ReSample();
+            std::cout << "Neff:" << 1 / weight_vec_.norm() / weight_vec_.norm() << std::endl;
         }
 
 //        int max_index(0);
@@ -640,6 +650,91 @@ namespace OPF {
         weight_vec_ /= weight_vec_.sum();
 
         return true;
+    }
+
+    bool OwnParticleFilter::SaveParicleAsImg(double x, double y) {
+
+        std::string path("particleimg/sa" + std::to_string(100 + imge_index_) + "save.jpg");
+        imge_index_++;
+        MYCHECK(1);
+
+        std::vector<double> lx, ly, gx, gy;
+        gx.push_back(x);
+        gy.push_back(y);
+        MYCHECK(1);
+
+        Eigen::MatrixXd tmp_matrix(particle_mx_);
+        Eigen::VectorXd tmp_weight(weight_vec_);
+
+        tmp_weight /= tmp_weight.sum();
+
+        Eigen::VectorXd Beta(weight_vec_);
+
+
+        for (int i(1); i < Beta.rows(); ++i) {
+
+            Beta(i) = Beta(i - 1) + tmp_weight(i);
+        }
+        if (Beta.maxCoeff() < 1.0) {
+            Beta(Beta.rows() - 1) = 1.0;
+//            std::cout << Beta << std::endl;
+        }
+        MYCHECK(1);
+
+        std::uniform_real_distribution<double> uuu(0, 0.9999999999);
+        double tmp_rnd(0.0);
+        for (int i(0); i < 1000; ++i) {
+            tmp_rnd = uuu(e_);
+            for (int j(0); j < Beta.rows(); ++j) {
+                if (tmp_rnd < Beta(j)) {
+
+                    lx.push_back(tmp_matrix(j, 0));
+                    ly.push_back(tmp_matrix(j, 1));
+
+                    break;
+                }
+                if (j == Beta.rows() - 1) {
+
+
+                    MYERROR("Unexpected run fork.")
+                    return true;
+                }
+            }
+
+        }
+        MYCHECK(1);
+
+
+        std::cout << lx.size() << "     ------    " << ly.size() << std::endl;
+
+        MYCHECK(1);
+
+
+        plt::named_plot("particle" + std::to_string(imge_index_), lx, ly, "+r");
+//        plt::plot(lx,ly,"+r");
+        MYCHECK(1);
+
+        plt::named_plot("true" + std::to_string(imge_index_), gx, gy, "b*");
+        MYCHECK(1);
+
+        plt::xlim(-5.0, 20.0);
+        plt::ylim(-5.0, 20.0);
+        MYCHECK(1);
+
+        plt::grid(true);
+        MYCHECK(1);
+
+        plt::show();
+//        plt::legend();
+//
+//        plt::save(path);
+
+
+
+
+
+        return true;
+
     }
 
 }
