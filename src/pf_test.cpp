@@ -64,7 +64,7 @@ int main() {
         uwb_range_vec.push_back(Eigen::Vector3d(*range(i, 0), *range(i, 1), *range(i, 2)));
     }
 
-    OPF::OwnParticleFilter opf(50000, apose, 1.12, 10);
+    OPF::OwnParticleFilter opf(10000, apose, 1.12, 10);
     opf.InitialState(Eigen::Vector2d(gt_x[0], gt_y[0]));
 
 
@@ -154,7 +154,8 @@ int main() {
             if (i > 0) {
                 double dx(gt_x[i] - gt_x[i - 1]), dy(gt_y[i] - gt_y[i - 1]);
 
-                plt::title("distance is:" + std::to_string(std::pow(dx * dx + dy * dy, 0.5)));
+                plt::title("distance is:" + std::to_string(std::pow(dx * dx + dy * dy, 0.5))
+                           + " i is:" + std::to_string(i));
             }
 
             plt::plot(gt_x, gt_y, "g-");
