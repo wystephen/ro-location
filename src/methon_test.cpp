@@ -36,6 +36,9 @@ double TwoDnormal(double x,
     return 1 / para1 * std::exp(para2);
 }
 
+double func(double *b, int sizes) {
+    return *(b + 1);
+}
 
 int main() {
     std::vector<double> dx, dy;
@@ -53,26 +56,34 @@ int main() {
 //        }
 //    }
 
-    std::default_random_engine e_;//Random generator engine.
+//    std::default_random_engine e_;//Random generator engine.
+//
+//    std::normal_distribution<> nor_get(0.1, 0.03);
+//    std::uniform_real_distribution<double> angle_get(-M_PI, M_PI);
+//
+//
+//    for (int j(0); j < 10000; ++j) {
+//        double dis(nor_get(e_));
+//        double angle(angle_get(e_));
+//        double delta_x(dis * std::cos(angle));
+//        double delta_y(dis * std::sin(angle));
+//        std::cout << "sin:" << std::sin(angle) << " cos:" << std::cos(angle) << std::endl;
+//
+//        dx.push_back((delta_x));
+//        dy.push_back(delta_y);
+//    }
+//
+//    matplotlibcpp::plot(dx, dy, "r+");
+//    matplotlibcpp::show();
 
-    std::normal_distribution<> nor_get(0.1, 0.03);
-    std::uniform_real_distribution<double> angle_get(-M_PI, M_PI);
+    std::vector<std::vector<double>> L{{1, 2},
+                                       {1, 2}};
 
+    std::cout << L.size() << " " << L[1].size() << std::endl;
 
-    for (int j(0); j < 10000; ++j) {
-        double dis(nor_get(e_));
-        double angle(angle_get(e_));
-        double delta_x(dis * std::cos(angle));
-        double delta_y(dis * std::sin(angle));
-        std::cout << "sin:" << std::sin(angle) << " cos:" << std::cos(angle) << std::endl;
-
-        dx.push_back((delta_x));
-        dy.push_back(delta_y);
-    }
-
-    matplotlibcpp::plot(dx, dy, "r+");
-    matplotlibcpp::show();
-
+    double *b(new double[100]);
+    *(b + 1) = 10;
+    std::cout << func(b, 10);
 
     return 0;
 }

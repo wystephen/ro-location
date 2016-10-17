@@ -57,6 +57,7 @@ include_directories(
         /usr/include/
         #                /home/steve/Cpp_Extent/Cpp_Extent
         ${PYTHON_INCLUDE_PATH}
+        ./include
 
 )
 
@@ -73,11 +74,11 @@ add_executable(ro-location src/ro-localization_main.cpp)
 
 target_link_libraries(ro-location ${catkin_LIBRARIES} ${PCL_LIBRARIES} ${OpenCV_LIBRARIES} ${MRPT_LIBS})
 
-add_executable(pf_test src/pf_test.cpp)
+add_executable(pf_test src/pf_test.cpp include/pf_test/EKF.h)
 
 target_link_libraries(pf_test ${catkin_LIBRARIES} ${PCL_LIBRARIES} ${OpenCV_LIBRARIES} ${PYTHON_LIBRARIES})
 
-add_executable(methon_test src/methon_test.cpp)
+add_executable(methon_test src/methon_test.cpp include/pf_test/EKF.h)
 
 target_link_libraries(methon_test ${catkin_LIBRARIES} ${PCL_LIBRARIES} ${OpenCV_LIBRARIES} ${PYTHON_LIBRARIES})
 

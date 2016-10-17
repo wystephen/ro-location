@@ -7,9 +7,9 @@
 #include "../include/Cpp_Extent/CSVReader.h"
 
 
-#include "../include/Cpp_Extent/matplotlib_interface.h"
+#include "Cpp_Extent/matplotlib_interface.h"
 
-#include "../include/pf_test/OwnParticleFilter.hpp"
+#include "pf_test/OwnParticleFilter.hpp"
 
 #include <omp.h>
 
