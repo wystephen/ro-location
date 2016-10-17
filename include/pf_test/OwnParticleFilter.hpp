@@ -557,10 +557,10 @@ namespace OPF {
 
 
         std::cout << "Neff:" << 1 / weight_vec_.norm() / weight_vec_.norm() << std::endl;
-//        while (1 / weight_vec_.norm()/ weight_vec_.norm() < particle_num_ / 100.0) {
-//            std::cout << "Neff:" << 1 / weight_vec_.norm()/ weight_vec_.norm()  << std::endl;
-//            ReSample();
-//        }
+        while (1 / weight_vec_.norm() / weight_vec_.norm() < particle_num_ / 400.0) {
+            std::cout << "Neff:" << 1 / weight_vec_.norm() / weight_vec_.norm() << std::endl;
+            ReSample();
+        }
 
 //        int max_index(0);
 //        weight_vec_.maxCoeff(&max_index);

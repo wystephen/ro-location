@@ -144,7 +144,7 @@ int main() {
         if (!isnan(err[i]))
             average += err[i] / uwb_range_vec.size();
 
-        opf.ReSample();
+//        opf.ReSample();
 
 
     }
