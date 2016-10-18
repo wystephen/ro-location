@@ -28,6 +28,7 @@ namespace plt = matplotlibcpp;
 int main() {
     bool is_view_likelihood(false);
     bool is_view_particle(false);
+    bool is_out_cnn_img(true);
     CSVReader gt("gt.csv"), beacon_set("beacon_set.csv"), uwb_range("uwb_range.csv");
 
 //    std::cout << gt.GetMatrix().GetRows() << " " << beacon_set.GetMatrix().GetRows() << " "
@@ -87,7 +88,7 @@ int main() {
         if (i < 4)
             opf.Sample();
         else {
-            opf.Sample((gt_x[i] - gt_x[i - 4]) / 4.0, (gt_y[i] - gt_y[i - 4]) / 4.0);
+            opf.Sample((gt_x[i] - gt_x[i - 2]) / 2.0, (gt_y[i] - gt_y[i - 2]) / 2.0);
         }
 //        if(i<5)
 //        {
@@ -95,6 +96,8 @@ int main() {
 //        }else{
 //            opf.Sample((f_x[i-1]-f_x[i-4])/3.0,(f_y[i-1]-f_y[i-4])/3.0);
 //        }
+
+        opf.Sample();
 
 
 
@@ -117,6 +120,24 @@ int main() {
         /*
          * End EVALUATE
          */
+
+        /*
+         * Out cnn image.
+         */
+        if (is_out_cnn_img) {
+            std::ofstream out_cnn("../cnn_data/p_map_" + std::to_string(100 + i));
+
+            for (double x(gt_x[i] - 1.0); x < gt_x[i] + 1.0; x += 0.05) {
+                for (double y(gt_y[i] - 1.0); y < gt_y[i] + 1.0; y += 0.05) {
+                    out_cnn << opf.Likelihood(Eigen::VectorXd(Eigen::Vector3d(x, y, 1.0)),
+                                              Eigen::VectorXd(uwb_range_vec[i]));
+                    out_cnn << " ";
+                }
+                out_cnn << std::endl;
+            }
+            out_cnn.close();
+        }
+
 
 
         /*

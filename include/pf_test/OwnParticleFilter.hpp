@@ -391,7 +391,7 @@ namespace OPF {
          * Sample Methon 4
          */
 ////        std::normal_distribution<> nor_get(0.0, 0.1615);
-        std::normal_distribution<> nor_get(0.0, 0.6015);
+        std::normal_distribution<> nor_get(0.0, 0.1815);
         std::uniform_real_distribution<double> angle_get(0.0, M_PI);
 
         for (int i(0); i < weight_vec_.rows(); ++i) {
@@ -443,7 +443,7 @@ namespace OPF {
         for (int i(0); i < sigma_.rows(); ++i) {
             if(i<2)
             {
-                normal_dis_vec.push_back(std::normal_distribution<>(delta(i), sigma_(i) * 3.0));
+                normal_dis_vec.push_back(std::normal_distribution<>(delta(i), sigma_(i) * 0.3));
 
             }
             else{
