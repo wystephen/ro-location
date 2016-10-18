@@ -484,6 +484,14 @@ namespace OPF {
         }
         Score /= Score.sum();
 
+        double s_mean(Score.mean());
+        for (int j(0); j < Score.rows(); ++j) {
+            if (Score(j) < s_mean) {
+                Score(j) = 0.0;
+            }
+        }
+
+
         int best_score_index(0.0);
         Score.maxCoeff(&best_score_index);
 
@@ -594,7 +602,8 @@ namespace OPF {
 
         }
 
-        return (ret);
+//        return std::pow(2.0,ret);
+        return ret;
 
     }
 
