@@ -127,15 +127,28 @@ int main() {
         if (is_out_cnn_img) {
             std::ofstream out_cnn("../cnn_data/p_map_" + std::to_string(100 + i));
 
-            for (double x(gt_x[i] - 1.0); x < gt_x[i] + 1.0; x += 0.05) {
-                for (double y(gt_y[i] - 1.0); y < gt_y[i] + 1.0; y += 0.05) {
+//            for (double x(gt_x[i] - 1.0); x < gt_x[i] + 1.0; x += 0.05) {
+//                for (double y(gt_y[i] - 1.0); y < gt_y[i] + 1.0; y += 0.05) {
+//                    out_cnn << opf.Likelihood(Eigen::VectorXd(Eigen::Vector3d(x, y, 1.0)),
+//                                              Eigen::VectorXd(uwb_range_vec[i]));
+//                    out_cnn << " ";
+//                }
+//                out_cnn << std::endl;
+//            }
+//            out_cnn.close();
+            for (int ix(0); ix < 41; ++ix) {
+                for (int iy(0); iy < 41; ++iy) {
+                    double x((ix - 20) * 0.05 + gt_x[i]);
+                    double y((iy - 20) * 0.05 + gt_y[i]);
+
                     out_cnn << opf.Likelihood(Eigen::VectorXd(Eigen::Vector3d(x, y, 1.0)),
                                               Eigen::VectorXd(uwb_range_vec[i]));
                     out_cnn << " ";
+
                 }
                 out_cnn << std::endl;
+
             }
-            out_cnn.close();
         }
 
 
