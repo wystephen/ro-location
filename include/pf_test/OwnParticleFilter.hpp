@@ -40,8 +40,8 @@ namespace OPF {
 
             sigma_.resize(state_.rows());
 
-            for (int i(0); i < sigma_.size(); ++i) {
-                sigma_(i) = 0.05;
+            for (int i(0); i < sigma_.rows(); ++i) {
+                sigma_(i) = 0.15;
             }
 
 
@@ -432,16 +432,18 @@ namespace OPF {
 //            particle_mx_(i, 1) = (last_best_y_ + state_(1)) /2.0 + nor_get(e_);
 //        }
 
+        return true;
+
     }
 
     bool OwnParticleFilter::Sample(double dx, double dy) {
         Eigen::Vector2d delta(dx,dy);
-        delta /= delta.sum();
+//        delta = delta.sum();
         std::vector<std::normal_distribution<>> normal_dis_vec;
         for (int i(0); i < sigma_.rows(); ++i) {
             if(i<2)
             {
-                normal_dis_vec.push_back(std::normal_distribution<>(delta(i), sigma_(i)));
+                normal_dis_vec.push_back(std::normal_distribution<>(delta(i), sigma_(i) * 3.0));
 
             }
             else{
@@ -457,6 +459,9 @@ namespace OPF {
             }
 
         }
+
+
+        return true;
     }
 
 
@@ -484,12 +489,12 @@ namespace OPF {
         }
         Score /= Score.sum();
 
-        double s_mean(Score.mean());
-        for (int j(0); j < Score.rows(); ++j) {
-            if (Score(j) < s_mean) {
-                Score(j) = 0.0;
-            }
-        }
+//        double s_mean(Score.mean());
+//        for (int j(0); j < Score.rows(); ++j) {
+//            if (Score(j) < s_mean) {
+//                Score(j) = 0.0;
+//            }
+//        }
 
 
         int best_score_index(0.0);
@@ -587,7 +592,7 @@ namespace OPF {
         double ret(0.0);
         Eigen::Vector3d dis;
         for (int j(0); j < 3; ++j) {
-            sigma_(j + 2) = 0.3;
+            sigma_(j + 2) = 0.1;
         }
         for (int i(0); i < 3; ++i) {
             dis(i) = 0.0;
@@ -637,7 +642,7 @@ namespace OPF {
 
 
         std::cout << "Neff:" << 1 / weight_vec_.norm() / weight_vec_.norm() << std::endl;
-        while (1 / weight_vec_.norm() / weight_vec_.norm() < particle_num_ / 200.0) {
+        while (1 / weight_vec_.norm() / weight_vec_.norm() < particle_num_ / 100.0) {
             ReSample();
             std::cout << "Neff:" << 1 / weight_vec_.norm() / weight_vec_.norm() << std::endl;
         }
@@ -759,8 +764,8 @@ namespace OPF {
 
         plt::named_plot("true" + std::to_string(imge_index_), gx, gy, "b*");
 
-        plt::xlim(-2.0, 15.0);
-        plt::ylim(-3.0, 10.0);
+        plt::xlim(-3.0, 15.0);
+        plt::ylim(-3.0, 15.0);
 
         plt::grid(true);
 //        MYCHECK(1);

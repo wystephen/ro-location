@@ -27,7 +27,7 @@ namespace plt = matplotlibcpp;
 
 int main() {
     bool is_view_likelihood(false);
-    bool is_view_particle(true);
+    bool is_view_particle(false);
     CSVReader gt("gt.csv"), beacon_set("beacon_set.csv"), uwb_range("uwb_range.csv");
 
 //    std::cout << gt.GetMatrix().GetRows() << " " << beacon_set.GetMatrix().GetRows() << " "
@@ -64,7 +64,7 @@ int main() {
         uwb_range_vec.push_back(Eigen::Vector3d(*range(i, 0), *range(i, 1), *range(i, 2)));
     }
 
-    OPF::OwnParticleFilter opf(10000, apose, 1.12, 10);
+    OPF::OwnParticleFilter opf(30000, apose, 1.12, 10);
     opf.InitialState(Eigen::Vector2d(gt_x[0], gt_y[0]));
 
 
@@ -84,8 +84,18 @@ int main() {
         /*
          * SAMPLE
          */
+        if (i < 4)
+            opf.Sample();
+        else {
+            opf.Sample((gt_x[i] - gt_x[i - 4]) / 4.0, (gt_y[i] - gt_y[i - 4]) / 4.0);
+        }
+//        if(i<5)
+//        {
+//            opf.Sample();
+//        }else{
+//            opf.Sample((f_x[i-1]-f_x[i-4])/3.0,(f_y[i-1]-f_y[i-4])/3.0);
+//        }
 
-        opf.Sample();
 
 
         /*
@@ -217,6 +227,10 @@ int main() {
         if (!isnan(err[i]))
             average += err[i] / uwb_range_vec.size();
 
+        /*
+         * ReSample
+         * Needn't resample in every time steps.
+         */
 //        opf.ReSample();
 
 
