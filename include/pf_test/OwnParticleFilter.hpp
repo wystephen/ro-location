@@ -588,10 +588,12 @@ namespace OPF {
         /*
          * Methond 5 in paper
          */
+        std::normal_distribution<> n(0, 0.012);
+
         double ret(0.0);
         Eigen::Vector3d dis;
         for (int j(0); j < 3; ++j) {
-            sigma_(j + 2) = 0.05;
+            sigma_(j + 2) = 1.0;
         }
         for (int i(0); i < 3; ++i) {
             dis(i) = 0.0;
@@ -602,7 +604,7 @@ namespace OPF {
 //            ret += 1 / std::sqrt(2 * M_PI) / sigma_(i + 2.0) * std::exp(
 //                    -std::pow(dis(i) - (range_vec(i)), 2.0) / 2.0 /
 //                    std::pow(sigma_(i + 2.0), 2.0));
-            ret += NormalPDF(range_vec(i), dis(i), 0.06);
+            ret += NormalPDF(range_vec(i), dis(i) + n(e_), 0.012);
 
         }
 

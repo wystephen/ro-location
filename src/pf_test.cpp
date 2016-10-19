@@ -27,7 +27,7 @@ namespace plt = matplotlibcpp;
 
 int main() {
     bool is_view_likelihood(false);
-    bool is_view_particle(true);
+    bool is_view_particle(false);
     bool is_out_cnn_img(false);
     CSVReader gt("gt.csv"), beacon_set("beacon_set.csv"), uwb_range("uwb_range.csv");
 
@@ -156,7 +156,7 @@ int main() {
         /*
          * Output particle image
          */
-        if (i % 3 == 0 && is_view_particle) {
+        if (i % 1 == 0 && is_view_particle) {
             std::vector<std::vector<double>> bx, by;
             bx.resize(3);
             by.resize(3);
