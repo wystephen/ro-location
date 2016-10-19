@@ -1,0 +1,889 @@
+{time:1476864322.4804239273,type:'c',beacon_id:0,tid:0,range:6890,lnum:11021,seq:68}
+{time:1476864322.4804239273,type:'c',beacon_id:1,tid:0,range:4177,lnum:11021,seq:68}
+{time:1476864322.4804239273,type:'c',beacon_id:2,tid:0,range:11201,lnum:11021,seq:68}
+{time:1476864322.4804239273,type:'c',beacon_id:3,tid:0,range:10133,lnum:11021,seq:68}
+{time:1476864322.7152955532,type:'a',aid:0,bid:1,range:8473,lnum:11024,seq:45}
+{time:1476864322.7152955532,type:'a',aid:0,bid:2,range:12316,lnum:11024,seq:45}
+{time:1476864322.7152955532,type:'a',aid:1,bid:2,range:15185,lnum:11024,seq:45}
+{time:1476864322.7590661049,type:'c',beacon_id:0,tid:0,range:6726,lnum:11028,seq:69}
+{time:1476864322.7590661049,type:'c',beacon_id:1,tid:0,range:4374,lnum:11028,seq:69}
+{time:1476864322.7590661049,type:'c',beacon_id:2,tid:0,range:10939,lnum:11028,seq:69}
+{time:1476864322.7590661049,type:'c',beacon_id:3,tid:0,range:9804,lnum:11028,seq:69}
+Id:0 x: 6.2183912799378848746 y: 3.5118276607935330347 z: 2.1664675348386999154{time:1476864322.9944388866,type:'a',aid:0,bid:1,range:8459,lnum:11031,seq:46}
+{time:1476864322.9944388866,type:'a',aid:0,bid:2,range:12396,lnum:11031,seq:46}
+{time:1476864322.9944388866,type:'a',aid:1,bid:2,range:15147,lnum:11031,seq:46}
+{time:1476864323.0390062332,type:'c',beacon_id:0,tid:0,range:7040,lnum:11035,seq:70}
+{time:1476864323.0394949913,type:'c',beacon_id:1,tid:0,range:4768,lnum:11035,seq:70}
+{time:1476864323.0394949913,type:'c',beacon_id:2,tid:0,range:10709,lnum:11035,seq:70}
+{time:1476864323.0394949913,type:'c',beacon_id:3,tid:0,range:9523,lnum:11035,seq:70}
+Id:0 x: 5.9852735294769745522 y: 3.64468909875939584 z: 2.4926360766405966096{time:1476864323.2746903896,type:'a',aid:0,bid:1,range:8464,lnum:11038,seq:47}
+{time:1476864323.2746903896,type:'a',aid:0,bid:2,range:12349,lnum:11038,seq:47}
+{time:1476864323.2746903896,type:'a',aid:1,bid:2,range:15574,lnum:11038,seq:47}
+{time:1476864323.3187720776,type:'c',beacon_id:0,tid:0,range:6923,lnum:11042,seq:71}
+{time:1476864323.3187720776,type:'c',beacon_id:1,tid:0,range:5002,lnum:11042,seq:71}
+{time:1476864323.3187720776,type:'c',beacon_id:2,tid:0,range:10428,lnum:11042,seq:71}
+{time:1476864323.3187720776,type:'c',beacon_id:3,tid:0,range:9219,lnum:11042,seq:71}
+Id:0 x: 5.9975760438926970508 y: 4.048743058502881631 z: 2.7668450216076361237{time:1476864323.5546119213,type:'a',aid:0,bid:1,range:8469,lnum:11045,seq:48}
+{time:1476864323.5546119213,type:'a',aid:0,bid:2,range:12298,lnum:11045,seq:48}
+{time:1476864323.5546119213,type:'a',aid:1,bid:2,range:15387,lnum:11045,seq:48}
+{time:1476864323.5966582298,type:'c',beacon_id:0,tid:0,range:7382,lnum:11049,seq:72}
+{time:1476864323.5966582298,type:'c',beacon_id:1,tid:0,range:5283,lnum:11049,seq:72}
+{time:1476864323.5966582298,type:'c',beacon_id:2,tid:0,range:10297,lnum:11049,seq:72}
+{time:1476864323.5966582298,type:'c',beacon_id:3,tid:0,range:8802,lnum:11049,seq:72}
+Id:0 x: 5.7902907768586091564 y: 4.1842476083804962528 z: 1.9340104732277130228{time:1476864323.8349633217,type:'a',aid:0,bid:1,range:8502,lnum:11051,seq:49}
+{time:1476864323.8349633217,type:'a',aid:0,bid:2,range:12316,lnum:11051,seq:49}
+{time:1476864323.8769927025,type:'c',beacon_id:0,tid:0,range:7485,lnum:11055,seq:73}
+{time:1476864323.8769927025,type:'c',beacon_id:1,tid:0,range:5536,lnum:11055,seq:73}
+{time:1476864323.8769927025,type:'c',beacon_id:2,tid:0,range:9997,lnum:11055,seq:73}
+{time:1476864323.8769927025,type:'c',beacon_id:3,tid:0,range:8431,lnum:11055,seq:73}
+Id:0 x: 5.9799186403897737208 y: 4.5890871452156591914 z: 2.1829466186745856149{time:1476864324.1166441441,type:'a',aid:0,bid:1,range:8445,lnum:11058,seq:50}
+{time:1476864324.1166441441,type:'a',aid:0,bid:2,range:12340,lnum:11058,seq:50}
+{time:1476864324.1166441441,type:'a',aid:1,bid:2,range:15133,lnum:11058,seq:50}
+{time:1476864324.1572856903,type:'c',beacon_id:0,tid:0,range:7634,lnum:11062,seq:74}
+{time:1476864324.1572856903,type:'c',beacon_id:1,tid:0,range:5826,lnum:11062,seq:74}
+{time:1476864324.1572856903,type:'c',beacon_id:2,tid:0,range:9739,lnum:11062,seq:74}
+{time:1476864324.1572856903,type:'c',beacon_id:3,tid:0,range:8202,lnum:11062,seq:74}
+Id:0 x: 5.908536697307360086 y: 4.8895896608887001733 z: 2.5097632768727420327{time:1476864324.3954021931,type:'a',aid:0,bid:1,range:8506,lnum:11065,seq:51}
+{time:1476864324.3954021931,type:'a',aid:0,bid:2,range:12349,lnum:11065,seq:51}
+{time:1476864324.3954021931,type:'a',aid:1,bid:2,range:15246,lnum:11065,seq:51}
+{time:1476864324.4369833469,type:'c',beacon_id:0,tid:0,range:7630,lnum:11069,seq:75}
+{time:1476864324.4369833469,type:'c',beacon_id:1,tid:0,range:6314,lnum:11069,seq:75}
+{time:1476864324.4374711514,type:'c',beacon_id:2,tid:0,range:9486,lnum:11069,seq:75}
+{time:1476864324.4374711514,type:'c',beacon_id:3,tid:0,range:7855,lnum:11069,seq:75}
+Id:0 x: 5.8465860466385493055 y: 5.1797869928535771322 z: 2.4010055860725341148{time:1476864324.674926281,type:'a',aid:0,bid:1,range:8436,lnum:11072,seq:52}
+{time:1476864324.674926281,type:'a',aid:0,bid:2,range:12335,lnum:11072,seq:52}
+{time:1476864324.674926281,type:'a',aid:1,bid:2,range:15199,lnum:11072,seq:52}
+{time:1476864324.7169423103,type:'c',beacon_id:0,tid:0,range:7883,lnum:11076,seq:76}
+{time:1476864324.7169423103,type:'c',beacon_id:1,tid:0,range:6524,lnum:11076,seq:76}
+{time:1476864324.7169423103,type:'c',beacon_id:2,tid:0,range:9101,lnum:11076,seq:76}
+{time:1476864324.7169423103,type:'c',beacon_id:3,tid:0,range:7620,lnum:11076,seq:76}
+Id:0 x: 5.4831440037248073693 y: 5.372116760831921134 z: 2.0898388371252982765{time:1476864324.9549586773,type:'a',aid:0,bid:1,range:8408,lnum:11079,seq:53}
+{time:1476864324.9549586773,type:'a',aid:0,bid:2,range:12312,lnum:11079,seq:53}
+{time:1476864324.9549586773,type:'a',aid:1,bid:2,range:15176,lnum:11079,seq:53}
+{time:1476864324.9969782829,type:'c',beacon_id:0,tid:0,range:8136,lnum:11083,seq:77}
+{time:1476864324.9969782829,type:'c',beacon_id:1,tid:0,range:6702,lnum:11083,seq:77}
+{time:1476864324.9969782829,type:'c',beacon_id:2,tid:0,range:8806,lnum:11083,seq:77}
+{time:1476864324.9969782829,type:'c',beacon_id:3,tid:0,range:7377,lnum:11083,seq:77}
+Id:0 x: 5.5682453232046658087 y: 5.8022814787394825231 z: 2.1857134029801703612{time:1476864325.2345557213,type:'a',aid:0,bid:1,range:8412,lnum:11086,seq:54}
+{time:1476864325.2345557213,type:'a',aid:0,bid:2,range:12359,lnum:11086,seq:54}
+{time:1476864325.2345557213,type:'a',aid:1,bid:2,range:15180,lnum:11086,seq:54}
+{time:1476864325.2776796818,type:'c',beacon_id:0,tid:0,range:8956,lnum:11090,seq:78}
+{time:1476864325.2776796818,type:'c',beacon_id:1,tid:0,range:7063,lnum:11090,seq:78}
+{time:1476864325.2776796818,type:'c',beacon_id:2,tid:0,range:8464,lnum:11090,seq:78}
+{time:1476864325.2776796818,type:'c',beacon_id:3,tid:0,range:6815,lnum:11090,seq:78}
+Id:0 x: 5.6818885708608837248 y: 6.1733241144884258844 z: 2.1211896417337090526{time:1476864325.5147681236,type:'a',aid:0,bid:1,range:8426,lnum:11093,seq:55}
+{time:1476864325.5147681236,type:'a',aid:0,bid:2,range:12377,lnum:11093,seq:55}
+{time:1476864325.5147681236,type:'a',aid:1,bid:2,range:15176,lnum:11093,seq:55}
+{time:1476864325.5573070049,type:'c',beacon_id:0,tid:0,range:8666,lnum:11097,seq:79}
+{time:1476864325.5573070049,type:'c',beacon_id:1,tid:0,range:7490,lnum:11097,seq:79}
+{time:1476864325.5573070049,type:'c',beacon_id:2,tid:0,range:8268,lnum:11097,seq:79}
+{time:1476864325.5573070049,type:'c',beacon_id:3,tid:0,range:6538,lnum:11097,seq:79}
+Id:0 x: 6.250216457437590023 y: 7.0046084069258460758 z: 1.8658962565973027381{time:1476864325.794295311,type:'a',aid:0,bid:1,range:8492,lnum:11100,seq:56}
+{time:1476864325.7952942848,type:'a',aid:0,bid:2,range:12330,lnum:11100,seq:56}
+{time:1476864325.7952942848,type:'a',aid:1,bid:2,range:15246,lnum:11100,seq:56}
+{time:1476864325.8373248577,type:'c',beacon_id:0,tid:0,range:8975,lnum:11104,seq:80}
+{time:1476864325.8373248577,type:'c',beacon_id:1,tid:0,range:7775,lnum:11104,seq:80}
+{time:1476864325.8373248577,type:'c',beacon_id:2,tid:0,range:8169,lnum:11104,seq:80}
+{time:1476864325.8373248577,type:'c',beacon_id:3,tid:0,range:6304,lnum:11104,seq:80}
+Id:0 x: 5.5314320043524300985 y: 6.894439692037594547 z: 2.3101323938013882398{time:1476864326.0746538639,type:'a',aid:0,bid:1,range:8483,lnum:11107,seq:57}
+{time:1476864326.0746538639,type:'a',aid:0,bid:2,range:12321,lnum:11107,seq:57}
+{time:1476864326.0746538639,type:'a',aid:1,bid:2,range:15152,lnum:11107,seq:57}
+{time:1476864326.1206977367,type:'c',beacon_id:0,tid:0,range:9204,lnum:11111,seq:81}
+{time:1476864326.1206977367,type:'c',beacon_id:1,tid:0,range:8094,lnum:11111,seq:81}
+{time:1476864326.1206977367,type:'c',beacon_id:2,tid:0,range:7944,lnum:11111,seq:81}
+{time:1476864326.1206977367,type:'c',beacon_id:3,tid:0,range:6065,lnum:11111,seq:81}
+Id:0 x: 5.5940308354040908512 y: 7.178766040759834155 z: 1.8369169657408126461{time:1476864326.3546369076,type:'a',aid:0,bid:1,range:8431,lnum:11114,seq:58}
+{time:1476864326.3546369076,type:'a',aid:0,bid:2,range:12274,lnum:11114,seq:58}
+{time:1476864326.3546369076,type:'a',aid:1,bid:2,range:15213,lnum:11114,seq:58}
+{time:1476864326.3970551491,type:'c',beacon_id:0,tid:0,range:9528,lnum:11118,seq:82}
+{time:1476864326.3970551491,type:'c',beacon_id:1,tid:0,range:8366,lnum:11118,seq:82}
+{time:1476864326.3970551491,type:'c',beacon_id:2,tid:0,range:7686,lnum:11118,seq:82}
+{time:1476864326.3970551491,type:'c',beacon_id:3,tid:0,range:5700,lnum:11118,seq:82}
+Id:0 x: 5.5287774815422476848 y: 7.4770475838799841384 z: 2.6986779331249515224{time:1476864326.6347434521,type:'a',aid:0,bid:1,range:8520,lnum:11121,seq:59}
+{time:1476864326.6347434521,type:'a',aid:0,bid:2,range:12255,lnum:11121,seq:59}
+{time:1476864326.6347434521,type:'a',aid:1,bid:2,range:15237,lnum:11121,seq:59}
+{time:1476864326.6770606041,type:'c',beacon_id:0,tid:0,range:9785,lnum:11125,seq:83}
+{time:1476864326.6770606041,type:'c',beacon_id:1,tid:0,range:8600,lnum:11125,seq:83}
+{time:1476864326.6770606041,type:'c',beacon_id:2,tid:0,range:7410,lnum:11125,seq:83}
+{time:1476864326.6770606041,type:'c',beacon_id:3,tid:0,range:5423,lnum:11125,seq:83}
+Id:0 x: 5.6322409421000481089 y: 7.8931390551579800885 z: 2.2188458371923367451{time:1476864326.9145526886,type:'a',aid:0,bid:1,range:8473,lnum:11128,seq:60}
+{time:1476864326.9145526886,type:'a',aid:0,bid:2,range:12363,lnum:11128,seq:60}
+{time:1476864326.9145526886,type:'a',aid:1,bid:2,range:15176,lnum:11128,seq:60}
+{time:1476864326.9567122459,type:'c',beacon_id:0,tid:0,range:9964,lnum:11132,seq:84}
+{time:1476864326.9567122459,type:'c',beacon_id:1,tid:0,range:8971,lnum:11132,seq:84}
+{time:1476864326.9567122459,type:'c',beacon_id:2,tid:0,range:7344,lnum:11132,seq:84}
+{time:1476864326.9567122459,type:'c',beacon_id:3,tid:0,range:5208,lnum:11132,seq:84}
+Id:0 x: 5.7021393725515441275 y: 8.2780920872162422341 z: 2.1838976954049749146{time:1476864327.1945548058,type:'a',aid:0,bid:1,range:8483,lnum:11135,seq:61}
+{time:1476864327.1945548058,type:'a',aid:0,bid:2,range:12312,lnum:11135,seq:61}
+{time:1476864327.1945548058,type:'a',aid:1,bid:2,range:15162,lnum:11135,seq:61}
+{time:1476864327.2365837097,type:'c',beacon_id:0,tid:0,range:10428,lnum:11139,seq:85}
+{time:1476864327.2365837097,type:'c',beacon_id:1,tid:0,range:9298,lnum:11139,seq:85}
+{time:1476864327.2365837097,type:'c',beacon_id:2,tid:0,range:7227,lnum:11139,seq:85}
+{time:1476864327.2365837097,type:'c',beacon_id:3,tid:0,range:4889,lnum:11139,seq:85}
+Id:0 x: 5.5049972403976195068 y: 8.4115239157877486065 z: 2.525271870071568614{time:1476864327.4744935036,type:'a',aid:0,bid:1,range:8455,lnum:11142,seq:62}
+{time:1476864327.4744935036,type:'a',aid:0,bid:2,range:12227,lnum:11142,seq:62}
+{time:1476864327.4744935036,type:'a',aid:1,bid:2,range:15185,lnum:11142,seq:62}
+{time:1476864327.5174877644,type:'c',beacon_id:0,tid:0,range:10498,lnum:11146,seq:86}
+{time:1476864327.5174877644,type:'c',beacon_id:1,tid:0,range:9627,lnum:11146,seq:86}
+{time:1476864327.5174877644,type:'c',beacon_id:2,tid:0,range:6923,lnum:11146,seq:86}
+{time:1476864327.5174877644,type:'c',beacon_id:3,tid:0,range:4688,lnum:11146,seq:86}
+Id:0 x: 5.7159631795770025064 y: 8.8835499108562760995 z: 1.8318005688045271295{time:1476864327.7550525665,type:'a',aid:0,bid:1,range:8469,lnum:11149,seq:63}
+{time:1476864327.7550525665,type:'a',aid:0,bid:2,range:12223,lnum:11149,seq:63}
+{time:1476864327.7550525665,type:'a',aid:1,bid:2,range:15223,lnum:11149,seq:63}
+{time:1476864328.0352833271,type:'a',aid:0,bid:1,range:8464,lnum:11152,seq:64}
+{time:1476864328.0352833271,type:'a',aid:0,bid:2,range:12354,lnum:11152,seq:64}
+{time:1476864328.0352833271,type:'a',aid:1,bid:2,range:15199,lnum:11152,seq:64}
+{time:1476864328.0794119835,type:'c',beacon_id:0,tid:0,range:10953,lnum:11153,seq:88}
+{time:1476864328.3170359135,type:'a',aid:0,bid:1,range:8455,lnum:11156,seq:65}
+{time:1476864328.3170359135,type:'a',aid:0,bid:2,range:12312,lnum:11156,seq:65}
+{time:1476864328.3170359135,type:'a',aid:1,bid:2,range:15269,lnum:11156,seq:65}
+{time:1476864328.3571486473,type:'c',beacon_id:0,tid:0,range:11327,lnum:11158,seq:89}
+{time:1476864328.3571486473,type:'c',beacon_id:3,tid:0,range:4252,lnum:11158,seq:89}
+{time:1476864328.6366541386,type:'c',beacon_id:0,tid:0,range:11018,lnum:11161,seq:90}
+{time:1476864328.6366541386,type:'c',beacon_id:2,tid:0,range:6337,lnum:11161,seq:90}
+{time:1476864328.6366541386,type:'c',beacon_id:3,tid:0,range:4308,lnum:11161,seq:90}
+{time:1476864328.9168350697,type:'c',beacon_id:0,tid:0,range:11332,lnum:11164,seq:91}
+{time:1476864328.9168350697,type:'c',beacon_id:2,tid:0,range:6013,lnum:11164,seq:91}
+{time:1476864328.9168350697,type:'c',beacon_id:3,tid:0,range:4252,lnum:11164,seq:91}
+{time:1476864329.1564736366,type:'a',aid:0,bid:1,range:8473,lnum:11167,seq:68}
+{time:1476864329.1564736366,type:'a',aid:0,bid:2,range:12237,lnum:11167,seq:68}
+{time:1476864329.1564736366,type:'a',aid:1,bid:2,range:15208,lnum:11167,seq:68}
+{time:1476864329.1970388889,type:'c',beacon_id:0,tid:0,range:11140,lnum:11171,seq:92}
+{time:1476864329.1970388889,type:'c',beacon_id:1,tid:0,range:10925,lnum:11171,seq:92}
+{time:1476864329.1970388889,type:'c',beacon_id:2,tid:0,range:5836,lnum:11171,seq:92}
+{time:1476864329.1970388889,type:'c',beacon_id:3,tid:0,range:4388,lnum:11171,seq:92}
+{time:1476864329.4350128174,type:'a',aid:0,bid:1,range:8455,lnum:11174,seq:69}
+{time:1476864329.4350128174,type:'a',aid:0,bid:2,range:12199,lnum:11174,seq:69}
+{time:1476864329.4350128174,type:'a',aid:1,bid:2,range:15157,lnum:11174,seq:69}
+{time:1476864329.4770829678,type:'c',beacon_id:0,tid:0,range:11000,lnum:11177,seq:93}
+{time:1476864329.4770829678,type:'c',beacon_id:1,tid:0,range:11126,lnum:11177,seq:93}
+{time:1476864329.4770829678,type:'c',beacon_id:2,tid:0,range:5564,lnum:11177,seq:93}
+Id:0 x: 4.7034932981389596662 y: 10.144474257751463497 z: 1.8578998169250608985{time:1476864329.7153303623,type:'a',aid:0,bid:1,range:8478,lnum:11180,seq:70}
+{time:1476864329.7153303623,type:'a',aid:0,bid:2,range:12330,lnum:11180,seq:70}
+{time:1476864329.7153303623,type:'a',aid:1,bid:2,range:15232,lnum:11180,seq:70}
+{time:1476864329.7572052479,type:'c',beacon_id:0,tid:0,range:10896,lnum:11183,seq:94}
+{time:1476864329.7572052479,type:'c',beacon_id:1,tid:0,range:11089,lnum:11183,seq:94}
+{time:1476864329.7572052479,type:'c',beacon_id:2,tid:0,range:5470,lnum:11183,seq:94}
+Id:0 x: 4.2763623872026252926 y: 10.087817028598195179 z: 2.0260018835526789616{time:1476864329.9950940609,type:'a',aid:0,bid:1,range:8567,lnum:11186,seq:71}
+{time:1476864329.9950940609,type:'a',aid:0,bid:2,range:12349,lnum:11186,seq:71}
+{time:1476864329.9950940609,type:'a',aid:1,bid:2,range:15213,lnum:11186,seq:71}
+{time:1476864330.0371193886,type:'c',beacon_id:0,tid:0,range:10793,lnum:11189,seq:95}
+{time:1476864330.0371193886,type:'c',beacon_id:1,tid:0,range:11108,lnum:11189,seq:95}
+{time:1476864330.0371193886,type:'c',beacon_id:2,tid:0,range:5278,lnum:11189,seq:95}
+Id:0 x: 4.1943048934788578208 y: 10.036561662329877009 z: 2.3690860131607118788{time:1476864330.2748062611,type:'a',aid:0,bid:1,range:8431,lnum:11192,seq:72}
+{time:1476864330.2748062611,type:'a',aid:0,bid:2,range:12260,lnum:11192,seq:72}
+{time:1476864330.2748062611,type:'a',aid:1,bid:2,range:15237,lnum:11192,seq:72}
+{time:1476864330.3208289146,type:'c',beacon_id:0,tid:0,range:10779,lnum:11195,seq:96}
+{time:1476864330.3208289146,type:'c',beacon_id:1,tid:0,range:11384,lnum:11195,seq:96}
+{time:1476864330.3208289146,type:'c',beacon_id:2,tid:0,range:4711,lnum:11195,seq:96}
+Id:0 x: 4.0410021976407826116 y: 10.067368733379339574 z: 2.0121553640180054323{time:1476864330.596996069,type:'c',beacon_id:0,tid:0,range:10503,lnum:11198,seq:97}
+{time:1476864330.596996069,type:'c',beacon_id:1,tid:0,range:11351,lnum:11198,seq:97}
+{time:1476864330.596996069,type:'c',beacon_id:2,tid:0,range:4758,lnum:11198,seq:97}
+Id:0 x: 3.6638339553782013347 y: 10.314215419409437757 z: 2.144592477567395683{time:1476864330.8765859604,type:'c',beacon_id:0,tid:0,range:10596,lnum:11201,seq:98}
+{time:1476864330.8765859604,type:'c',beacon_id:1,tid:0,range:11778,lnum:11201,seq:98}
+{time:1476864330.8765859604,type:'c',beacon_id:2,tid:0,range:4303,lnum:11201,seq:98}
+Id:0 x: 3.3790080448341304198 y: 10.008036144154269564 z: 2.0806925594514362743{time:1476864331.1144995689,type:'a',aid:0,bid:1,range:8497,lnum:11204,seq:75}
+{time:1476864331.1144995689,type:'a',aid:0,bid:2,range:12284,lnum:11204,seq:75}
+{time:1476864331.1144995689,type:'a',aid:1,bid:2,range:15199,lnum:11204,seq:75}
+{time:1476864331.1570315361,type:'c',beacon_id:0,tid:0,range:10577,lnum:11207,seq:99}
+{time:1476864331.1570315361,type:'c',beacon_id:1,tid:0,range:11623,lnum:11207,seq:99}
+{time:1476864331.1570315361,type:'c',beacon_id:2,tid:0,range:4093,lnum:11207,seq:99}
+Id:0 x: 2.9289934623997369023 y: 10.233118448793710797 z: 1.9470517058386103137{time:1476864331.4368910789,type:'c',beacon_id:0,tid:0,range:10503,lnum:11210,seq:100}
+{time:1476864331.4368910789,type:'c',beacon_id:1,tid:0,range:11651,lnum:11210,seq:100}
+{time:1476864331.4368910789,type:'c',beacon_id:2,tid:0,range:3718,lnum:11210,seq:100}
+Id:0 x: 3.0887784131705382507 y: 10.394395719793971367 z: 2.1484634272913334385{time:1476864331.7169013023,type:'c',beacon_id:0,tid:0,range:10390,lnum:11213,seq:101}
+{time:1476864331.7169013023,type:'c',beacon_id:1,tid:0,range:11815,lnum:11213,seq:101}
+{time:1476864331.7169013023,type:'c',beacon_id:2,tid:0,range:3769,lnum:11213,seq:101}
+Id:0 x: 2.9347267715434246504 y: 10.554930823420061614 z: 1.9768562714831516836{time:1476864331.9964962006,type:'c',beacon_id:0,tid:0,range:10348,lnum:11216,seq:102}
+{time:1476864331.9964962006,type:'c',beacon_id:1,tid:0,range:11806,lnum:11216,seq:102}
+{time:1476864331.9964962006,type:'c',beacon_id:2,tid:0,range:3727,lnum:11216,seq:102}
+Id:0 x: 2.6011164201724610301 y: 10.326531611928798426 z: 2.0656348483893509638{time:1476864332.2772803307,type:'c',beacon_id:0,tid:0,range:10254,lnum:11219,seq:103}
+{time:1476864332.2772803307,type:'c',beacon_id:1,tid:0,range:11956,lnum:11219,seq:103}
+{time:1476864332.2772803307,type:'c',beacon_id:2,tid:0,range:3639,lnum:11219,seq:103}
+Id:0 x: 2.5628736648082441896 y: 10.303490573055439583 z: 2.1939822649655713604{time:1476864332.5170352459,type:'a',aid:0,bid:1,range:8487,lnum:11222,seq:80}
+{time:1476864332.5170352459,type:'a',aid:0,bid:2,range:12288,lnum:11222,seq:80}
+{time:1476864332.5170352459,type:'a',aid:1,bid:2,range:15147,lnum:11222,seq:80}
+{time:1476864332.5570881367,type:'c',beacon_id:0,tid:0,range:10062,lnum:11226,seq:104}
+{time:1476864332.5570881367,type:'c',beacon_id:1,tid:0,range:11749,lnum:11226,seq:104}
+{time:1476864332.5570881367,type:'c',beacon_id:2,tid:0,range:3727,lnum:11226,seq:104}
+{time:1476864332.5570881367,type:'c',beacon_id:3,tid:0,range:7283,lnum:11226,seq:104}
+Id:0 x: 2.2636287152142360313 y: 10.190854267821038093 z: 2.4444909256445521706{time:1476864332.7943980694,type:'a',aid:0,bid:1,range:8459,lnum:11229,seq:81}
+{time:1476864332.7943980694,type:'a',aid:0,bid:2,range:12279,lnum:11229,seq:81}
+{time:1476864332.795412302,type:'a',aid:1,bid:2,range:15208,lnum:11229,seq:81}
+{time:1476864332.8365008831,type:'c',beacon_id:0,tid:0,range:9785,lnum:11233,seq:105}
+{time:1476864332.8374648094,type:'c',beacon_id:1,tid:0,range:11506,lnum:11233,seq:105}
+{time:1476864332.8374648094,type:'c',beacon_id:2,tid:0,range:3797,lnum:11233,seq:105}
+{time:1476864332.8374648094,type:'c',beacon_id:3,tid:0,range:7260,lnum:11233,seq:105}
+Id:0 x: 2.301682909012531919 y: 10.060026616766194252 z: 2.067710207974321257{time:1476864333.0730750561,type:'a',aid:0,bid:1,range:8520,lnum:11236,seq:82}
+{time:1476864333.0730750561,type:'a',aid:0,bid:2,range:12316,lnum:11236,seq:82}
+{time:1476864333.0730750561,type:'a',aid:1,bid:2,range:15204,lnum:11236,seq:82}
+{time:1476864333.1171228886,type:'c',beacon_id:0,tid:0,range:9570,lnum:11240,seq:106}
+{time:1476864333.1171228886,type:'c',beacon_id:1,tid:0,range:11402,lnum:11240,seq:106}
+{time:1476864333.1171228886,type:'c',beacon_id:2,tid:0,range:4037,lnum:11240,seq:106}
+{time:1476864333.1171228886,type:'c',beacon_id:3,tid:0,range:7813,lnum:11240,seq:106}
+Id:0 x: 2.2897707125272241946 y: 9.8634784700567106341 z: 1.9032012241161715416{time:1476864333.3973407745,type:'c',beacon_id:0,tid:0,range:9289,lnum:11244,seq:107}
+{time:1476864333.3973407745,type:'c',beacon_id:1,tid:0,range:11313,lnum:11244,seq:107}
+{time:1476864333.3973407745,type:'c',beacon_id:2,tid:0,range:4172,lnum:11244,seq:107}
+{time:1476864333.3973407745,type:'c',beacon_id:3,tid:0,range:7944,lnum:11244,seq:107}
+Id:0 x: 2.2051157606776983222 y: 9.5678191720076348759 z: 1.99441520806352246{time:1476864333.6767113209,type:'c',beacon_id:0,tid:0,range:8956,lnum:11248,seq:108}
+{time:1476864333.6776745319,type:'c',beacon_id:1,tid:0,range:11014,lnum:11248,seq:108}
+{time:1476864333.6776745319,type:'c',beacon_id:2,tid:0,range:4388,lnum:11248,seq:108}
+{time:1476864333.6776745319,type:'c',beacon_id:3,tid:0,range:7644,lnum:11248,seq:108}
+Id:0 x: 2.0366202128802615157 y: 9.2625764782534112385 z: 2.6869886695434725965{time:1476864333.9122834206,type:'a',aid:0,bid:1,range:8492,lnum:11251,seq:85}
+{time:1476864333.9132812023,type:'a',aid:0,bid:2,range:12321,lnum:11251,seq:85}
+{time:1476864333.9132812023,type:'a',aid:1,bid:2,range:15269,lnum:11251,seq:85}
+{time:1476864334.1930270195,type:'a',aid:0,bid:1,range:8487,lnum:11254,seq:86}
+{time:1476864334.1930270195,type:'a',aid:0,bid:2,range:12373,lnum:11254,seq:86}
+{time:1476864334.1930270195,type:'a',aid:1,bid:2,range:16179,lnum:11254,seq:86}
+{time:1476864334.2390706539,type:'c',beacon_id:0,tid:0,range:8647,lnum:11255,seq:110}
+{time:1476864334.4732558727,type:'a',aid:0,bid:1,range:8455,lnum:11258,seq:87}
+{time:1476864334.4732558727,type:'a',aid:0,bid:2,range:12274,lnum:11258,seq:87}
+{time:1476864334.4732558727,type:'a',aid:1,bid:2,range:15223,lnum:11258,seq:87}
+{time:1476864334.5212974548,type:'c',beacon_id:0,tid:0,range:7925,lnum:11262,seq:111}
+{time:1476864334.5212974548,type:'c',beacon_id:1,tid:0,range:10212,lnum:11262,seq:111}
+{time:1476864334.5212974548,type:'c',beacon_id:2,tid:0,range:5274,lnum:11262,seq:111}
+{time:1476864334.5212974548,type:'c',beacon_id:3,tid:0,range:8150,lnum:11262,seq:111}
+{time:1476864334.7527940273,type:'a',aid:0,bid:1,range:8483,lnum:11265,seq:88}
+{time:1476864334.753308773,type:'a',aid:0,bid:2,range:12284,lnum:11265,seq:88}
+{time:1476864334.753308773,type:'a',aid:1,bid:2,range:15185,lnum:11265,seq:88}
+{time:1476864334.7969288826,type:'c',beacon_id:0,tid:0,range:7803,lnum:11269,seq:112}
+{time:1476864334.7969288826,type:'c',beacon_id:1,tid:0,range:9936,lnum:11269,seq:112}
+{time:1476864334.7969288826,type:'c',beacon_id:2,tid:0,range:5554,lnum:11269,seq:112}
+{time:1476864334.7969288826,type:'c',beacon_id:3,tid:0,range:8370,lnum:11269,seq:112}
+Id:0 x: 2.0172525604854882886 y: 7.9240514518759948004 z: 2.1107724165115731019{time:1476864335.0331234932,type:'a',aid:0,bid:1,range:8497,lnum:11272,seq:89}
+{time:1476864335.0331234932,type:'a',aid:0,bid:2,range:12368,lnum:11272,seq:89}
+{time:1476864335.0331234932,type:'a',aid:1,bid:2,range:15251,lnum:11272,seq:89}
+{time:1476864335.0774428844,type:'c',beacon_id:0,tid:0,range:7499,lnum:11276,seq:113}
+{time:1476864335.0774428844,type:'c',beacon_id:1,tid:0,range:9749,lnum:11276,seq:113}
+{time:1476864335.0774428844,type:'c',beacon_id:2,tid:0,range:5849,lnum:11276,seq:113}
+{time:1476864335.0774428844,type:'c',beacon_id:3,tid:0,range:8464,lnum:11276,seq:113}
+Id:0 x: 2.22782981698727367 y: 7.729402809398400187 z: 2.0244409210065374971{time:1476864335.3125383854,type:'a',aid:0,bid:1,range:8464,lnum:11279,seq:90}
+{time:1476864335.3125383854,type:'a',aid:0,bid:2,range:12302,lnum:11279,seq:90}
+{time:1476864335.3125383854,type:'a',aid:1,bid:2,range:15152,lnum:11279,seq:90}
+{time:1476864335.5928144455,type:'a',aid:0,bid:1,range:8426,lnum:11282,seq:91}
+{time:1476864335.5928144455,type:'a',aid:0,bid:2,range:12279,lnum:11282,seq:91}
+{time:1476864335.5928144455,type:'a',aid:1,bid:2,range:15241,lnum:11282,seq:91}
+{time:1476864335.6368458271,type:'c',beacon_id:1,tid:0,range:9153,lnum:11284,seq:115}
+{time:1476864335.6368458271,type:'c',beacon_id:3,tid:0,range:8769,lnum:11284,seq:115}
+{time:1476864335.8731122017,type:'a',aid:0,bid:1,range:8469,lnum:11287,seq:92}
+{time:1476864335.8731122017,type:'a',aid:0,bid:2,range:12298,lnum:11287,seq:92}
+{time:1476864335.8731122017,type:'a',aid:1,bid:2,range:15157,lnum:11287,seq:92}
+{time:1476864335.9171631336,type:'c',beacon_id:0,tid:0,range:6548,lnum:11291,seq:116}
+{time:1476864335.9171631336,type:'c',beacon_id:1,tid:0,range:8952,lnum:11291,seq:116}
+{time:1476864335.9171631336,type:'c',beacon_id:2,tid:0,range:6730,lnum:11291,seq:116}
+{time:1476864335.9171631336,type:'c',beacon_id:3,tid:0,range:9017,lnum:11291,seq:116}
+{time:1476864336.1533870697,type:'a',aid:0,bid:1,range:8483,lnum:11294,seq:93}
+{time:1476864336.1533870697,type:'a',aid:0,bid:2,range:12269,lnum:11294,seq:93}
+{time:1476864336.1533870697,type:'a',aid:1,bid:2,range:15288,lnum:11294,seq:93}
+{time:1476864336.1971423626,type:'c',beacon_id:0,tid:0,range:6374,lnum:11298,seq:117}
+{time:1476864336.1971423626,type:'c',beacon_id:1,tid:0,range:8614,lnum:11298,seq:117}
+{time:1476864336.1971423626,type:'c',beacon_id:2,tid:0,range:7152,lnum:11298,seq:117}
+{time:1476864336.1971423626,type:'c',beacon_id:3,tid:0,range:9397,lnum:11298,seq:117}
+Id:0 x: 2.251100423134058115 y: 6.4091822361721941803 z: 2.1339549962614827727{time:1476864336.4331150055,type:'a',aid:0,bid:1,range:8520,lnum:11301,seq:94}
+{time:1476864336.4331150055,type:'a',aid:0,bid:2,range:12354,lnum:11301,seq:94}
+{time:1476864336.4331150055,type:'a',aid:1,bid:2,range:15185,lnum:11301,seq:94}
+{time:1476864336.4769601822,type:'c',beacon_id:0,tid:0,range:5709,lnum:11304,seq:118}
+{time:1476864336.4769601822,type:'c',beacon_id:1,tid:0,range:8478,lnum:11304,seq:118}
+{time:1476864336.4769601822,type:'c',beacon_id:3,tid:0,range:9598,lnum:11304,seq:118}
+Id:0 x: 2.4646576741441381664 y: 6.0871755109739895673 z: 1.8108688685090521542{time:1476864336.7162191868,type:'a',aid:0,bid:1,range:8412,lnum:11307,seq:95}
+{time:1476864336.717215538,type:'a',aid:0,bid:2,range:12279,lnum:11307,seq:95}
+{time:1476864336.717215538,type:'a',aid:1,bid:2,range:15213,lnum:11307,seq:95}
+{time:1476864336.7573823929,type:'c',beacon_id:0,tid:0,range:5353,lnum:11310,seq:119}
+{time:1476864336.7578709126,type:'c',beacon_id:1,tid:0,range:8272,lnum:11310,seq:119}
+{time:1476864336.7583703995,type:'c',beacon_id:3,tid:0,range:9879,lnum:11310,seq:119}
+{time:1476864336.9931418896,type:'a',aid:0,bid:1,range:8544,lnum:11313,seq:96}
+{time:1476864336.9931418896,type:'a',aid:0,bid:2,range:12269,lnum:11313,seq:96}
+{time:1476864336.9931418896,type:'a',aid:1,bid:2,range:15166,lnum:11313,seq:96}
+{time:1476864337.0371847153,type:'c',beacon_id:0,tid:0,range:5475,lnum:11316,seq:120}
+{time:1476864337.0371847153,type:'c',beacon_id:1,tid:0,range:8075,lnum:11316,seq:120}
+{time:1476864337.0371847153,type:'c',beacon_id:3,tid:0,range:10184,lnum:11316,seq:120}
+{time:1476864337.2731595039,type:'a',aid:0,bid:1,range:8431,lnum:11319,seq:97}
+{time:1476864337.2731595039,type:'a',aid:0,bid:2,range:12401,lnum:11319,seq:97}
+{time:1476864337.2731595039,type:'a',aid:1,bid:2,range:15185,lnum:11319,seq:97}
+{time:1476864337.3172171116,type:'c',beacon_id:0,tid:0,range:5034,lnum:11322,seq:121}
+{time:1476864337.3172171116,type:'c',beacon_id:1,tid:0,range:7869,lnum:11322,seq:121}
+{time:1476864337.3172171116,type:'c',beacon_id:3,tid:0,range:10451,lnum:11322,seq:121}
+{time:1476864337.5531246662,type:'a',aid:0,bid:1,range:8497,lnum:11325,seq:98}
+{time:1476864337.5531246662,type:'a',aid:0,bid:2,range:12279,lnum:11325,seq:98}
+{time:1476864337.5531246662,type:'a',aid:1,bid:2,range:15180,lnum:11325,seq:98}
+{time:1476864337.5964670181,type:'c',beacon_id:0,tid:0,range:4987,lnum:11328,seq:122}
+{time:1476864337.5974669456,type:'c',beacon_id:1,tid:0,range:7644,lnum:11328,seq:122}
+{time:1476864337.5974669456,type:'c',beacon_id:3,tid:0,range:10723,lnum:11328,seq:122}
+{time:1476864337.8771557808,type:'c',beacon_id:0,tid:0,range:4252,lnum:11331,seq:123}
+{time:1476864337.8771557808,type:'c',beacon_id:1,tid:0,range:7419,lnum:11331,seq:123}
+{time:1476864337.8771557808,type:'c',beacon_id:3,tid:0,range:10939,lnum:11331,seq:123}
+{time:1476864338.1569647789,type:'c',beacon_id:0,tid:0,range:4004,lnum:11333,seq:124}
+{time:1476864338.1569647789,type:'c',beacon_id:1,tid:0,range:7232,lnum:11333,seq:124}
+{time:1476864338.3928627968,type:'a',aid:0,bid:1,range:8506,lnum:11336,seq:101}
+{time:1476864338.3928627968,type:'a',aid:0,bid:2,range:12387,lnum:11336,seq:101}
+{time:1476864338.3928627968,type:'a',aid:1,bid:2,range:15162,lnum:11336,seq:101}
+{time:1476864338.436848402,type:'c',beacon_id:0,tid:0,range:3769,lnum:11338,seq:125}
+{time:1476864338.436848402,type:'c',beacon_id:1,tid:0,range:7105,lnum:11338,seq:125}
+{time:1476864338.6725394726,type:'a',aid:0,bid:1,range:8469,lnum:11341,seq:102}
+{time:1476864338.6725394726,type:'a',aid:0,bid:2,range:12176,lnum:11341,seq:102}
+{time:1476864338.6725394726,type:'a',aid:1,bid:2,range:15223,lnum:11341,seq:102}
+{time:1476864338.7205762863,type:'c',beacon_id:0,tid:0,range:3526,lnum:11343,seq:126}
+{time:1476864338.7205762863,type:'c',beacon_id:1,tid:0,range:6946,lnum:11343,seq:126}
+{time:1476864338.9530966282,type:'a',aid:0,bid:1,range:8492,lnum:11346,seq:103}
+{time:1476864338.9530966282,type:'a',aid:0,bid:2,range:12335,lnum:11346,seq:103}
+{time:1476864338.9530966282,type:'a',aid:1,bid:2,range:15251,lnum:11346,seq:103}
+{time:1476864338.9968326092,type:'c',beacon_id:0,tid:0,range:3297,lnum:11348,seq:127}
+{time:1476864338.9968326092,type:'c',beacon_id:1,tid:0,range:6749,lnum:11348,seq:127}
+{time:1476864339.2326395512,type:'a',aid:0,bid:1,range:8445,lnum:11351,seq:104}
+{time:1476864339.2326395512,type:'a',aid:0,bid:2,range:12227,lnum:11351,seq:104}
+{time:1476864339.2326395512,type:'a',aid:1,bid:2,range:15185,lnum:11351,seq:104}
+{time:1476864339.2767188549,type:'c',beacon_id:0,tid:0,range:3278,lnum:11353,seq:128}
+{time:1476864339.2767188549,type:'c',beacon_id:1,tid:0,range:6669,lnum:11353,seq:128}
+{time:1476864339.5130958557,type:'a',aid:0,bid:1,range:8492,lnum:11356,seq:105}
+{time:1476864339.5130958557,type:'a',aid:0,bid:2,range:12345,lnum:11356,seq:105}
+{time:1476864339.5130958557,type:'a',aid:1,bid:2,range:15185,lnum:11356,seq:105}
+{time:1476864339.5571432114,type:'c',beacon_id:0,tid:0,range:3029,lnum:11358,seq:129}
+{time:1476864339.5571432114,type:'c',beacon_id:1,tid:0,range:6646,lnum:11358,seq:129}
+{time:1476864339.7929463387,type:'a',aid:0,bid:1,range:8426,lnum:11361,seq:106}
+{time:1476864339.7929463387,type:'a',aid:0,bid:2,range:12241,lnum:11361,seq:106}
+{time:1476864339.7929463387,type:'a',aid:1,bid:2,range:15171,lnum:11361,seq:106}
+{time:1476864339.8370010853,type:'c',beacon_id:0,tid:0,range:2805,lnum:11362,seq:130}
+{time:1476864340.0731608868,type:'a',aid:0,bid:1,range:8506,lnum:11365,seq:107}
+{time:1476864340.0731608868,type:'a',aid:0,bid:2,range:12316,lnum:11365,seq:107}
+{time:1476864340.0731608868,type:'a',aid:1,bid:2,range:15265,lnum:11365,seq:107}
+{time:1476864340.1172120571,type:'c',beacon_id:0,tid:0,range:2627,lnum:11367,seq:131}
+{time:1476864340.1172120571,type:'c',beacon_id:3,tid:0,range:13010,lnum:11367,seq:131}
+{time:1476864340.3525969982,type:'a',aid:0,bid:1,range:8469,lnum:11370,seq:108}
+{time:1476864340.3525969982,type:'a',aid:0,bid:2,range:12382,lnum:11370,seq:108}
+{time:1476864340.3525969982,type:'a',aid:1,bid:2,range:15199,lnum:11370,seq:108}
+{time:1476864340.3968379498,type:'c',beacon_id:0,tid:0,range:2543,lnum:11373,seq:132}
+{time:1476864340.3968379498,type:'c',beacon_id:1,tid:0,range:6426,lnum:11373,seq:132}
+{time:1476864340.3968379498,type:'c',beacon_id:3,tid:0,range:13188,lnum:11373,seq:132}
+{time:1476864340.6769282818,type:'c',beacon_id:0,tid:0,range:2496,lnum:11376,seq:133}
+{time:1476864340.6769282818,type:'c',beacon_id:1,tid:0,range:6379,lnum:11376,seq:133}
+{time:1476864340.6769282818,type:'c',beacon_id:3,tid:0,range:13516,lnum:11376,seq:133}
+{time:1476864340.9611711502,type:'c',beacon_id:0,tid:0,range:2487,lnum:11379,seq:134}
+{time:1476864340.9611711502,type:'c',beacon_id:1,tid:0,range:6234,lnum:11379,seq:134}
+{time:1476864340.9611711502,type:'c',beacon_id:3,tid:0,range:13643,lnum:11379,seq:134}
+{time:1476864341.1924760342,type:'a',aid:0,bid:1,range:8445,lnum:11382,seq:111}
+{time:1476864341.1924760342,type:'a',aid:0,bid:2,range:12260,lnum:11382,seq:111}
+{time:1476864341.1924760342,type:'a',aid:1,bid:2,range:15213,lnum:11382,seq:111}
+{time:1476864341.2365074158,type:'c',beacon_id:0,tid:0,range:2683,lnum:11385,seq:135}
+{time:1476864341.2374596596,type:'c',beacon_id:1,tid:0,range:6154,lnum:11385,seq:135}
+{time:1476864341.2374596596,type:'c',beacon_id:3,tid:0,range:13807,lnum:11385,seq:135}
+{time:1476864341.4731893539,type:'a',aid:0,bid:1,range:8558,lnum:11388,seq:112}
+{time:1476864341.4731893539,type:'a',aid:0,bid:2,range:12279,lnum:11388,seq:112}
+{time:1476864341.4731893539,type:'a',aid:1,bid:2,range:15185,lnum:11388,seq:112}
+{time:1476864341.7526452541,type:'a',aid:0,bid:1,range:10025,lnum:11391,seq:113}
+{time:1476864341.7526452541,type:'a',aid:0,bid:2,range:12293,lnum:11391,seq:113}
+{time:1476864341.7526452541,type:'a',aid:1,bid:2,range:15241,lnum:11391,seq:113}
+{time:1476864341.7983109951,type:'c',beacon_id:0,tid:0,range:2903,lnum:11392,seq:137}
+{time:1476864342.0322744846,type:'a',aid:0,bid:1,range:9331,lnum:11395,seq:114}
+{time:1476864342.0332889557,type:'a',aid:0,bid:2,range:12298,lnum:11395,seq:114}
+{time:1476864342.0332889557,type:'a',aid:1,bid:2,range:15185,lnum:11395,seq:114}
+{time:1476864342.3128767014,type:'a',aid:0,bid:1,range:9978,lnum:11398,seq:115}
+{time:1476864342.3128767014,type:'a',aid:0,bid:2,range:12279,lnum:11398,seq:115}
+{time:1476864342.3128767014,type:'a',aid:1,bid:2,range:15237,lnum:11398,seq:115}
+{time:1476864342.3589093685,type:'c',beacon_id:0,tid:0,range:4112,lnum:11399,seq:139}
+{time:1476864343.1564078331,type:'a',aid:0,bid:1,range:9846,lnum:11402,seq:118}
+{time:1476864343.1564078331,type:'a',aid:0,bid:2,range:12279,lnum:11402,seq:118}
+{time:1476864343.1564078331,type:'a',aid:1,bid:2,range:15251,lnum:11402,seq:118}
+{time:1476864347.4008016586,type:'c',beacon_id:0,tid:0,range:7672,lnum:11404,seq:157}
+{time:1476864347.4008016586,type:'c',beacon_id:3,tid:0,range:12443,lnum:11404,seq:157}
+{time:1476864347.6771175861,type:'c',beacon_id:0,tid:0,range:7630,lnum:11407,seq:158}
+{time:1476864347.6771175861,type:'c',beacon_id:2,tid:0,range:14374,lnum:11407,seq:158}
+{time:1476864347.6771175861,type:'c',beacon_id:3,tid:0,range:12401,lnum:11407,seq:158}
+{time:1476864347.9568989277,type:'c',beacon_id:0,tid:0,range:7658,lnum:11411,seq:159}
+{time:1476864347.9568989277,type:'c',beacon_id:1,tid:0,range:1176,lnum:11411,seq:159}
+{time:1476864347.9568989277,type:'c',beacon_id:2,tid:0,range:14187,lnum:11411,seq:159}
+{time:1476864347.9568989277,type:'c',beacon_id:3,tid:0,range:11979,lnum:11411,seq:159}
+{time:1476864348.1930301189,type:'a',aid:0,bid:1,range:8511,lnum:11414,seq:136}
+{time:1476864348.1930301189,type:'a',aid:0,bid:2,range:12288,lnum:11414,seq:136}
+{time:1476864348.1930301189,type:'a',aid:1,bid:2,range:15143,lnum:11414,seq:136}
+{time:1476864348.2370371819,type:'c',beacon_id:0,tid:0,range:7630,lnum:11418,seq:160}
+{time:1476864348.2370371819,type:'c',beacon_id:1,tid:0,range:1377,lnum:11418,seq:160}
+{time:1476864348.2370371819,type:'c',beacon_id:2,tid:0,range:14055,lnum:11418,seq:160}
+{time:1476864348.2370371819,type:'c',beacon_id:3,tid:0,range:11632,lnum:11418,seq:160}
+Id:0 x: 7.8817601238362104965 y: 1.0022126665435360238 z: 2.5492327415116635692{time:1476864348.4727475643,type:'a',aid:0,bid:1,range:8459,lnum:11421,seq:137}
+{time:1476864348.4727475643,type:'a',aid:0,bid:2,range:12288,lnum:11421,seq:137}
+{time:1476864348.4727475643,type:'a',aid:1,bid:2,range:15227,lnum:11421,seq:137}
+{time:1476864348.5168190002,type:'c',beacon_id:0,tid:0,range:7686,lnum:11425,seq:161}
+{time:1476864348.5168190002,type:'c',beacon_id:1,tid:0,range:1541,lnum:11425,seq:161}
+{time:1476864348.5168190002,type:'c',beacon_id:2,tid:0,range:13868,lnum:11425,seq:161}
+{time:1476864348.5168190002,type:'c',beacon_id:3,tid:0,range:11416,lnum:11425,seq:161}
+Id:0 x: 7.8209390381460206498 y: 1.1309894530384467792 z: 2.337674235198888617{time:1476864348.7971892357,type:'c',beacon_id:0,tid:0,range:7709,lnum:11429,seq:162}
+{time:1476864348.7971892357,type:'c',beacon_id:1,tid:0,range:1803,lnum:11429,seq:162}
+{time:1476864348.7971892357,type:'c',beacon_id:2,tid:0,range:13742,lnum:11429,seq:162}
+{time:1476864348.7971892357,type:'c',beacon_id:3,tid:0,range:11234,lnum:11429,seq:162}
+Id:0 x: 7.8386642764467309163 y: 1.3741074926238199261 z: 2.3341419371420712991{time:1476864349.0771591663,type:'c',beacon_id:0,tid:0,range:7761,lnum:11433,seq:163}
+{time:1476864349.0771591663,type:'c',beacon_id:1,tid:0,range:2126,lnum:11433,seq:163}
+{time:1476864349.0771591663,type:'c',beacon_id:2,tid:0,range:13470,lnum:11433,seq:163}
+{time:1476864349.0771591663,type:'c',beacon_id:3,tid:0,range:11112,lnum:11433,seq:163}
+Id:0 x: 7.7345357190976544715 y: 1.5701395356533667247 z: 2.4862879711543177663{time:1476864349.3572778702,type:'c',beacon_id:0,tid:0,range:7925,lnum:11436,seq:164}
+{time:1476864349.3572778702,type:'c',beacon_id:1,tid:0,range:2412,lnum:11436,seq:164}
+{time:1476864349.3572778702,type:'c',beacon_id:2,tid:0,range:13296,lnum:11436,seq:164}
+Id:0 x: 7.7022238565275378264 y: 1.8936676643225414107 z: 2.3164128138728248274{time:1476864349.5966889858,type:'a',aid:0,bid:1,range:8464,lnum:11439,seq:141}
+{time:1476864349.5966889858,type:'a',aid:0,bid:2,range:12260,lnum:11439,seq:141}
+{time:1476864349.5966889858,type:'a',aid:1,bid:2,range:15138,lnum:11439,seq:141}
+{time:1476864349.6367018223,type:'c',beacon_id:0,tid:0,range:8014,lnum:11443,seq:165}
+{time:1476864349.6367018223,type:'c',beacon_id:1,tid:0,range:2665,lnum:11443,seq:165}
+{time:1476864349.6367018223,type:'c',beacon_id:2,tid:0,range:13094,lnum:11443,seq:165}
+{time:1476864349.6367018223,type:'c',beacon_id:3,tid:0,range:10549,lnum:11443,seq:165}
+Id:0 x: 7.7091728915567623304 y: 2.2226407350660593032 z: 2.82927656601577171{time:1476864349.8731069565,type:'a',aid:0,bid:1,range:8464,lnum:11446,seq:142}
+{time:1476864349.8731069565,type:'a',aid:0,bid:2,range:12330,lnum:11446,seq:142}
+{time:1476864349.8731069565,type:'a',aid:1,bid:2,range:15227,lnum:11446,seq:142}
+{time:1476864349.9172358513,type:'c',beacon_id:0,tid:0,range:8000,lnum:11450,seq:166}
+{time:1476864349.9172358513,type:'c',beacon_id:1,tid:0,range:2936,lnum:11450,seq:166}
+{time:1476864349.9172358513,type:'c',beacon_id:2,tid:0,range:12781,lnum:11450,seq:166}
+{time:1476864349.9172358513,type:'c',beacon_id:3,tid:0,range:10222,lnum:11450,seq:166}
+Id:0 x: 7.7148844349216050276 y: 2.488013800230024497 z: 2.6431506120654324477{time:1476864350.1534929276,type:'a',aid:0,bid:1,range:8441,lnum:11453,seq:143}
+{time:1476864350.1534929276,type:'a',aid:0,bid:2,range:12284,lnum:11453,seq:143}
+{time:1476864350.1534929276,type:'a',aid:1,bid:2,range:15208,lnum:11453,seq:143}
+{time:1476864350.1971971989,type:'c',beacon_id:0,tid:0,range:8038,lnum:11457,seq:167}
+{time:1476864350.1971971989,type:'c',beacon_id:1,tid:0,range:3297,lnum:11457,seq:167}
+{time:1476864350.1971971989,type:'c',beacon_id:2,tid:0,range:12602,lnum:11457,seq:167}
+{time:1476864350.1971971989,type:'c',beacon_id:3,tid:0,range:9879,lnum:11457,seq:167}
+Id:0 x: 7.6705483892423993453 y: 2.7582345156483838444 z: 2.1084677431653187085{time:1476864350.4771614075,type:'c',beacon_id:0,tid:0,range:8202,lnum:11461,seq:168}
+{time:1476864350.4771614075,type:'c',beacon_id:1,tid:0,range:3517,lnum:11461,seq:168}
+{time:1476864350.4771614075,type:'c',beacon_id:2,tid:0,range:12321,lnum:11461,seq:168}
+{time:1476864350.4771614075,type:'c',beacon_id:3,tid:0,range:9584,lnum:11461,seq:168}
+Id:0 x: 7.5172818381303301294 y: 2.9923701743140833642 z: 2.1263647752114271938{time:1476864350.7572724819,type:'c',beacon_id:0,tid:0,range:8296,lnum:11465,seq:169}
+{time:1476864350.7572724819,type:'c',beacon_id:1,tid:0,range:3868,lnum:11465,seq:169}
+{time:1476864350.7572724819,type:'c',beacon_id:2,tid:0,range:11782,lnum:11465,seq:169}
+{time:1476864350.7572724819,type:'c',beacon_id:3,tid:0,range:9158,lnum:11465,seq:169}
+Id:0 x: 7.582301745555898087 y: 3.3747163524670531487 z: 2.7921688672709543688{time:1476864350.9928512573,type:'a',aid:0,bid:1,range:8469,lnum:11468,seq:146}
+{time:1476864350.9928512573,type:'a',aid:0,bid:2,range:12326,lnum:11468,seq:146}
+{time:1476864350.9928512573,type:'a',aid:1,bid:2,range:15166,lnum:11468,seq:146}
+{time:1476864351.0368943214,type:'c',beacon_id:0,tid:0,range:8394,lnum:11472,seq:170}
+{time:1476864351.0368943214,type:'c',beacon_id:1,tid:0,range:4167,lnum:11472,seq:170}
+{time:1476864351.0368943214,type:'c',beacon_id:2,tid:0,range:11506,lnum:11472,seq:170}
+{time:1476864351.0368943214,type:'c',beacon_id:3,tid:0,range:8759,lnum:11472,seq:170}
+Id:0 x: 7.620559725687697572 y: 3.8931629999977124257 z: 2.1866321111112001496{time:1476864351.272967577,type:'a',aid:0,bid:1,range:8464,lnum:11475,seq:147}
+{time:1476864351.272967577,type:'a',aid:0,bid:2,range:12251,lnum:11475,seq:147}
+{time:1476864351.272967577,type:'a',aid:1,bid:2,range:15194,lnum:11475,seq:147}
+{time:1476864351.31650877,type:'c',beacon_id:0,tid:0,range:8736,lnum:11479,seq:171}
+{time:1476864351.3174726963,type:'c',beacon_id:1,tid:0,range:4510,lnum:11479,seq:171}
+{time:1476864351.3174726963,type:'c',beacon_id:2,tid:0,range:11262,lnum:11479,seq:171}
+{time:1476864351.3174726963,type:'c',beacon_id:3,tid:0,range:8464,lnum:11479,seq:171}
+Id:0 x: 7.5705184521027932831 y: 4.2141752498990827647 z: 2.2833317856154669023{time:1476864351.5529930592,type:'a',aid:0,bid:1,range:8436,lnum:11482,seq:148}
+{time:1476864351.5529930592,type:'a',aid:0,bid:2,range:12293,lnum:11482,seq:148}
+{time:1476864351.5529930592,type:'a',aid:1,bid:2,range:15218,lnum:11482,seq:148}
+{time:1476864351.6009626389,type:'c',beacon_id:0,tid:0,range:8816,lnum:11486,seq:172}
+{time:1476864351.6009626389,type:'c',beacon_id:1,tid:0,range:4833,lnum:11486,seq:172}
+{time:1476864351.6009626389,type:'c',beacon_id:2,tid:0,range:11051,lnum:11486,seq:172}
+{time:1476864351.6009626389,type:'c',beacon_id:3,tid:0,range:8258,lnum:11486,seq:172}
+Id:0 x: 7.7806681181876005127 y: 4.6603528212817515453 z: 1.9005404892447239629{time:1476864351.8770260811,type:'c',beacon_id:0,tid:0,range:8956,lnum:11490,seq:173}
+{time:1476864351.8770260811,type:'c',beacon_id:1,tid:0,range:5260,lnum:11490,seq:173}
+{time:1476864351.8770260811,type:'c',beacon_id:2,tid:0,range:10798,lnum:11490,seq:173}
+{time:1476864351.8770260811,type:'c',beacon_id:3,tid:0,range:7958,lnum:11490,seq:173}
+Id:0 x: 7.6337982249816231928 y: 4.9196248168418446056 z: 2.2101441132831487479{time:1476864352.1570503712,type:'c',beacon_id:0,tid:0,range:8924,lnum:11494,seq:174}
+{time:1476864352.1570503712,type:'c',beacon_id:1,tid:0,range:5404,lnum:11494,seq:174}
+{time:1476864352.1570503712,type:'c',beacon_id:2,tid:0,range:10662,lnum:11494,seq:174}
+{time:1476864352.1570503712,type:'c',beacon_id:3,tid:0,range:7569,lnum:11494,seq:174}
+Id:0 x: 7.4796879961933271375 y: 5.2498430798875075354 z: 2.4292538951874629305{time:1476864352.3930282593,type:'a',aid:0,bid:1,range:8455,lnum:11497,seq:151}
+{time:1476864352.3930282593,type:'a',aid:0,bid:2,range:12265,lnum:11497,seq:151}
+{time:1476864352.3930282593,type:'a',aid:1,bid:2,range:15180,lnum:11497,seq:151}
+{time:1476864352.4370589256,type:'c',beacon_id:0,tid:0,range:8802,lnum:11501,seq:175}
+{time:1476864352.4370589256,type:'c',beacon_id:1,tid:0,range:5849,lnum:11501,seq:175}
+{time:1476864352.4370589256,type:'c',beacon_id:2,tid:0,range:10423,lnum:11501,seq:175}
+{time:1476864352.4370589256,type:'c',beacon_id:3,tid:0,range:7096,lnum:11501,seq:175}
+Id:0 x: 7.3568649467287681176 y: 5.3384366730444234861 z: 2.2094254978258591748{time:1476864352.6726996899,type:'a',aid:0,bid:1,range:8497,lnum:11504,seq:152}
+{time:1476864352.6726996899,type:'a',aid:0,bid:2,range:12330,lnum:11504,seq:152}
+{time:1476864352.6726996899,type:'a',aid:1,bid:2,range:15241,lnum:11504,seq:152}
+{time:1476864352.7172226906,type:'c',beacon_id:0,tid:0,range:9509,lnum:11508,seq:176}
+{time:1476864352.7172226906,type:'c',beacon_id:1,tid:0,range:6295,lnum:11508,seq:176}
+{time:1476864352.7172226906,type:'c',beacon_id:2,tid:0,range:10254,lnum:11508,seq:176}
+{time:1476864352.7172226906,type:'c',beacon_id:3,tid:0,range:6881,lnum:11508,seq:176}
+Id:0 x: 6.8731595888854393195 y: 5.4601494425247789621 z: 2.3506546904700975631{time:1476864352.9529585838,type:'a',aid:0,bid:1,range:8497,lnum:11511,seq:153}
+{time:1476864352.9529585838,type:'a',aid:0,bid:2,range:12330,lnum:11511,seq:153}
+{time:1476864352.9529585838,type:'a',aid:1,bid:2,range:15171,lnum:11511,seq:153}
+{time:1476864352.9965667725,type:'c',beacon_id:0,tid:0,range:9462,lnum:11515,seq:177}
+{time:1476864352.9965667725,type:'c',beacon_id:1,tid:0,range:6585,lnum:11515,seq:177}
+{time:1476864352.9965667725,type:'c',beacon_id:2,tid:0,range:9875,lnum:11515,seq:177}
+{time:1476864352.9965667725,type:'c',beacon_id:3,tid:0,range:6548,lnum:11515,seq:177}
+Id:0 x: 7.3339880981821092831 y: 6.1113242989593166143 z: 1.905826847033526672{time:1476864353.2324512005,type:'a',aid:0,bid:1,range:8455,lnum:11518,seq:154}
+{time:1476864353.2324512005,type:'a',aid:0,bid:2,range:12148,lnum:11518,seq:154}
+{time:1476864353.2324512005,type:'a',aid:1,bid:2,range:15223,lnum:11518,seq:154}
+{time:1476864353.2779870033,type:'c',beacon_id:0,tid:0,range:9753,lnum:11522,seq:178}
+{time:1476864353.2779870033,type:'c',beacon_id:1,tid:0,range:6787,lnum:11522,seq:178}
+{time:1476864353.2779870033,type:'c',beacon_id:2,tid:0,range:9669,lnum:11522,seq:178}
+{time:1476864353.2779870033,type:'c',beacon_id:3,tid:0,range:6271,lnum:11522,seq:178}
+Id:0 x: 7.0692893303831052521 y: 6.3668063434921675636 z: 2.0404327288827106557{time:1476864353.5124418736,type:'a',aid:0,bid:1,range:8497,lnum:11525,seq:155}
+{time:1476864353.5124418736,type:'a',aid:0,bid:2,range:12293,lnum:11525,seq:155}
+{time:1476864353.5124418736,type:'a',aid:1,bid:2,range:15180,lnum:11525,seq:155}
+{time:1476864353.5565080643,type:'c',beacon_id:0,tid:0,range:9907,lnum:11529,seq:179}
+{time:1476864353.5565080643,type:'c',beacon_id:1,tid:0,range:7204,lnum:11529,seq:179}
+{time:1476864353.5565080643,type:'c',beacon_id:2,tid:0,range:9556,lnum:11529,seq:179}
+{time:1476864353.5565080643,type:'c',beacon_id:3,tid:0,range:5929,lnum:11529,seq:179}
+Id:0 x: 7.2667275560725093086 y: 6.7530689481570647104 z: 2.1919533384430835987{time:1476864353.7967679501,type:'a',aid:0,bid:1,range:8478,lnum:11532,seq:156}
+{time:1476864353.7967679501,type:'a',aid:0,bid:2,range:12307,lnum:11532,seq:156}
+{time:1476864353.7967679501,type:'a',aid:1,bid:2,range:15232,lnum:11532,seq:156}
+{time:1476864353.8378067017,type:'c',beacon_id:0,tid:0,range:10184,lnum:11536,seq:180}
+{time:1476864353.8378067017,type:'c',beacon_id:1,tid:0,range:7611,lnum:11536,seq:180}
+{time:1476864353.8378067017,type:'c',beacon_id:2,tid:0,range:9340,lnum:11536,seq:180}
+{time:1476864353.8378067017,type:'c',beacon_id:3,tid:0,range:5578,lnum:11536,seq:180}
+Id:0 x: 7.0415697652083508729 y: 6.9462034224059072685 z: 2.4385712367004415135{time:1476864354.0730350018,type:'a',aid:0,bid:1,range:8487,lnum:11539,seq:157}
+{time:1476864354.0730350018,type:'a',aid:0,bid:2,range:12312,lnum:11539,seq:157}
+{time:1476864354.0730350018,type:'a',aid:1,bid:2,range:15208,lnum:11539,seq:157}
+{time:1476864354.116953373,type:'c',beacon_id:0,tid:0,range:10348,lnum:11543,seq:181}
+{time:1476864354.1179475784,type:'c',beacon_id:1,tid:0,range:8258,lnum:11543,seq:181}
+{time:1476864354.1179475784,type:'c',beacon_id:2,tid:0,range:9256,lnum:11543,seq:181}
+{time:1476864354.1179475784,type:'c',beacon_id:3,tid:0,range:5227,lnum:11543,seq:181}
+Id:0 x: 7.0153776389383937229 y: 7.321019482049754501 z: 2.0507864694753350499{time:1476864354.3534221649,type:'a',aid:0,bid:1,range:8464,lnum:11546,seq:158}
+{time:1476864354.3534221649,type:'a',aid:0,bid:2,range:12387,lnum:11546,seq:158}
+{time:1476864354.3534221649,type:'a',aid:1,bid:2,range:15237,lnum:11546,seq:158}
+{time:1476864354.6329741478,type:'a',aid:0,bid:1,range:8459,lnum:11549,seq:159}
+{time:1476864354.6329741478,type:'a',aid:0,bid:2,range:12321,lnum:11549,seq:159}
+{time:1476864354.6329741478,type:'a',aid:1,bid:2,range:15241,lnum:11549,seq:159}
+{time:1476864354.6790075302,type:'c',beacon_id:0,tid:0,range:10610,lnum:11550,seq:183}
+{time:1476864354.9123270512,type:'a',aid:0,bid:1,range:8464,lnum:11553,seq:160}
+{time:1476864354.9123270512,type:'a',aid:0,bid:2,range:12279,lnum:11553,seq:160}
+{time:1476864354.9123270512,type:'a',aid:1,bid:2,range:15279,lnum:11553,seq:160}
+{time:1476864354.9563579559,type:'c',beacon_id:0,tid:0,range:11164,lnum:11556,seq:184}
+{time:1476864354.9563579559,type:'c',beacon_id:2,tid:0,range:8595,lnum:11556,seq:184}
+{time:1476864354.9563579559,type:'c',beacon_id:3,tid:0,range:4247,lnum:11556,seq:184}
+{time:1476864355.1931390762,type:'a',aid:0,bid:1,range:8492,lnum:11559,seq:161}
+{time:1476864355.1931390762,type:'a',aid:0,bid:2,range:12368,lnum:11559,seq:161}
+{time:1476864355.1931390762,type:'a',aid:1,bid:2,range:15199,lnum:11559,seq:161}
+{time:1476864355.2371826172,type:'c',beacon_id:0,tid:0,range:11051,lnum:11562,seq:185}
+{time:1476864355.2371826172,type:'c',beacon_id:2,tid:0,range:8487,lnum:11562,seq:185}
+{time:1476864355.2371826172,type:'c',beacon_id:3,tid:0,range:3840,lnum:11562,seq:185}
+{time:1476864355.4725916386,type:'a',aid:0,bid:1,range:8464,lnum:11565,seq:162}
+{time:1476864355.4725916386,type:'a',aid:0,bid:2,range:12335,lnum:11565,seq:162}
+{time:1476864355.4725916386,type:'a',aid:1,bid:2,range:15199,lnum:11565,seq:162}
+{time:1476864355.8011164665,type:'c',beacon_id:0,tid:0,range:12143,lnum:11566,seq:187}
+{time:1476864356.0765759945,type:'c',beacon_id:0,tid:0,range:12368,lnum:11569,seq:188}
+{time:1476864356.0765759945,type:'c',beacon_id:2,tid:0,range:8179,lnum:11569,seq:188}
+{time:1476864356.0765759945,type:'c',beacon_id:3,tid:0,range:2940,lnum:11569,seq:188}
+{time:1476864356.3122975826,type:'a',aid:0,bid:1,range:8450,lnum:11572,seq:165}
+{time:1476864356.3122975826,type:'a',aid:0,bid:2,range:12307,lnum:11572,seq:165}
+{time:1476864356.3122975826,type:'a',aid:1,bid:2,range:15180,lnum:11572,seq:165}
+{time:1476864356.3572916985,type:'c',beacon_id:0,tid:0,range:12316,lnum:11575,seq:189}
+{time:1476864356.3572916985,type:'c',beacon_id:2,tid:0,range:8197,lnum:11575,seq:189}
+{time:1476864356.3572916985,type:'c',beacon_id:3,tid:0,range:2777,lnum:11575,seq:189}
+{time:1476864356.5931923389,type:'a',aid:0,bid:1,range:8455,lnum:11577,seq:166}
+{time:1476864356.5931923389,type:'a',aid:0,bid:2,range:12307,lnum:11577,seq:166}
+{time:1476864356.6362748146,type:'c',beacon_id:0,tid:0,range:12692,lnum:11581,seq:190}
+{time:1476864356.6372623444,type:'c',beacon_id:1,tid:0,range:10939,lnum:11581,seq:190}
+{time:1476864356.6372623444,type:'c',beacon_id:2,tid:0,range:7794,lnum:11581,seq:190}
+{time:1476864356.6372623444,type:'c',beacon_id:3,tid:0,range:2501,lnum:11581,seq:190}
+{time:1476864356.8726902008,type:'a',aid:0,bid:1,range:8464,lnum:11584,seq:167}
+{time:1476864356.8726902008,type:'a',aid:0,bid:2,range:12298,lnum:11584,seq:167}
+{time:1476864356.8726902008,type:'a',aid:1,bid:2,range:15208,lnum:11584,seq:167}
+{time:1476864356.9172379971,type:'c',beacon_id:0,tid:0,range:12996,lnum:11587,seq:191}
+{time:1476864356.9172379971,type:'c',beacon_id:2,tid:0,range:7897,lnum:11587,seq:191}
+{time:1476864356.9172379971,type:'c',beacon_id:3,tid:0,range:2342,lnum:11587,seq:191}
+Id:0 x: 6.7694473443477223285 y: 10.578756694098386149 z: 1.1693297786951981632{time:1476864357.1530294418,type:'a',aid:0,bid:1,range:8436,lnum:11590,seq:168}
+{time:1476864357.1530294418,type:'a',aid:0,bid:2,range:12316,lnum:11590,seq:168}
+{time:1476864357.1530294418,type:'a',aid:1,bid:2,range:15232,lnum:11590,seq:168}
+{time:1476864357.1976633072,type:'c',beacon_id:0,tid:0,range:13268,lnum:11593,seq:192}
+{time:1476864357.1976633072,type:'c',beacon_id:1,tid:0,range:11393,lnum:11593,seq:192}
+{time:1476864357.1976633072,type:'c',beacon_id:3,tid:0,range:2093,lnum:11593,seq:192}
+{time:1476864357.4329409599,type:'a',aid:0,bid:1,range:8469,lnum:11596,seq:169}
+{time:1476864357.4329409599,type:'a',aid:0,bid:2,range:12302,lnum:11596,seq:169}
+{time:1476864357.4329409599,type:'a',aid:1,bid:2,range:15237,lnum:11596,seq:169}
+{time:1476864357.7129445076,type:'a',aid:0,bid:1,range:8497,lnum:11599,seq:170}
+{time:1476864357.7129445076,type:'a',aid:0,bid:2,range:12265,lnum:11599,seq:170}
+{time:1476864357.7129445076,type:'a',aid:1,bid:2,range:15227,lnum:11599,seq:170}
+{time:1476864357.7589747906,type:'c',beacon_id:0,tid:0,range:13456,lnum:11601,seq:194}
+{time:1476864357.9965190887,type:'a',aid:0,bid:1,range:8502,lnum:11604,seq:171}
+{time:1476864357.9965190887,type:'a',aid:0,bid:2,range:12307,lnum:11604,seq:171}
+{time:1476864357.9965190887,type:'a',aid:1,bid:2,range:15218,lnum:11604,seq:171}
+{time:1476864358.0365841389,type:'c',beacon_id:0,tid:0,range:13756,lnum:11607,seq:195}
+{time:1476864358.0365841389,type:'c',beacon_id:1,tid:0,range:12133,lnum:11607,seq:195}
+{time:1476864358.0365841389,type:'c',beacon_id:3,tid:0,range:1883,lnum:11607,seq:195}
+{time:1476864358.272377491,type:'a',aid:0,bid:1,range:8506,lnum:11610,seq:172}
+{time:1476864358.272377491,type:'a',aid:0,bid:2,range:12260,lnum:11610,seq:172}
+{time:1476864358.272377491,type:'a',aid:1,bid:2,range:15213,lnum:11610,seq:172}
+{time:1476864358.5528285503,type:'a',aid:0,bid:1,range:8473,lnum:11613,seq:173}
+{time:1476864358.5528285503,type:'a',aid:0,bid:2,range:12246,lnum:11613,seq:173}
+{time:1476864358.5528285503,type:'a',aid:1,bid:2,range:15204,lnum:11613,seq:173}
+{time:1476864358.5990109444,type:'c',beacon_id:0,tid:0,range:13939,lnum:11614,seq:197}
+{time:1476864358.8326900005,type:'a',aid:0,bid:1,range:8483,lnum:11617,seq:174}
+{time:1476864358.8326900005,type:'a',aid:0,bid:2,range:12255,lnum:11617,seq:174}
+{time:1476864358.8326900005,type:'a',aid:1,bid:2,range:15194,lnum:11617,seq:174}
+{time:1476864358.8766918182,type:'c',beacon_id:0,tid:0,range:13953,lnum:11620,seq:198}
+{time:1476864358.8766918182,type:'c',beacon_id:2,tid:0,range:7925,lnum:11620,seq:198}
+{time:1476864358.8766918182,type:'c',beacon_id:3,tid:0,range:1952,lnum:11620,seq:198}
+{time:1476864359.1128132343,type:'a',aid:0,bid:1,range:8464,lnum:11623,seq:175}
+{time:1476864359.1128132343,type:'a',aid:0,bid:2,range:12377,lnum:11623,seq:175}
+{time:1476864359.1128132343,type:'a',aid:1,bid:2,range:15204,lnum:11623,seq:175}
+{time:1476864359.3928332329,type:'a',aid:0,bid:1,range:8459,lnum:11626,seq:176}
+{time:1476864359.3928332329,type:'a',aid:0,bid:2,range:12335,lnum:11626,seq:176}
+{time:1476864359.3928332329,type:'a',aid:1,bid:2,range:15227,lnum:11626,seq:176}
+{time:1476864359.4389271736,type:'c',beacon_id:0,tid:0,range:13864,lnum:11627,seq:200}
+{time:1476864359.6728262901,type:'a',aid:0,bid:1,range:8530,lnum:11630,seq:177}
+{time:1476864359.6728262901,type:'a',aid:0,bid:2,range:12340,lnum:11630,seq:177}
+{time:1476864359.6728262901,type:'a',aid:1,bid:2,range:15194,lnum:11630,seq:177}
+{time:1476864359.7164514065,type:'c',beacon_id:0,tid:0,range:13723,lnum:11634,seq:201}
+{time:1476864359.7164514065,type:'c',beacon_id:1,tid:0,range:12373,lnum:11634,seq:201}
+{time:1476864359.7164514065,type:'c',beacon_id:2,tid:0,range:7606,lnum:11634,seq:201}
+{time:1476864359.7164514065,type:'c',beacon_id:3,tid:0,range:2121,lnum:11634,seq:201}
+{time:1476864359.9525830746,type:'a',aid:0,bid:1,range:8530,lnum:11637,seq:178}
+{time:1476864359.9525830746,type:'a',aid:0,bid:2,range:12405,lnum:11637,seq:178}
+{time:1476864359.9525830746,type:'a',aid:1,bid:2,range:15227,lnum:11637,seq:178}
+{time:1476864360.0012443066,type:'c',beacon_id:0,tid:0,range:13521,lnum:11641,seq:202}
+{time:1476864360.0012443066,type:'c',beacon_id:1,tid:0,range:12119,lnum:11641,seq:202}
+{time:1476864360.0012443066,type:'c',beacon_id:2,tid:0,range:7452,lnum:11641,seq:202}
+{time:1476864360.0012443066,type:'c',beacon_id:3,tid:0,range:2646,lnum:11641,seq:202}
+Id:0 x: 6.4200928916548276604 y: 11.739759877694542212 z: -0.046501973837635546261{time:1476864360.2331652641,type:'a',aid:0,bid:1,range:8469,lnum:11644,seq:179}
+{time:1476864360.2331652641,type:'a',aid:0,bid:2,range:12260,lnum:11644,seq:179}
+{time:1476864360.2331652641,type:'a',aid:1,bid:2,range:15237,lnum:11644,seq:179}
+{time:1476864360.2781934738,type:'c',beacon_id:0,tid:0,range:13348,lnum:11648,seq:203}
+{time:1476864360.2781934738,type:'c',beacon_id:1,tid:0,range:12523,lnum:11648,seq:203}
+{time:1476864360.2781934738,type:'c',beacon_id:2,tid:0,range:7026,lnum:11648,seq:203}
+{time:1476864360.2781934738,type:'c',beacon_id:3,tid:0,range:2926,lnum:11648,seq:203}
+Id:0 x: 6.4605614516516887136 y: 11.617180551016520695 z: 0.52619669849930428285{time:1476864360.5130839348,type:'a',aid:0,bid:1,range:8459,lnum:11651,seq:180}
+{time:1476864360.5130839348,type:'a',aid:0,bid:2,range:12307,lnum:11651,seq:180}
+{time:1476864360.5130839348,type:'a',aid:1,bid:2,range:15171,lnum:11651,seq:180}
+{time:1476864360.557123661,type:'c',beacon_id:0,tid:0,range:13179,lnum:11655,seq:204}
+{time:1476864360.557123661,type:'c',beacon_id:1,tid:0,range:12105,lnum:11655,seq:204}
+{time:1476864360.557123661,type:'c',beacon_id:2,tid:0,range:6712,lnum:11655,seq:204}
+{time:1476864360.557123661,type:'c',beacon_id:3,tid:0,range:2945,lnum:11655,seq:204}
+Id:0 x: 5.6370873239499674767 y: 11.646701259908175174 z: -0.27821601860157318953{time:1476864360.7928664684,type:'a',aid:0,bid:1,range:8487,lnum:11658,seq:181}
+{time:1476864360.7928664684,type:'a',aid:0,bid:2,range:12265,lnum:11658,seq:181}
+{time:1476864360.7933294773,type:'a',aid:1,bid:2,range:15251,lnum:11658,seq:181}
+{time:1476864360.8369457722,type:'c',beacon_id:0,tid:0,range:13090,lnum:11662,seq:205}
+{time:1476864360.8369457722,type:'c',beacon_id:1,tid:0,range:12293,lnum:11662,seq:205}
+{time:1476864360.8369457722,type:'c',beacon_id:2,tid:0,range:6444,lnum:11662,seq:205}
+{time:1476864360.8369457722,type:'c',beacon_id:3,tid:0,range:3423,lnum:11662,seq:205}
+Id:0 x: 5.9647830222789188781 y: 11.651907930361105059 z: 4.5298516527824430611{time:1476864361.0729744434,type:'a',aid:0,bid:1,range:8516,lnum:11665,seq:182}
+{time:1476864361.0729744434,type:'a',aid:0,bid:2,range:12335,lnum:11665,seq:182}
+{time:1476864361.0729744434,type:'a',aid:1,bid:2,range:15241,lnum:11665,seq:182}
+{time:1476864361.1171951294,type:'c',beacon_id:0,tid:0,range:12973,lnum:11669,seq:206}
+{time:1476864361.1171951294,type:'c',beacon_id:1,tid:0,range:12448,lnum:11669,seq:206}
+{time:1476864361.1171951294,type:'c',beacon_id:2,tid:0,range:6178,lnum:11669,seq:206}
+{time:1476864361.1171951294,type:'c',beacon_id:3,tid:0,range:3675,lnum:11669,seq:206}
+Id:0 x: 5.5743091789689911408 y: 11.684114171484225153 z: 1.0617912380283802687{time:1476864361.3525846004,type:'a',aid:0,bid:1,range:8469,lnum:11672,seq:183}
+{time:1476864361.3525846004,type:'a',aid:0,bid:2,range:12293,lnum:11672,seq:183}
+{time:1476864361.3525846004,type:'a',aid:1,bid:2,range:15232,lnum:11672,seq:183}
+{time:1476864361.3973829746,type:'c',beacon_id:0,tid:0,range:12875,lnum:11675,seq:207}
+{time:1476864361.3973829746,type:'c',beacon_id:1,tid:0,range:12429,lnum:11675,seq:207}
+{time:1476864361.3973829746,type:'c',beacon_id:2,tid:0,range:5896,lnum:11675,seq:207}
+Id:0 x: 5.1861212499296467371 y: 11.682133366847752498 z: 0.77949659306485497012{time:1476864361.6766238213,type:'c',beacon_id:0,tid:0,range:12781,lnum:11678,seq:208}
+{time:1476864361.6766238213,type:'c',beacon_id:1,tid:0,range:12617,lnum:11678,seq:208}
+{time:1476864361.6766238213,type:'c',beacon_id:2,tid:0,range:5559,lnum:11678,seq:208}
+Id:0 x: 5.0699370449518088577 y: 11.71190572571348909 z: 1.2992273425807536746{time:1476864361.956656456,type:'c',beacon_id:0,tid:0,range:12654,lnum:11681,seq:209}
+{time:1476864361.956656456,type:'c',beacon_id:1,tid:0,range:12560,lnum:11681,seq:209}
+{time:1476864361.956656456,type:'c',beacon_id:2,tid:0,range:5283,lnum:11681,seq:209}
+Id:0 x: 4.668436691913720793 y: 11.753873654072050314 z: 1.1544339682079498566{time:1476864362.197188139,type:'a',aid:0,bid:1,range:8544,lnum:11684,seq:186}
+{time:1476864362.197188139,type:'a',aid:0,bid:2,range:12194,lnum:11684,seq:186}
+{time:1476864362.197188139,type:'a',aid:1,bid:2,range:15208,lnum:11684,seq:186}
+{time:1476864362.2372920513,type:'c',beacon_id:0,tid:0,range:12452,lnum:11688,seq:210}
+{time:1476864362.2372920513,type:'c',beacon_id:1,tid:0,range:12856,lnum:11688,seq:210}
+{time:1476864362.2372920513,type:'c',beacon_id:2,tid:0,range:5006,lnum:11688,seq:210}
+{time:1476864362.2372920513,type:'c',beacon_id:3,tid:0,range:4950,lnum:11688,seq:210}
+Id:0 x: 4.56721138496671486 y: 11.740963038733514878 z: 1.8108477439268317877{time:1476864362.4725670815,type:'a',aid:0,bid:1,range:8520,lnum:11691,seq:187}
+{time:1476864362.4725670815,type:'a',aid:0,bid:2,range:12265,lnum:11691,seq:187}
+{time:1476864362.4725670815,type:'a',aid:1,bid:2,range:15208,lnum:11691,seq:187}
+{time:1476864362.517039299,type:'c',beacon_id:0,tid:0,range:12415,lnum:11695,seq:211}
+{time:1476864362.517039299,type:'c',beacon_id:1,tid:0,range:12846,lnum:11695,seq:211}
+{time:1476864362.517039299,type:'c',beacon_id:2,tid:0,range:4566,lnum:11695,seq:211}
+{time:1476864362.517039299,type:'c',beacon_id:3,tid:0,range:5283,lnum:11695,seq:211}
+Id:0 x: 3.8570296586104619863 y: 11.628858545085719811 z: 0.77620253822744000871{time:1476864362.7532572746,type:'a',aid:0,bid:1,range:8455,lnum:11698,seq:188}
+{time:1476864362.7532572746,type:'a',aid:0,bid:2,range:12260,lnum:11698,seq:188}
+{time:1476864362.7532572746,type:'a',aid:1,bid:2,range:15232,lnum:11698,seq:188}
+{time:1476864362.7968289852,type:'c',beacon_id:0,tid:0,range:12241,lnum:11701,seq:212}
+{time:1476864362.7968289852,type:'c',beacon_id:1,tid:0,range:12936,lnum:11701,seq:212}
+{time:1476864362.7973265648,type:'c',beacon_id:2,tid:0,range:4847,lnum:11701,seq:212}
+Id:0 x: 3.8196410690956916767 y: 11.755726202823689519 z: 1.8400566619347298314{time:1476864363.0331544876,type:'a',aid:0,bid:1,range:8473,lnum:11704,seq:189}
+{time:1476864363.0331544876,type:'a',aid:0,bid:2,range:12260,lnum:11704,seq:189}
+{time:1476864363.0331544876,type:'a',aid:1,bid:2,range:15227,lnum:11704,seq:189}
+{time:1476864363.0772111416,type:'c',beacon_id:0,tid:0,range:12251,lnum:11707,seq:213}
+{time:1476864363.0772111416,type:'c',beacon_id:1,tid:0,range:13094,lnum:11707,seq:213}
+{time:1476864363.0772111416,type:'c',beacon_id:2,tid:0,range:4439,lnum:11707,seq:213}
+Id:0 x: 3.4468866561195814491 y: 11.472161489068506413 z: 0.47996743104415084957{time:1476864363.3132228851,type:'a',aid:0,bid:1,range:8473,lnum:11710,seq:190}
+{time:1476864363.3132228851,type:'a',aid:0,bid:2,range:12274,lnum:11710,seq:190}
+{time:1476864363.3132228851,type:'a',aid:1,bid:2,range:15255,lnum:11710,seq:190}
+{time:1476864363.3572537899,type:'c',beacon_id:0,tid:0,range:12152,lnum:11713,seq:214}
+{time:1476864363.3572537899,type:'c',beacon_id:1,tid:0,range:13160,lnum:11713,seq:214}
+{time:1476864363.3572537899,type:'c',beacon_id:2,tid:0,range:4102,lnum:11713,seq:214}
+Id:0 x: 3.2287879133274430821 y: 11.62142322118947213 z: 0.85420133173014090033{time:1476864363.5928301811,type:'a',aid:0,bid:1,range:8473,lnum:11716,seq:191}
+{time:1476864363.5928301811,type:'a',aid:0,bid:2,range:12349,lnum:11716,seq:191}
+{time:1476864363.5928301811,type:'a',aid:1,bid:2,range:15213,lnum:11716,seq:191}
+{time:1476864363.6368837357,type:'c',beacon_id:0,tid:0,range:12058,lnum:11719,seq:215}
+{time:1476864363.6368837357,type:'c',beacon_id:1,tid:0,range:13291,lnum:11719,seq:215}
+{time:1476864363.6368837357,type:'c',beacon_id:2,tid:0,range:3391,lnum:11719,seq:215}
+Id:0 x: 2.994853100339562868 y: 11.631009873618715744 z: 1.1502518476369756328{time:1476864363.8722422123,type:'a',aid:0,bid:1,range:8534,lnum:11722,seq:192}
+{time:1476864363.8722422123,type:'a',aid:0,bid:2,range:12321,lnum:11722,seq:192}
+{time:1476864363.8722422123,type:'a',aid:1,bid:2,range:15218,lnum:11722,seq:192}
+{time:1476864363.9166874886,type:'c',beacon_id:0,tid:0,range:11993,lnum:11725,seq:216}
+{time:1476864363.9166874886,type:'c',beacon_id:1,tid:0,range:13427,lnum:11725,seq:216}
+{time:1476864363.9166874886,type:'c',beacon_id:2,tid:0,range:3292,lnum:11725,seq:216}
+Id:0 x: 2.6711395245540536791 y: 11.738223738370642479 z: 2.3111741088511070785{time:1476864364.1522264481,type:'a',aid:0,bid:1,range:8558,lnum:11728,seq:193}
+{time:1476864364.1522264481,type:'a',aid:0,bid:2,range:12251,lnum:11728,seq:193}
+{time:1476864364.1522264481,type:'a',aid:1,bid:2,range:15199,lnum:11728,seq:193}
+{time:1476864364.2008910179,type:'c',beacon_id:0,tid:0,range:11984,lnum:11731,seq:217}
+{time:1476864364.2008910179,type:'c',beacon_id:1,tid:0,range:13502,lnum:11731,seq:217}
+{time:1476864364.2008910179,type:'c',beacon_id:2,tid:0,range:2824,lnum:11731,seq:217}
+Id:0 x: 2.3780930289474184747 y: 11.692546346657456624 z: 1.7912475534920087039{time:1476864364.4327094555,type:'a',aid:0,bid:1,range:8426,lnum:11734,seq:194}
+{time:1476864364.4327094555,type:'a',aid:0,bid:2,range:12363,lnum:11734,seq:194}
+{time:1476864364.4327094555,type:'a',aid:1,bid:2,range:15199,lnum:11734,seq:194}
+{time:1476864364.4767911434,type:'c',beacon_id:0,tid:0,range:11998,lnum:11737,seq:218}
+{time:1476864364.4767911434,type:'c',beacon_id:1,tid:0,range:13587,lnum:11737,seq:218}
+{time:1476864364.4767911434,type:'c',beacon_id:2,tid:0,range:2314,lnum:11737,seq:218}
+Id:0 x: 2.2349199912507939914 y: 11.861835852376406919 z: 2.429878220039602521{time:1476864364.7128431797,type:'a',aid:0,bid:1,range:8516,lnum:11740,seq:195}
+{time:1476864364.7128431797,type:'a',aid:0,bid:2,range:12237,lnum:11740,seq:195}
+{time:1476864364.7128431797,type:'a',aid:1,bid:2,range:15208,lnum:11740,seq:195}
+{time:1476864364.756922245,type:'c',beacon_id:0,tid:0,range:11787,lnum:11743,seq:219}
+{time:1476864364.756922245,type:'c',beacon_id:1,tid:0,range:13643,lnum:11743,seq:219}
+{time:1476864364.756922245,type:'c',beacon_id:2,tid:0,range:2529,lnum:11743,seq:219}
+Id:0 x: 2.0694540030383441476 y: 12.201431836310311141 z: 2.2564777924085248628{time:1476864364.9922840595,type:'a',aid:0,bid:1,range:8469,lnum:11746,seq:196}
+{time:1476864364.9922840595,type:'a',aid:0,bid:2,range:12330,lnum:11746,seq:196}
+{time:1476864364.9922840595,type:'a',aid:1,bid:2,range:15260,lnum:11746,seq:196}
+{time:1476864365.0365173817,type:'c',beacon_id:0,tid:0,range:11932,lnum:11749,seq:220}
+{time:1476864365.0365173817,type:'c',beacon_id:1,tid:0,range:13657,lnum:11749,seq:220}
+{time:1476864365.0365173817,type:'c',beacon_id:2,tid:0,range:2828,lnum:11749,seq:220}
+Id:0 x: 1.7721585567393605132 y: 11.652911676085082604 z: 2.9502755680230650093{time:1476864365.2726256847,type:'a',aid:0,bid:1,range:8483,lnum:11752,seq:197}
+{time:1476864365.2726256847,type:'a',aid:0,bid:2,range:12307,lnum:11752,seq:197}
+{time:1476864365.2726256847,type:'a',aid:1,bid:2,range:15223,lnum:11752,seq:197}
+{time:1476864365.3168566227,type:'c',beacon_id:0,tid:0,range:11829,lnum:11755,seq:221}
+{time:1476864365.3168566227,type:'c',beacon_id:1,tid:0,range:13732,lnum:11755,seq:221}
+{time:1476864365.3168566227,type:'c',beacon_id:2,tid:0,range:2533,lnum:11755,seq:221}
+Id:0 x: 1.944539859940239257 y: 11.730694909423283079 z: 2.0089471885241096949{time:1476864365.5528478622,type:'a',aid:0,bid:1,range:8469,lnum:11758,seq:198}
+{time:1476864365.5528478622,type:'a',aid:0,bid:2,range:12279,lnum:11758,seq:198}
+{time:1476864365.5528478622,type:'a',aid:1,bid:2,range:15269,lnum:11758,seq:198}
+{time:1476864365.5969781876,type:'c',beacon_id:0,tid:0,range:11637,lnum:11761,seq:222}
+{time:1476864365.5969781876,type:'c',beacon_id:1,tid:0,range:13685,lnum:11761,seq:222}
+{time:1476864365.5969781876,type:'c',beacon_id:2,tid:0,range:2706,lnum:11761,seq:222}
+Id:0 x: 1.6907058810048469777 y: 11.687824683314495644 z: 2.3206556130797566517{time:1476864365.8327219486,type:'a',aid:0,bid:1,range:8459,lnum:11764,seq:199}
+{time:1476864365.8327219486,type:'a',aid:0,bid:2,range:12326,lnum:11764,seq:199}
+{time:1476864365.8327219486,type:'a',aid:1,bid:2,range:15246,lnum:11764,seq:199}
+{time:1476864365.8767518997,type:'c',beacon_id:0,tid:0,range:11581,lnum:11767,seq:223}
+{time:1476864365.8767518997,type:'c',beacon_id:1,tid:0,range:13329,lnum:11767,seq:223}
+{time:1476864365.8767518997,type:'c',beacon_id:2,tid:0,range:2749,lnum:11767,seq:223}
+Id:0 x: 1.5093127559312953245 y: 11.470490664502566602 z: 1.7471680398622686514{time:1476864366.1124773026,type:'a',aid:0,bid:1,range:8502,lnum:11770,seq:200}
+{time:1476864366.1124773026,type:'a',aid:0,bid:2,range:12232,lnum:11770,seq:200}
+{time:1476864366.1124773026,type:'a',aid:1,bid:2,range:15199,lnum:11770,seq:200}
+{time:1476864366.1565079689,type:'c',beacon_id:0,tid:0,range:11393,lnum:11774,seq:224}
+{time:1476864366.1565079689,type:'c',beacon_id:1,tid:0,range:13165,lnum:11774,seq:224}
+{time:1476864366.1565079689,type:'c',beacon_id:2,tid:0,range:2716,lnum:11774,seq:224}
+{time:1476864366.1565079689,type:'c',beacon_id:3,tid:0,range:7086,lnum:11774,seq:224}
+Id:0 x: 1.9585660999865248666 y: 11.495693506437293152 z: 2.3226443784547163851{time:1476864366.3970086575,type:'a',aid:0,bid:1,range:8473,lnum:11777,seq:201}
+{time:1476864366.3970086575,type:'a',aid:0,bid:2,range:12316,lnum:11777,seq:201}
+{time:1476864366.3970086575,type:'a',aid:1,bid:2,range:15199,lnum:11777,seq:201}
+{time:1476864366.6735889912,type:'a',aid:0,bid:1,range:8516,lnum:11780,seq:202}
+{time:1476864366.6735889912,type:'a',aid:0,bid:2,range:12326,lnum:11780,seq:202}
+{time:1476864366.6735889912,type:'a',aid:1,bid:2,range:15232,lnum:11780,seq:202}
+{time:1476864366.7168095112,type:'c',beacon_id:1,tid:0,range:12748,lnum:11783,seq:226}
+{time:1476864366.7168095112,type:'c',beacon_id:2,tid:0,range:3006,lnum:11783,seq:226}
+{time:1476864366.7168095112,type:'c',beacon_id:3,tid:0,range:7054,lnum:11783,seq:226}
+{time:1476864366.9530436993,type:'a',aid:0,bid:1,range:8516,lnum:11786,seq:203}
+{time:1476864366.9530436993,type:'a',aid:0,bid:2,range:12232,lnum:11786,seq:203}
+{time:1476864366.9530436993,type:'a',aid:1,bid:2,range:15269,lnum:11786,seq:203}
+{time:1476864366.9970786572,type:'c',beacon_id:0,tid:0,range:10442,lnum:11790,seq:227}
+{time:1476864366.9970786572,type:'c',beacon_id:1,tid:0,range:12396,lnum:11790,seq:227}
+{time:1476864366.9970786572,type:'c',beacon_id:2,tid:0,range:3259,lnum:11790,seq:227}
+{time:1476864366.9970786572,type:'c',beacon_id:3,tid:0,range:7358,lnum:11790,seq:227}
+{time:1476864367.2765996456,type:'c',beacon_id:0,tid:0,range:10278,lnum:11794,seq:228}
+{time:1476864367.2775988579,type:'c',beacon_id:1,tid:0,range:12030,lnum:11794,seq:228}
+{time:1476864367.2775988579,type:'c',beacon_id:2,tid:0,range:3353,lnum:11794,seq:228}
+{time:1476864367.2775988579,type:'c',beacon_id:3,tid:0,range:7157,lnum:11794,seq:228}
+Id:0 x: 1.873151093906425313 y: 10.439299021107371956 z: 2.1256402757995944697{time:1476864367.5566442013,type:'c',beacon_id:0,tid:0,range:10161,lnum:11797,seq:229}
+{time:1476864367.5566442013,type:'c',beacon_id:1,tid:0,range:11731,lnum:11797,seq:229}
+{time:1476864367.5566442013,type:'c',beacon_id:2,tid:0,range:3666,lnum:11797,seq:229}
+Id:0 x: 2.170442085551192779 y: 10.343363445230544073 z: 2.5549182174738036544{time:1476864367.792725563,type:'a',aid:0,bid:1,range:8516,lnum:11800,seq:206}
+{time:1476864367.792725563,type:'a',aid:0,bid:2,range:12438,lnum:11800,seq:206}
+{time:1476864367.792725563,type:'a',aid:1,bid:2,range:15237,lnum:11800,seq:206}
+{time:1476864367.8368391991,type:'c',beacon_id:0,tid:0,range:9818,lnum:11803,seq:230}
+{time:1476864367.8368391991,type:'c',beacon_id:1,tid:0,range:11618,lnum:11803,seq:230}
+{time:1476864367.8368391991,type:'c',beacon_id:2,tid:0,range:3896,lnum:11803,seq:230}
+Id:0 x: 2.4423663588811246328 y: 10.164383994712510528 z: 2.6092755740450024327{time:1476864368.0722298622,type:'a',aid:0,bid:1,range:8525,lnum:11806,seq:207}
+{time:1476864368.0722298622,type:'a',aid:0,bid:2,range:12213,lnum:11806,seq:207}
+{time:1476864368.0732302666,type:'a',aid:1,bid:2,range:15143,lnum:11806,seq:207}
+{time:1476864368.1166012287,type:'c',beacon_id:0,tid:0,range:9326,lnum:11810,seq:231}
+{time:1476864368.1166012287,type:'c',beacon_id:1,tid:0,range:11271,lnum:11810,seq:231}
+{time:1476864368.1166012287,type:'c',beacon_id:2,tid:0,range:4158,lnum:11810,seq:231}
+{time:1476864368.1166012287,type:'c',beacon_id:3,tid:0,range:7925,lnum:11810,seq:231}
+Id:0 x: 2.2172450510711372296 y: 9.7620722207515946423 z: 2.6177771064803292411{time:1476864368.3530619144,type:'a',aid:0,bid:1,range:8473,lnum:11811,seq:208}
+{time:1476864368.4012086391,type:'c',beacon_id:0,tid:0,range:9186,lnum:11814,seq:232}
+{time:1476864368.4012086391,type:'c',beacon_id:1,tid:0,range:10976,lnum:11814,seq:232}
+{time:1476864368.4017207623,type:'c',beacon_id:3,tid:0,range:7639,lnum:11814,seq:232}
+Id:0 x: 2.108790291431236863 y: 9.3376020633950442829 z: 1.9890266015141879752{time:1476864369.192825079,type:'a',aid:0,bid:1,range:8445,lnum:11817,seq:211}
+{time:1476864369.192825079,type:'a',aid:0,bid:2,range:12298,lnum:11817,seq:211}
+{time:1476864369.192825079,type:'a',aid:1,bid:2,range:15260,lnum:11817,seq:211}
+{time:1476864369.2390155792,type:'c',beacon_id:0,tid:0,range:8455,lnum:11818,seq:235}
+{time:1476864369.4725801945,type:'a',aid:0,bid:1,range:8441,lnum:11821,seq:212}
+{time:1476864369.4725801945,type:'a',aid:0,bid:2,range:12354,lnum:11821,seq:212}
+{time:1476864369.4725801945,type:'a',aid:1,bid:2,range:15316,lnum:11821,seq:212}
+{time:1476864369.5170388222,type:'c',beacon_id:0,tid:0,range:7681,lnum:11825,seq:236}
+{time:1476864369.5170388222,type:'c',beacon_id:1,tid:0,range:9846,lnum:11825,seq:236}
+{time:1476864369.5170388222,type:'c',beacon_id:2,tid:0,range:5863,lnum:11825,seq:236}
+{time:1476864369.5170388222,type:'c',beacon_id:3,tid:0,range:8595,lnum:11825,seq:236}
+{time:1476864369.7529089451,type:'a',aid:0,bid:1,range:8469,lnum:11828,seq:213}
+{time:1476864369.7529089451,type:'a',aid:0,bid:2,range:12255,lnum:11828,seq:213}
+{time:1476864369.7529089451,type:'a',aid:1,bid:2,range:15237,lnum:11828,seq:213}
+{time:1476864369.7969157696,type:'c',beacon_id:0,tid:0,range:7363,lnum:11831,seq:237}
+{time:1476864369.7969157696,type:'c',beacon_id:1,tid:0,range:9575,lnum:11831,seq:237}
+{time:1476864369.7969157696,type:'c',beacon_id:3,tid:0,range:8562,lnum:11831,seq:237}
+Id:0 x: 2.245035608773252811 y: 7.4947877682703616387 z: 2.052301512122616689{time:1476864370.0324854851,type:'a',aid:0,bid:1,range:8459,lnum:11834,seq:214}
+{time:1476864370.0324854851,type:'a',aid:0,bid:2,range:12349,lnum:11834,seq:214}
+{time:1476864370.0324854851,type:'a',aid:1,bid:2,range:15241,lnum:11834,seq:214}
+{time:1476864370.0764980316,type:'c',beacon_id:0,tid:0,range:6637,lnum:11837,seq:238}
+{time:1476864370.0764980316,type:'c',beacon_id:1,tid:0,range:9186,lnum:11837,seq:238}
+{time:1476864370.0764980316,type:'c',beacon_id:3,tid:0,range:8835,lnum:11837,seq:238}
+{time:1476864370.3569059372,type:'c',beacon_id:0,tid:0,range:6276,lnum:11840,seq:239}
+{time:1476864370.3569059372,type:'c',beacon_id:1,tid:0,range:8985,lnum:11840,seq:239}
+{time:1476864370.3569059372,type:'c',beacon_id:3,tid:0,range:9115,lnum:11840,seq:239}
+{time:1476864370.6411783695,type:'c',beacon_id:0,tid:0,range:6505,lnum:11843,seq:240}
+{time:1476864370.6411783695,type:'c',beacon_id:1,tid:0,range:8741,lnum:11843,seq:240}
+{time:1476864370.6411783695,type:'c',beacon_id:3,tid:0,range:9355,lnum:11843,seq:240}
+{time:1476864370.8725275993,type:'a',aid:0,bid:1,range:8520,lnum:11846,seq:217}
+{time:1476864370.8725275993,type:'a',aid:0,bid:2,range:12302,lnum:11846,seq:217}
+{time:1476864370.8725275993,type:'a',aid:1,bid:2,range:15237,lnum:11846,seq:217}
+{time:1476864370.9165768623,type:'c',beacon_id:0,tid:0,range:6154,lnum:11849,seq:241}
+{time:1476864370.9165768623,type:'c',beacon_id:1,tid:0,range:8483,lnum:11849,seq:241}
+{time:1476864370.9165768623,type:'c',beacon_id:3,tid:0,range:9758,lnum:11849,seq:241}
+{time:1476864371.1527330875,type:'a',aid:0,bid:1,range:8469,lnum:11852,seq:218}
+{time:1476864371.1527330875,type:'a',aid:0,bid:2,range:12452,lnum:11852,seq:218}
+{time:1476864371.1527330875,type:'a',aid:1,bid:2,range:15241,lnum:11852,seq:218}
+{time:1476864371.1967184544,type:'c',beacon_id:0,tid:0,range:5493,lnum:11855,seq:242}
+{time:1476864371.1967184544,type:'c',beacon_id:1,tid:0,range:8207,lnum:11855,seq:242}
+{time:1476864371.1977140903,type:'c',beacon_id:3,tid:0,range:9907,lnum:11855,seq:242}
+{time:1476864371.4329965115,type:'a',aid:0,bid:1,range:8445,lnum:11858,seq:219}
+{time:1476864371.4329965115,type:'a',aid:0,bid:2,range:12326,lnum:11858,seq:219}
+{time:1476864371.4329965115,type:'a',aid:1,bid:2,range:15166,lnum:11858,seq:219}
+{time:1476864371.4771001339,type:'c',beacon_id:0,tid:0,range:5316,lnum:11861,seq:243}
+{time:1476864371.4771001339,type:'c',beacon_id:1,tid:0,range:8000,lnum:11861,seq:243}
+{time:1476864371.4771001339,type:'c',beacon_id:3,tid:0,range:10245,lnum:11861,seq:243}
+{time:1476864371.7572228909,type:'c',beacon_id:0,tid:0,range:4721,lnum:11864,seq:244}
+{time:1476864371.7572228909,type:'c',beacon_id:1,tid:0,range:7691,lnum:11864,seq:244}
+{time:1476864371.7572228909,type:'c',beacon_id:3,tid:0,range:10559,lnum:11864,seq:244}
+{time:1476864372.0371770859,type:'c',beacon_id:0,tid:0,range:4796,lnum:11867,seq:245}
+{time:1476864372.0371770859,type:'c',beacon_id:1,tid:0,range:7508,lnum:11867,seq:245}
+{time:1476864372.0371770859,type:'c',beacon_id:3,tid:0,range:10695,lnum:11867,seq:245}
+{time:1476864372.3173322678,type:'c',beacon_id:0,tid:0,range:4214,lnum:11869,seq:246}
+{time:1476864372.3173322678,type:'c',beacon_id:1,tid:0,range:7391,lnum:11869,seq:246}
+{time:1476864372.5528171062,type:'a',aid:0,bid:1,range:8478,lnum:11872,seq:223}
+{time:1476864372.5528171062,type:'a',aid:0,bid:2,range:12340,lnum:11872,seq:223}
+{time:1476864372.5528171062,type:'a',aid:1,bid:2,range:15246,lnum:11872,seq:223}
+{time:1476864372.5968453884,type:'c',beacon_id:0,tid:0,range:4195,lnum:11874,seq:247}
+{time:1476864372.5968453884,type:'c',beacon_id:1,tid:0,range:7204,lnum:11874,seq:247}
+{time:1476864372.8365609646,type:'a',aid:0,bid:1,range:8511,lnum:11877,seq:224}
+{time:1476864372.8365609646,type:'a',aid:0,bid:2,range:12274,lnum:11877,seq:224}
+{time:1476864372.8365609646,type:'a',aid:1,bid:2,range:15241,lnum:11877,seq:224}
+{time:1476864372.8765854836,type:'c',beacon_id:0,tid:0,range:3675,lnum:11879,seq:248}
+{time:1476864372.8765854836,type:'c',beacon_id:1,tid:0,range:7007,lnum:11879,seq:248}
+{time:1476864373.1128778458,type:'a',aid:0,bid:1,range:8455,lnum:11882,seq:225}
+{time:1476864373.1128778458,type:'a',aid:0,bid:2,range:12354,lnum:11882,seq:225}
+{time:1476864373.1128778458,type:'a',aid:1,bid:2,range:15279,lnum:11882,seq:225}
+{time:1476864373.1570932865,type:'c',beacon_id:0,tid:0,range:3493,lnum:11884,seq:249}
+{time:1476864373.1570932865,type:'c',beacon_id:1,tid:0,range:6895,lnum:11884,seq:249}
+{time:1476864373.3927059174,type:'a',aid:0,bid:1,range:8487,lnum:11887,seq:226}
+{time:1476864373.3927059174,type:'a',aid:0,bid:2,range:12293,lnum:11887,seq:226}
+{time:1476864373.3927059174,type:'a',aid:1,bid:2,range:15223,lnum:11887,seq:226}
+{time:1476864373.4368884563,type:'c',beacon_id:0,tid:0,range:3189,lnum:11889,seq:250}
+{time:1476864373.4368884563,type:'c',beacon_id:1,tid:0,range:6688,lnum:11889,seq:250}
+{time:1476864373.6727833748,type:'a',aid:0,bid:1,range:8539,lnum:11892,seq:227}
+{time:1476864373.6727833748,type:'a',aid:0,bid:2,range:12330,lnum:11892,seq:227}
+{time:1476864373.6727833748,type:'a',aid:1,bid:2,range:15218,lnum:11892,seq:227}
+{time:1476864373.7169253826,type:'c',beacon_id:0,tid:0,range:2950,lnum:11894,seq:251}
+{time:1476864373.7169253826,type:'c',beacon_id:1,tid:0,range:6655,lnum:11894,seq:251}
+{time:1476864373.952788353,type:'a',aid:0,bid:1,range:8478,lnum:11897,seq:228}
+{time:1476864373.952788353,type:'a',aid:0,bid:2,range:12373,lnum:11897,seq:228}
+{time:1476864373.952788353,type:'a',aid:1,bid:2,range:15237,lnum:11897,seq:228}
+{time:1476864373.9968202114,type:'c',beacon_id:0,tid:0,range:2861,lnum:11898,seq:252}
+{time:1476864374.2326357365,type:'a',aid:0,bid:1,range:8455,lnum:11901,seq:229}
+{time:1476864374.2326357365,type:'a',aid:0,bid:2,range:12434,lnum:11901,seq:229}
+{time:1476864374.2326357365,type:'a',aid:1,bid:2,range:15251,lnum:11901,seq:229}
+{time:1476864374.2766644955,type:'c',beacon_id:0,tid:0,range:2772,lnum:11902,seq:253}
+{time:1476864374.5130631924,type:'a',aid:0,bid:1,range:8469,lnum:11905,seq:230}
+{time:1476864374.5135629177,type:'a',aid:0,bid:2,range:12298,lnum:11905,seq:230}
+{time:1476864374.5135629177,type:'a',aid:1,bid:2,range:15218,lnum:11905,seq:230}
+{time:1476864374.5567965508,type:'c',beacon_id:0,tid:0,range:2725,lnum:11907,seq:254}
+{time:1476864374.5567965508,type:'c',beacon_id:1,tid:0,range:6519,lnum:11907,seq:254}

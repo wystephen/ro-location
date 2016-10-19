@@ -40,4 +40,3 @@ while True:
     f_handle = open(file_name, 'w')
 tcpCliSock.close()
 
-tcpSerSock.close()
