@@ -28,7 +28,7 @@ namespace plt = matplotlibcpp;
 int main() {
     bool is_view_likelihood(false);
     bool is_view_particle(false);
-    bool is_out_cnn_img(true);
+    bool is_out_cnn_img(false);
     CSVReader gt("gt.csv"), beacon_set("beacon_set.csv"), uwb_range("uwb_range.csv");
 
 //    std::cout << gt.GetMatrix().GetRows() << " " << beacon_set.GetMatrix().GetRows() << " "
@@ -88,7 +88,7 @@ int main() {
         if (i < 4)
             opf.Sample();
         else {
-            opf.Sample((gt_x[i] - gt_x[i - 2]) / 2.0, (gt_y[i] - gt_y[i - 2]) / 2.0);
+            opf.Sample((gt_x[i - 1] - gt_x[i - 2]) / 1.0, (gt_y[i - 1] - gt_y[i - 2]) / 1.0);
         }
 //        if(i<5)
 //        {
@@ -97,7 +97,7 @@ int main() {
 //            opf.Sample((f_x[i-1]-f_x[i-4])/3.0,(f_y[i-1]-f_y[i-4])/3.0);
 //        }
 
-        opf.Sample();
+//        opf.Sample();
 
 
 
@@ -265,7 +265,7 @@ int main() {
          * ReSample
          * Needn't resample in every time steps.
          */
-//        opf.ReSample();
+        opf.ReSample();
 
 
     }

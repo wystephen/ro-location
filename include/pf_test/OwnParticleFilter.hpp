@@ -443,7 +443,7 @@ namespace OPF {
         for (int i(0); i < sigma_.rows(); ++i) {
             if(i<2)
             {
-                normal_dis_vec.push_back(std::normal_distribution<>(delta(i), sigma_(i) * 0.3));
+                normal_dis_vec.push_back(std::normal_distribution<>(delta(i), sigma_(i)));
 
             }
             else{
@@ -592,7 +592,7 @@ namespace OPF {
         double ret(0.0);
         Eigen::Vector3d dis;
         for (int j(0); j < 3; ++j) {
-            sigma_(j + 2) = 0.1;
+            sigma_(j + 2) = 0.5;
         }
         for (int i(0); i < 3; ++i) {
             dis(i) = 0.0;
@@ -642,10 +642,10 @@ namespace OPF {
 
 
         std::cout << "Neff:" << 1 / weight_vec_.norm() / weight_vec_.norm() << std::endl;
-        while (1 / weight_vec_.norm() / weight_vec_.norm() < particle_num_ / 100.0) {
-            ReSample();
-            std::cout << "Neff:" << 1 / weight_vec_.norm() / weight_vec_.norm() << std::endl;
-        }
+//        while (1 / weight_vec_.norm() / weight_vec_.norm() < particle_num_ / 100.0) {
+//            ReSample();
+//            std::cout << "Neff:" << 1 / weight_vec_.norm() / weight_vec_.norm() << std::endl;
+//        }
 
 //        int max_index(0);
 //        weight_vec_.maxCoeff(&max_index);
