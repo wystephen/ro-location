@@ -6,9 +6,9 @@ import scipy as sp
 
 import matplotlib.pyplot as plt
 
-from script.filter_fram import filter_frame
+from filter_fram import filter_frame
 
-from script.PFONE import PFONE
+from PFONE import PFONE
 
 
 class RangPf(filter_frame):

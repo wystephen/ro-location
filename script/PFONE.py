@@ -6,7 +6,7 @@ import scipy as sp
 
 from scipy.optimize import minimize
 
-from script.EKFONE import EKFONE as ekf
+from EKFONE import EKFONE as ekf
 
 from multiprocessing import Pool
 
