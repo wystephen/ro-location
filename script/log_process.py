@@ -31,6 +31,13 @@ class seq_process:
         logf_all = logf.readlines()
 
         for ll in logf_all:
+            if ll[0] == 'I':
+                start = ll.find('{')
+                if start == -1:
+                    print("ll is :",ll,"can not found a {")
+                    return True
+                ll = ll[start::]
+            print(ll)
             jdata = demjson.decode(ll)
 
             if jdata['type'] == 'a':
@@ -60,4 +67,4 @@ class seq_process:
 
 if __name__ == '__main__':
     se = seq_process()
-    se.process_file()
+    se.process_file(file_name='LOGBig/LOG_2016_10_19_16_1_18.data')
