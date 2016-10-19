@@ -41,7 +41,7 @@ namespace OPF {
             sigma_.resize(state_.rows());
 
             for (int i(0); i < sigma_.rows(); ++i) {
-                sigma_(i) = 0.15;
+                sigma_(i) = 0.2;
             }
 
 
@@ -487,7 +487,7 @@ namespace OPF {
             Score(j) = Likelihood(particle_mx_.block(j, 0, 1, particle_mx_.cols()), range_vec);
 //            Score(j) = std::exp(Score(j));
         }
-        Score /= Score.sum();
+//        Score /= Score.sum();
 
 //        double s_mean(Score.mean());
 //        for (int j(0); j < Score.rows(); ++j) {
@@ -516,9 +516,8 @@ namespace OPF {
          * Update weight.
          */
         std::cout << "min weight : " << weight_vec_.minCoeff() << "max weight:" << weight_vec_.maxCoeff() << std::endl;
-//        Score /= Score.sum();
         for (int i(0); i < weight_vec_.size(); ++i) {
-            weight_vec_(i) = weight_vec_(i) * Score(i);
+            weight_vec_(i) = Score(i);
         }
         std::cout << "min weight : " << weight_vec_.minCoeff() << "max weight:" << weight_vec_.maxCoeff() << std::endl;
 
@@ -592,7 +591,7 @@ namespace OPF {
         double ret(0.0);
         Eigen::Vector3d dis;
         for (int j(0); j < 3; ++j) {
-            sigma_(j + 2) = 0.5;
+            sigma_(j + 2) = 0.05;
         }
         for (int i(0); i < 3; ++i) {
             dis(i) = 0.0;
@@ -600,15 +599,16 @@ namespace OPF {
             dis(i) += std::pow(guess_state(1) - beacon_pose_(i, 1), 2.0);
             dis(i) += std::pow(z_offset_ - beacon_pose_(i, 2), 2.0);
             dis(i) = std::pow(dis(i), 0.5);
-            ret += 1 / std::sqrt(2 * M_PI) / sigma_(i + 2.0) * std::exp(
-                    -std::pow(dis(i) - (range_vec(i)), 2.0) / 2.0 /
-                    std::pow(sigma_(i + 2.0), 2.0));
-//            ret += std::log(1/std::sqrt(2*M_PI )/sigma_(i+2)) * -1.0/(std::pow(dis(i)-range_vec(i),2.0)/2/std::pow(sigma_(i+2),2));
+//            ret += 1 / std::sqrt(2 * M_PI) / sigma_(i + 2.0) * std::exp(
+//                    -std::pow(dis(i) - (range_vec(i)), 2.0) / 2.0 /
+//                    std::pow(sigma_(i + 2.0), 2.0));
+            ret += NormalPDF(range_vec(i), dis(i), 0.06);
 
         }
 
 //        return std::pow(2.0,ret);
         return ret;
+
 
     }
 

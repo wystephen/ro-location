@@ -27,7 +27,7 @@ namespace plt = matplotlibcpp;
 
 int main() {
     bool is_view_likelihood(false);
-    bool is_view_particle(false);
+    bool is_view_particle(true);
     bool is_out_cnn_img(false);
     CSVReader gt("gt.csv"), beacon_set("beacon_set.csv"), uwb_range("uwb_range.csv");
 
@@ -65,7 +65,7 @@ int main() {
         uwb_range_vec.push_back(Eigen::Vector3d(*range(i, 0), *range(i, 1), *range(i, 2)));
     }
 
-    OPF::OwnParticleFilter opf(30000, apose, 1.12, 10);
+    OPF::OwnParticleFilter opf(17000, apose, 1.12, 10);
     opf.InitialState(Eigen::Vector2d(gt_x[0], gt_y[0]));
 
 
@@ -179,8 +179,8 @@ int main() {
 
             double mx(0.0), my(0.0);
             double max_score(-100.0);
-            for (double y(16.0); y > -3; y -= 0.05) {
-                for (double x(-4.0); x < 20.0; x += 0.05) {
+            for (double y(16.0); y > -3; y -= 0.01) {
+                for (double x(-4.0); x < 20.0; x += 0.01) {
                     double the_sco = opf.Likelihood(Eigen::VectorXd(Eigen::Vector3d(x, y, 1.0)),
                                                     Eigen::VectorXd(uwb_range_vec[i]));
                     if (the_sco > max_score) {
