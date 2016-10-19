@@ -75,6 +75,7 @@ if __name__ == '__main__':
     cpp_filter_out = np.loadtxt("../filter_out.txt")
     cpp_filter_out = cpp_filter_out[0:beacon_info.shape[0], :]
 
+
     '''
     End Load Data
     '''
@@ -108,7 +109,7 @@ if __name__ == '__main__':
 
     sim_filter.setInput(beacon_info, beacon)
     # print("second beacon:", beacon)
-    sim_filter.initial_filter(300)
+    sim_filter.initial_filter(20000)
     self_out = sim_filter.filter()
 
 
@@ -127,6 +128,10 @@ if __name__ == '__main__':
     # err between ground truth and self triangle
     # err_tri = np.sum((tg_result[:, 0:2] - gt[:, 0:2]) ** 2.0, 1)
     # err_tri = err_tri ** 0.5
+
+    # np.savetxt("../gt.csv", gt, delimiter=',')
+    # np.savetxt("../beacon_set.csv", beacon, delimiter=',')
+    # np.savetxt("../uwb_range.csv", beacon_info[:, 3:6], delimiter=',')
 
     plt.figure(1)
     plt.plot(err_all, 'y+-')
