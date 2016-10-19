@@ -487,7 +487,7 @@ namespace OPF {
             Score(j) = Likelihood(particle_mx_.block(j, 0, 1, particle_mx_.cols()), range_vec);
 //            Score(j) = std::exp(Score(j));
         }
-//        Score /= Score.sum();
+        Score /= Score.sum();
 
 //        double s_mean(Score.mean());
 //        for (int j(0); j < Score.rows(); ++j) {
@@ -517,7 +517,7 @@ namespace OPF {
          */
         std::cout << "min weight : " << weight_vec_.minCoeff() << "max weight:" << weight_vec_.maxCoeff() << std::endl;
         for (int i(0); i < weight_vec_.size(); ++i) {
-            weight_vec_(i) = Score(i);
+            weight_vec_(i) *= Score(i);
         }
         std::cout << "min weight : " << weight_vec_.minCoeff() << "max weight:" << weight_vec_.maxCoeff() << std::endl;
 
