@@ -41,7 +41,7 @@ namespace OPF {
             sigma_.resize(state_.rows());
 
             for (int i(0); i < sigma_.rows(); ++i) {
-                sigma_(i) = 0.2;
+                sigma_(i) = 0.4;
             }
 
 
@@ -604,7 +604,7 @@ namespace OPF {
 //            ret += 1 / std::sqrt(2 * M_PI) / sigma_(i + 2.0) * std::exp(
 //                    -std::pow(dis(i) - (range_vec(i)), 2.0) / 2.0 /
 //                    std::pow(sigma_(i + 2.0), 2.0));
-            ret += NormalPDF(range_vec(i), dis(i) + n(e_), 0.012);
+            ret += NormalPDF(range_vec(i), dis(i) + n(e_), 0.08);
 
         }
 
@@ -662,6 +662,9 @@ namespace OPF {
     bool OwnParticleFilter::ReSample() {
 
 
+        /*
+         * RESAMPLE METHON 1
+         */
         weight_vec_ /= weight_vec_.sum();
         Eigen::MatrixXd tmp_matrix(particle_mx_);
         Eigen::VectorXd tmp_weight(weight_vec_);
@@ -705,6 +708,11 @@ namespace OPF {
 
         weight_vec_.setOnes();
         weight_vec_ /= weight_vec_.sum();
+
+        /*
+         * RESAMPLE METHON2
+         * TODO:ACHIEVE THIS METHOND.
+         */
 
         return true;
     }
