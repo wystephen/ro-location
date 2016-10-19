@@ -1,0 +1,19 @@
+Set beacon 3(4th).
+LOG_2016_10_19_10_23_24.data
+
+script/20161019log/LOG_2016_10_19_10_29_24.data
+LOG_2016_10_19_10_31_0.data
+
+LOS,upper head
+script/20161019log/LOG_2016_10_19_10_33_23.data
+
+NLOS ,upper head
+script/20161019log/LOG_2016_10_19_10_34_29.data
+
+
+
+Fast ,under head.
+script/20161019log/LOG_2016_10_19_10_42_28.data
+
+Slow,under head
+script/20161019log/LOG_2016_10_19_10_45_36.data
