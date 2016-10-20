@@ -90,12 +90,14 @@ int main() {
 //        else {
 //            opf.Sample((gt_x[i - 1] - gt_x[i - 2]) / 1.0, (gt_y[i - 1] - gt_y[i - 2]) / 1.0);
 //        }
-//        if(i<5)
+//        if(i<3)
 //        {
 //            opf.Sample();
 //        }else{
-//            opf.Sample((f_x[i-1]-f_x[i-4])/3.0,(f_y[i-1]-f_y[i-4])/3.0);
+//            opf.Sample((f_x[i-1]-f_x[i-2])/1.0,(f_y[i-1]-f_y[i-2])/1.0);
 //        }
+
+        opf.ComputeCPoint(Eigen::VectorXd(uwb_range_vec[i]));
 
         opf.Sample();
 

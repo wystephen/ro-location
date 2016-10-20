@@ -391,18 +391,18 @@ namespace OPF {
          * Sample Methon 4
          */
 ////        std::normal_distribution<> nor_get(0.0, 0.1615);
-        std::normal_distribution<> nor_get(0.0, 0.1815);
-        std::uniform_real_distribution<double> angle_get(0.0, M_PI);
-
-        for (int i(0); i < weight_vec_.rows(); ++i) {
-            double dis(nor_get(e_));
-            double angle(angle_get(e_));
-            double delta_x(dis * std::cos(angle));
-            double delta_y(dis * std::sin(angle));
-//            std::cout << "de x:" << delta_x << " de y: " << delta_y << std::endl;
-            particle_mx_(i, 0) += delta_x;
-            particle_mx_(i, 1) += delta_y;
-        }
+//        std::normal_distribution<> nor_get(0.0, 0.1815);
+//        std::uniform_real_distribution<double> angle_get(0.0, M_PI);
+//
+//        for (int i(0); i < weight_vec_.rows(); ++i) {
+//            double dis(nor_get(e_));
+//            double angle(angle_get(e_));
+//            double delta_x(dis * std::cos(angle));
+//            double delta_y(dis * std::sin(angle));
+////            std::cout << "de x:" << delta_x << " de y: " << delta_y << std::endl;
+//            particle_mx_(i, 0) += delta_x;
+//            particle_mx_(i, 1) += delta_y;
+//        }
         /*
          * Sample Methon 5
          */
@@ -431,6 +431,32 @@ namespace OPF {
 //            particle_mx_(i, 0) = (last_best_x_+state_(0))/2.0 + nor_get(e_);
 //            particle_mx_(i, 1) = (last_best_y_ + state_(1)) /2.0 + nor_get(e_);
 //        }
+        /*
+         * Sample Methon7
+         */
+
+        std::normal_distribution<> nor_get(0.0, 0.1815);
+        std::uniform_real_distribution<double> angle_get(0.0, M_PI);
+        std::uniform_real_distribution<double> unif_get(0.005, 0.8);
+        //con_point_//
+
+        std::uniform_int_distribution<int> index_get(0, 5);
+        int index = index_get(e_);
+        for (int i(0); i < weight_vec_.rows(); ++i) {
+            if (con_point_(index, 0) > 10000) {
+                double dis(nor_get(e_));
+                double angle(angle_get(e_));
+                double delta_x(dis * std::cos(angle));
+                double delta_y(dis * std::sin(angle));
+                particle_mx_(i, 0) += delta_x;
+                particle_mx_(i, 1) += delta_y;
+            } else {
+                double beta = unif_get(e_);
+
+                particle_mx_(i, 0) += beta * (con_point_(index, 0) - particle_mx_(i, 0));
+                particle_mx_(i, 1) += beta * (con_point_(index, 1) - particle_mx_(i, 1));
+            }
+        }
 
         return true;
 
@@ -714,6 +740,7 @@ namespace OPF {
          * TODO:ACHIEVE THIS METHOND.
          */
 
+
         return true;
     }
 
@@ -781,7 +808,7 @@ namespace OPF {
 //        MYCHECK(1);
 
 //        plt::show();
-//        plt::legend();
+        plt::legend();
 //
 //        plt::save(path);
 
