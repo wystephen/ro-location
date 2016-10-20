@@ -53,6 +53,8 @@ namespace OPF {
 
         bool Sample(double dx,double dy);
 
+        bool EnhanceSample(Eigen::VectorXd range);
+
         bool Evaluate(Eigen::VectorXd range_vec);
 
         double Likelihood(Eigen::VectorXd guess_state, Eigen::VectorXd range_vec);
@@ -406,22 +408,22 @@ namespace OPF {
         /*
          * Sample Methon 5
          */
-//        std::normal_distribution<> nor_get(0.1, 0.2);
-//
-//        for (int i(0); i < weight_vec_.rows(); ++i) {
-//            double dis(nor_get(e_));
-//            double angle(std::atan2(last_best_y_ - particle_mx_(i, 1), last_best_x_ - particle_mx_(i, 0)));
-//            double ddx(last_best_x_ - particle_mx_(i, 0)),ddy(last_best_y_ - particle_mx_(i, 1));
-//            double val = std::pow(ddx*ddx+ddy*ddy,0.5);
-////            ddx /=val;
-////            ddy /=val;
-//
-//            double delta_x(dis * ddx);// + dis * std::cos(angle));
-//            double delta_y(dis * ddy );//+ dis * std::sin(angle));
-////            std::cout << "de x:" << delta_x << " de y: " << delta_y << std::endl;
-//            particle_mx_(i, 0) += delta_x;
-//            particle_mx_(i, 1) += delta_y;
-//        }
+        std::normal_distribution<> nor_get(0.1, 0.2);
+
+        for (int i(0); i < weight_vec_.rows(); ++i) {
+            double dis(nor_get(e_));
+            double angle(std::atan2(last_best_y_ - particle_mx_(i, 1), last_best_x_ - particle_mx_(i, 0)));
+            double ddx(last_best_x_ - particle_mx_(i, 0)), ddy(last_best_y_ - particle_mx_(i, 1));
+            double val = std::pow(ddx * ddx + ddy * ddy, 0.5);
+//            ddx /=val;
+//            ddy /=val;
+
+            double delta_x(dis * ddx);// + dis * std::cos(angle));
+            double delta_y(dis * ddy);//+ dis * std::sin(angle));
+//            std::cout << "de x:" << delta_x << " de y: " << delta_y << std::endl;
+            particle_mx_(i, 0) += delta_x;
+            particle_mx_(i, 1) += delta_y;
+        }
         /*
          * Sample Methon6
          */
@@ -435,14 +437,45 @@ namespace OPF {
          * Sample Methon7
          */
 
+//        std::normal_distribution<> nor_get(0.0, 0.1815);
+//        std::uniform_real_distribution<double> angle_get(0.0, M_PI);
+//        std::uniform_real_distribution<double> unif_get(0.005, 1.1);
+//        //con_point_//
+//
+//        std::uniform_int_distribution<int> index_get(0, 5);
+//
+//        for (int i(0); i < weight_vec_.rows(); ++i) {
+//            int index = index_get(e_);
+//            if (con_point_(index, 0) > 10000 ) {
+//                double dis(nor_get(e_));
+//                double angle(angle_get(e_));
+//                double delta_x(dis * std::cos(angle));
+//                double delta_y(dis * std::sin(angle));
+//                particle_mx_(i, 0) += delta_x;
+//                particle_mx_(i, 1) += delta_y;
+//            } else {
+//                double beta = unif_get(e_);
+//
+//                particle_mx_(i, 0) += beta * (con_point_(index, 0) - particle_mx_(i, 0));
+//                particle_mx_(i, 1) += beta * (con_point_(index, 1) - particle_mx_(i, 1));
+//            }
+//        }
+
+        return true;
+
+    }
+
+    bool OwnParticleFilter::EnhanceSample(Eigen::VectorXd range) {
+        ComputeCPoint(range);
         std::normal_distribution<> nor_get(0.0, 0.1815);
         std::uniform_real_distribution<double> angle_get(0.0, M_PI);
-        std::uniform_real_distribution<double> unif_get(0.005, 0.8);
+        std::uniform_real_distribution<double> unif_get(0.005, 1.1);
         //con_point_//
 
         std::uniform_int_distribution<int> index_get(0, 5);
-        int index = index_get(e_);
+
         for (int i(0); i < weight_vec_.rows(); ++i) {
+            int index = index_get(e_);
             if (con_point_(index, 0) > 10000) {
                 double dis(nor_get(e_));
                 double angle(angle_get(e_));
@@ -459,7 +492,6 @@ namespace OPF {
         }
 
         return true;
-
     }
 
     bool OwnParticleFilter::Sample(double dx, double dy) {

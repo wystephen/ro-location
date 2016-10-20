@@ -65,7 +65,7 @@ int main() {
         uwb_range_vec.push_back(Eigen::Vector3d(*range(i, 0), *range(i, 1), *range(i, 2)));
     }
 
-    OPF::OwnParticleFilter opf(37000, apose, 1.12, 10);
+    OPF::OwnParticleFilter opf(17000, apose, 1.12, 10);
     opf.InitialState(Eigen::Vector2d(gt_x[0], gt_y[0]));
 
 
@@ -97,9 +97,11 @@ int main() {
 //            opf.Sample((f_x[i-1]-f_x[i-2])/1.0,(f_y[i-1]-f_y[i-2])/1.0);
 //        }
 
-        opf.ComputeCPoint(Eigen::VectorXd(uwb_range_vec[i]));
-
-        opf.Sample();
+        if (i > 0 && result_score[i - 1] < 1e-5) {
+            opf.EnhanceSample(Eigen::VectorXd(uwb_range_vec[i]));
+        } else {
+            opf.Sample();
+        }
 
 
 
@@ -158,7 +160,7 @@ int main() {
         /*
          * Output particle image
          */
-        if (i % 1 == 0 && is_view_particle) {
+        if (i % 5 == 0 && is_view_particle) {
             std::vector<std::vector<double>> bx, by;
             bx.resize(3);
             by.resize(3);
