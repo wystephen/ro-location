@@ -97,6 +97,8 @@ namespace OPF {
 
         Eigen::Matrix<double, 6, 2> con_point_;
 
+        Eigen::VectorXd avg_range_;
+
     private:
         /*
          *
@@ -392,38 +394,38 @@ namespace OPF {
         /*
          * Sample Methon 4
          */
-////        std::normal_distribution<> nor_get(0.0, 0.1615);
-//        std::normal_distribution<> nor_get(0.0, 0.1815);
-//        std::uniform_real_distribution<double> angle_get(0.0, M_PI);
-//
-//        for (int i(0); i < weight_vec_.rows(); ++i) {
-//            double dis(nor_get(e_));
-//            double angle(angle_get(e_));
-//            double delta_x(dis * std::cos(angle));
-//            double delta_y(dis * std::sin(angle));
-////            std::cout << "de x:" << delta_x << " de y: " << delta_y << std::endl;
-//            particle_mx_(i, 0) += delta_x;
-//            particle_mx_(i, 1) += delta_y;
-//        }
-        /*
-         * Sample Methon 5
-         */
-        std::normal_distribution<> nor_get(0.1, 0.2);
+//        std::normal_distribution<> nor_get(0.0, 0.1615);
+        std::normal_distribution<> nor_get(0.0, 0.1815);
+        std::uniform_real_distribution<double> angle_get(0.0, M_PI);
 
         for (int i(0); i < weight_vec_.rows(); ++i) {
             double dis(nor_get(e_));
-            double angle(std::atan2(last_best_y_ - particle_mx_(i, 1), last_best_x_ - particle_mx_(i, 0)));
-            double ddx(last_best_x_ - particle_mx_(i, 0)), ddy(last_best_y_ - particle_mx_(i, 1));
-            double val = std::pow(ddx * ddx + ddy * ddy, 0.5);
-//            ddx /=val;
-//            ddy /=val;
-
-            double delta_x(dis * ddx);// + dis * std::cos(angle));
-            double delta_y(dis * ddy);//+ dis * std::sin(angle));
+            double angle(angle_get(e_));
+            double delta_x(dis * std::cos(angle));
+            double delta_y(dis * std::sin(angle));
 //            std::cout << "de x:" << delta_x << " de y: " << delta_y << std::endl;
             particle_mx_(i, 0) += delta_x;
             particle_mx_(i, 1) += delta_y;
         }
+        /*
+         * Sample Methon 5
+         */
+//        std::normal_distribution<> nor_get(0.1, 0.2);
+//
+//        for (int i(0); i < weight_vec_.rows(); ++i) {
+//            double dis(nor_get(e_));
+//            double angle(std::atan2(last_best_y_ - particle_mx_(i, 1), last_best_x_ - particle_mx_(i, 0)));
+//            double ddx(last_best_x_ - particle_mx_(i, 0)), ddy(last_best_y_ - particle_mx_(i, 1));
+//            double val = std::pow(ddx * ddx + ddy * ddy, 0.5);
+////            ddx /=val;
+////            ddy /=val;
+//
+//            double delta_x(dis * ddx);// + dis * std::cos(angle));
+//            double delta_y(dis * ddy);//+ dis * std::sin(angle));
+////            std::cout << "de x:" << delta_x << " de y: " << delta_y << std::endl;
+//            particle_mx_(i, 0) += delta_x;
+//            particle_mx_(i, 1) += delta_y;
+//        }
         /*
          * Sample Methon6
          */
@@ -531,6 +533,12 @@ namespace OPF {
 //        ComputeCPoint(range_vec);
 //        std::cout << "common point:" << con_point_ << std::endl;
 
+        if (avg_range_.size() < 1) {
+            avg_range_ = range_vec;
+        } else {
+            avg_range_ *= 0.8;
+            avg_range_ += 0.2 * range_vec;
+        }
 
         weight_vec_ /= weight_vec_.sum();
 
@@ -662,9 +670,10 @@ namespace OPF {
 //            ret += 1 / std::sqrt(2 * M_PI) / sigma_(i + 2.0) * std::exp(
 //                    -std::pow(dis(i) - (range_vec(i)), 2.0) / 2.0 /
 //                    std::pow(sigma_(i + 2.0), 2.0));
-            ret += NormalPDF(range_vec(i), dis(i) + n(e_), 0.08);
+            ret += NormalPDF(range_vec(i), dis(i) + n(e_), 0.08) * NormalPDF(range_vec(i), avg_range_(i), 0.4);
 
         }
+
 
 //        return std::pow(2.0,ret);
         return ret;
@@ -702,10 +711,10 @@ namespace OPF {
 
 
         std::cout << "Neff:" << 1 / weight_vec_.norm() / weight_vec_.norm() << std::endl;
-//        while (1 / weight_vec_.norm() / weight_vec_.norm() < particle_num_ / 100.0) {
-//            ReSample();
-//            std::cout << "Neff:" << 1 / weight_vec_.norm() / weight_vec_.norm() << std::endl;
-//        }
+        while (1 / weight_vec_.norm() / weight_vec_.norm() < particle_num_ / 100.0) {
+            ReSample();
+            std::cout << "Neff:" << 1 / weight_vec_.norm() / weight_vec_.norm() << std::endl;
+        }
 
 //        int max_index(0);
 //        weight_vec_.maxCoeff(&max_index);
