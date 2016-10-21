@@ -38,7 +38,7 @@ if __name__ == "__main__":
 
             index = int(index[0])
 
-            tmp_mat = tmp_mat / tmp_mat.sum()
+            # tmp_mat = tmp_mat / tmp_mat.sum()
 
             scipy.misc.toimage(tmp_mat).save("../../tmpdata/" + str(index) + ".bmp")
 
