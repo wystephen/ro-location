@@ -685,7 +685,7 @@ namespace OPF {
          */
         std::normal_distribution<> n(0, 0.012);
 
-        double ret(0.0);
+        double ret(1.0);
         Eigen::Vector3d dis;
         for (int j(0); j < 3; ++j) {
             sigma_(j + 2) = 1.0;
@@ -707,13 +707,13 @@ namespace OPF {
                 return 0.1 * (1.01 - std::exp(-0.17 * dis(i)));
             };
 
-            ret += LogNormalPDF(range_vec(i), dis(i) + f() + guess_state(2 + i)/*+ n(e_)*/, 0.2);
+            ret *= (NormalPDF(range_vec(i), dis(i) + f() + guess_state(2 + i)/*+ n(e_)*/, 0.1) + 0.01);
 
         }
 
 
 //        return std::pow(2.0,ret);
-        return std::exp(ret);
+        return (ret);
 
 
     }
