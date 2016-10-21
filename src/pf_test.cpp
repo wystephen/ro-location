@@ -65,7 +65,7 @@ int main() {
         uwb_range_vec.push_back(Eigen::Vector3d(*range(i, 0), *range(i, 1), *range(i, 2)));
     }
 
-    OPF::OwnParticleFilter opf(37000, apose, 1.12, 10);
+    OPF::OwnParticleFilter opf(17000, apose, 1.12, 10);
     opf.InitialState(Eigen::Vector2d(gt_x[0], gt_y[0]));
 
 
@@ -85,11 +85,11 @@ int main() {
         /*
          * SAMPLE
          */
-//        if (i < 4)
-//            opf.Sample();
-//        else {
-//            opf.Sample((gt_x[i - 1] - gt_x[i - 2]) / 1.0, (gt_y[i - 1] - gt_y[i - 2]) / 1.0);
-//        }
+        if (i < 4)
+            opf.Sample();
+        else {
+            opf.Sample((gt_x[i - 1] - gt_x[i - 2]) / 1.0, (gt_y[i - 1] - gt_y[i - 2]) / 1.0);
+        }
 //        if(i<3)
 //        {
 //            opf.Sample();
@@ -103,7 +103,7 @@ int main() {
 //            opf.Sample();
 //        }
 
-        opf.Sample();
+//        opf.Sample();
 
 
 
@@ -271,7 +271,7 @@ int main() {
          * ReSample
          * Needn't resample in every time steps.
          */
-//        opf.ReSample();
+        opf.ReSample();
 
 
     }

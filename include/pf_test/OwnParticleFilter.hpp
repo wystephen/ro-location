@@ -114,6 +114,10 @@ namespace OPF {
             return 1 / std::sqrt(2.0 * M_PI) / sigma * std::exp(-std::pow(x - miu, 2.0) / 2 / sigma / sigma);
         }
 
+        double LogNormalPDF(double x, double miu, double sigma) {
+            return std::log(1 / std::sqrt(2.0 * M_PI) / sigma) / (std::pow(x - miu, 2.0) / 2 / sigma / sigma);
+        }
+
 
         /*
          * Some error.
@@ -583,7 +587,7 @@ namespace OPF {
          */
         std::cout << "min weight : " << weight_vec_.minCoeff() << "max weight:" << weight_vec_.maxCoeff() << std::endl;
         for (int i(0); i < weight_vec_.size(); ++i) {
-            weight_vec_(i) *= Score(i);
+            weight_vec_(i) *= std::exp(Score(i));
         }
         std::cout << "min weight : " << weight_vec_.minCoeff() << "max weight:" << weight_vec_.maxCoeff() << std::endl;
 
@@ -670,13 +674,14 @@ namespace OPF {
 //            ret += 1 / std::sqrt(2 * M_PI) / sigma_(i + 2.0) * std::exp(
 //                    -std::pow(dis(i) - (range_vec(i)), 2.0) / 2.0 /
 //                    std::pow(sigma_(i + 2.0), 2.0));
-            ret += NormalPDF(range_vec(i), dis(i) + n(e_), 0.08) * NormalPDF(range_vec(i), avg_range_(i), 0.4);
+            //ret *= (NormalPDF(range_vec(i), dis(i) + n(e_), 0.08)+1e-8) ;//* NormalPDF(range_vec(i), avg_range_(i), 0.4);
+            ret += LogNormalPDF(range_vec(i), dis(i) + n(e_), 0.08);
 
         }
 
 
 //        return std::pow(2.0,ret);
-        return ret;
+        return (ret);
 
 
     }
