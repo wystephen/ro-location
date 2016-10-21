@@ -707,9 +707,11 @@ namespace OPF {
                 return 0.1 * (1.01 - std::exp(-0.17 * dis(i)));
             };
 
-            ret *= (NormalPDF(range_vec(i), dis(i) + f() + guess_state(2 + i)/*+ n(e_)*/, 0.1) + 0.01);
+            ret *= (NormalPDF(range_vec(i), dis(i) + f() /*+ guess_state(2 + i)/*+ n(e_)*/, 0.2) + 1e-59);
+
 
         }
+//        std::cout << "ret " << ret << std::endl;
 
 
 //        return std::pow(2.0,ret);
