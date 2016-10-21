@@ -26,7 +26,7 @@ namespace plt = matplotlibcpp;
  */
 
 int main() {
-    bool is_view_likelihood(false);
+    bool is_view_likelihood(true);
     bool is_view_particle(false);
     bool is_out_cnn_img(false);
     CSVReader gt("gt.csv"), beacon_set("beacon_set.csv"), uwb_range("uwb_range.csv");
@@ -77,6 +77,13 @@ int main() {
 
     std::vector<double> real_score, result_score;
 
+
+    /*
+     * Random engine
+     */
+
+    std::default_random_engine re;
+    std::normal_distribution<> normal_d(0, 0.08);
     for (int i(0); i < uwb_range_vec.size(); ++i) {
 //        opf.Sample(last_dx,last_dy);
 
@@ -88,7 +95,7 @@ int main() {
         if (i < 4)
             opf.Sample();
         else {
-            opf.Sample((gt_x[i - 1] - gt_x[i - 2]) / 1.0, (gt_y[i - 1] - gt_y[i - 2]) / 1.0);
+            opf.Sample((gt_x[i] - gt_x[i - 1]) / 1.0 + normal_d(re), (gt_y[i] - gt_y[i - 1]) / 1.0 + normal_d(re));
         }
 //        if(i<3)
 //        {

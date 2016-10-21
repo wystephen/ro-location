@@ -663,7 +663,7 @@ namespace OPF {
         double ret(0.0);
         Eigen::Vector3d dis;
         for (int j(0); j < 3; ++j) {
-            sigma_(j + 2) = 1.0;
+            sigma_(j + 2) = 1.3;
         }
         for (int i(0); i < 3; ++i) {
             dis(i) = 0.0;
@@ -675,7 +675,24 @@ namespace OPF {
 //                    -std::pow(dis(i) - (range_vec(i)), 2.0) / 2.0 /
 //                    std::pow(sigma_(i + 2.0), 2.0));
             //ret *= (NormalPDF(range_vec(i), dis(i) + n(e_), 0.08)+1e-8) ;//* NormalPDF(range_vec(i), avg_range_(i), 0.4);
-            ret += LogNormalPDF(range_vec(i), dis(i) + n(e_), 0.08);
+            /*
+             * bias
+             */
+            auto f = [=] {
+                return 0.1 * (1.01 - std::exp(-0.17 * dis(i)));
+            };
+            /*
+             * randon bias
+             */
+            auto b = [=] {
+                std::uniform_real_distribution<double> rnd(0, 1);
+                if (rnd(e_) < 0.05) {
+                    return rnd(e_) * 10.0;
+                } else {
+                    return 0.0;
+                }
+            };
+            ret += LogNormalPDF(range_vec(i), dis(i) + f() + b()/*+ n(e_)*/, 0.08);
 
         }
 
