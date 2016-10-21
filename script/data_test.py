@@ -61,7 +61,7 @@ if __name__ == '__main__':
     '''
     Load Data
     '''
-    gt = np.loadtxt("../datasets/uwb_ro-localization_demo_GT.txt")
+    gt = np.loadtxt("gt.csv", delimiter=',')
     gt = gt[:, 1:4]
 
     # load beacon dataset
