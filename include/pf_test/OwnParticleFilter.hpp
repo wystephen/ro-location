@@ -410,6 +410,18 @@ namespace OPF {
 //            std::cout << "de x:" << delta_x << " de y: " << delta_y << std::endl;
             particle_mx_(i, 0) += delta_x;
             particle_mx_(i, 1) += delta_y;
+            for (int j(2); j < particle_mx_.cols(); ++j) {
+
+                auto b = [&] {
+                    std::uniform_real_distribution<double> rnd(0, 1);
+                    if (rnd(e_) < 0.05) {
+                        return particle_mx_(i, j) + (rnd(e_) - 0.5) * 10.0;
+                    } else {
+
+                    }
+                };
+                b();
+            }
         }
         /*
          * Sample Methon 5
@@ -503,6 +515,10 @@ namespace OPF {
     bool OwnParticleFilter::Sample(double dx, double dy) {
         Eigen::Vector2d delta(dx,dy);
 //        delta = delta.sum();
+        /*
+         * randon bias
+         */
+
         std::vector<std::normal_distribution<>> normal_dis_vec;
         for (int i(0); i < sigma_.rows(); ++i) {
             if(i<2)
@@ -520,6 +536,15 @@ namespace OPF {
         for (int i(0); i < weight_vec_.rows(); ++i) {
             for (int j(0); j < particle_mx_.cols(); ++j) {
                 particle_mx_(i, j) += normal_dis_vec.at(j)(e_);
+                auto b = [&] {
+                    std::uniform_real_distribution<double> rnd(0, 1);
+                    if (rnd(e_) < 0.05) {
+                        return particle_mx_(i, j) + (rnd(e_) - 0.5) * 10.0;
+                    } else {
+
+                    }
+                };
+                if (j > 2) b();
             }
 
         }
@@ -681,18 +706,19 @@ namespace OPF {
             auto f = [=] {
                 return 0.1 * (1.01 - std::exp(-0.17 * dis(i)));
             };
-            /*
-             * randon bias
-             */
-            auto b = [=] {
-                std::uniform_real_distribution<double> rnd(0, 1);
-                if (rnd(e_) < 0.05) {
-                    return rnd(e_) * 10.0;
-                } else {
-                    return 0.0;
-                }
-            };
-            ret += LogNormalPDF(range_vec(i), dis(i) + f() + b()/*+ n(e_)*/, 0.08);
+//            /*
+//             * randon bias
+//             */
+//            auto b = [=] {
+//                std::uniform_real_distribution<double> rnd(0, 1);
+//                if (rnd(e_) < 0.05) {
+//                    return guess_state(2_i) + (rnd(e_)-0.5) * 10.0;
+//                } else {
+//
+//                }
+//            };
+//            b();
+            ret += LogNormalPDF(range_vec(i), dis(i) + f() + guess_state(2 + i)/*+ n(e_)*/, 0.08);
 
         }
 
