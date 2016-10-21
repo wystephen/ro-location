@@ -5,6 +5,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/pf_test.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/methon_test.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/ro-localization_main.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/include/pf_test/VirtualOdometry.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/include/pf_test/EKF.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
     </content>

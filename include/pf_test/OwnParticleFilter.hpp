@@ -688,7 +688,7 @@ namespace OPF {
         double ret(0.0);
         Eigen::Vector3d dis;
         for (int j(0); j < 3; ++j) {
-            sigma_(j + 2) = 1.3;
+            sigma_(j + 2) = 1.0;
         }
         for (int i(0); i < 3; ++i) {
             dis(i) = 0.0;
