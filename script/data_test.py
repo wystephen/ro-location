@@ -62,7 +62,7 @@ if __name__ == '__main__':
     Load Data
     '''
     gt = np.loadtxt("gt.csv", delimiter=',')
-    gt = gt[:, 1:4]
+    # gt = gt[:, 1:4]
 
     # load beacon dataset
     beacon_info = np.loadtxt("../beacon_out.txt")
@@ -109,7 +109,7 @@ if __name__ == '__main__':
 
     sim_filter.setInput(beacon_info, beacon)
     # print("second beacon:", beacon)
-    sim_filter.initial_filter(20000)
+    sim_filter.initial_filter(16)
     self_out = sim_filter.filter()
 
 
@@ -121,8 +121,8 @@ if __name__ == '__main__':
 
     # error between ground truth and beacon location
     beacon_pose = beacon_info[:, 0:3]
-    gt[:, 0] += odometry_offset[0]
-    gt[:, 1] += odometry_offset[1]
+    # gt[:, 0] += odometry_offset[0]
+    # gt[:, 1] += odometry_offset[1]
     err_all = np.sum((beacon_pose[:, 0:2] - gt[:, 0:2]) ** 2.0, 1)
     err_all = err_all ** 0.5
     # err between ground truth and self triangle
