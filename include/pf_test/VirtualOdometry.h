@@ -63,29 +63,12 @@ namespace OPF {
                 dis(i) += std::pow(guess_state(1) - beacon_pose_(i, 1), 2.0);
                 dis(i) += std::pow(z_offset_ - beacon_pose_(i, 2), 2.0);
                 dis(i) = std::pow(dis(i), 0.5);
-//            ret += 1 / std::sqrt(2 * M_PI) / sigma_(i + 2.0) * std::exp(
-//                    -std::pow(dis(i) - (range_vec(i)), 2.0) / 2.0 /
-//                    std::pow(sigma_(i + 2.0), 2.0));
-                //ret *= (NormalPDF(range_vec(i), dis(i) + n(e_), 0.08)+1e-8) ;//* NormalPDF(range_vec(i), avg_range_(i), 0.4);
-                /*
-                 * bias
-                 */
+
                 auto f = [=] {
                     return 0.1 * (1.01 - std::exp(-0.17 * dis(i)));
                 };
-//            /*
-//             * randon bias
-//             */
-//            auto b = [=] {
-//                std::uniform_real_distribution<double> rnd(0, 1);
-//                if (rnd(e_) < 0.05) {
-//                    return guess_state(2_i) + (rnd(e_)-0.5) * 10.0;
-//                } else {
-//
-//                }
-//            };
-//            b();
-                ret += LogNormalPDF(range_vec(i), dis(i) + f(), 0.08);
+
+                ret += LogNormalPDF(range_vec(i), dis(i) + f(), 0.18);
 
             }
 

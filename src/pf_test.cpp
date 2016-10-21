@@ -67,7 +67,7 @@ int main() {
         uwb_range_vec.push_back(Eigen::Vector3d(*range(i, 0), *range(i, 1), *range(i, 2)));
     }
 
-    OPF::OwnParticleFilter opf(17000, apose, 1.12, 10);
+    OPF::OwnParticleFilter opf(10000, apose, 1.12, 10);
     opf.InitialState(Eigen::Vector2d(gt_x[0], gt_y[0]));
 
     OPF::VirtualOdometry odom(apose, 1.12);
@@ -117,6 +117,7 @@ int main() {
 //        }
 
 //        opf.Sample();
+/*
         if (i < 4)
             opf.Sample();
         else {
@@ -127,6 +128,7 @@ int main() {
                                                         Eigen::VectorXd(uwb_range_vec[i]));
             opf.Sample(tmp_odo_val(0), tmp_odo_val(1));
         }
+*/
 
 
 
@@ -294,7 +296,7 @@ int main() {
          * ReSample
          * Needn't resample in every time steps.
          */
-        opf.ReSample();
+//        opf.ReSample();
 
 
     }

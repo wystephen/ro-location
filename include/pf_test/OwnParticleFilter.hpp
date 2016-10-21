@@ -115,7 +115,7 @@ namespace OPF {
         }
 
         double LogNormalPDF(double x, double miu, double sigma) {
-            return std::log(1 / std::sqrt(2.0 * M_PI) / sigma) / (std::pow(x - miu, 2.0) / 2 / sigma / sigma);
+            return std::log(1 / std::sqrt(2.0 * M_PI) / sigma) - (std::pow(x - miu, 2.0) / 2 / sigma / sigma);
         }
 
 
@@ -580,7 +580,7 @@ namespace OPF {
         Eigen::VectorXd Score(weight_vec_);
         for (int j(0); j < Score.rows(); ++j) {
             Score(j) = Likelihood(particle_mx_.block(j, 0, 1, particle_mx_.cols()), range_vec);
-//            Score(j) = std::exp(Score(j));
+//            Score(j) = std::exp(Score(j)/10000.0);
         }
         Score /= Score.sum();
 
@@ -612,7 +612,7 @@ namespace OPF {
          */
         std::cout << "min weight : " << weight_vec_.minCoeff() << "max weight:" << weight_vec_.maxCoeff() << std::endl;
         for (int i(0); i < weight_vec_.size(); ++i) {
-            weight_vec_(i) *= std::exp(Score(i));
+            weight_vec_(i) *= (Score(i));
         }
         std::cout << "min weight : " << weight_vec_.minCoeff() << "max weight:" << weight_vec_.maxCoeff() << std::endl;
 
@@ -706,25 +706,14 @@ namespace OPF {
             auto f = [=] {
                 return 0.1 * (1.01 - std::exp(-0.17 * dis(i)));
             };
-//            /*
-//             * randon bias
-//             */
-//            auto b = [=] {
-//                std::uniform_real_distribution<double> rnd(0, 1);
-//                if (rnd(e_) < 0.05) {
-//                    return guess_state(2_i) + (rnd(e_)-0.5) * 10.0;
-//                } else {
-//
-//                }
-//            };
-//            b();
-            ret += LogNormalPDF(range_vec(i), dis(i) + f() + guess_state(2 + i)/*+ n(e_)*/, 0.08);
+
+            ret += LogNormalPDF(range_vec(i), dis(i) + f() + guess_state(2 + i)/*+ n(e_)*/, 0.2);
 
         }
 
 
 //        return std::pow(2.0,ret);
-        return (ret);
+        return std::exp(ret);
 
 
     }
@@ -734,7 +723,10 @@ namespace OPF {
         Eigen::VectorXd tmp_state(state_);
         tmp_state.setZero();
         weight_vec_ /= weight_vec_.sum();
-
+        if (isnan(weight_vec_.sum())) {
+            weight_vec_.setOnes();
+            weight_vec_ /= weight_vec_.sum();
+        }
         for (int i(0); i < particle_mx_.rows(); ++i) {
             for (int j(0); j < particle_mx_.cols(); ++j) {
                 tmp_state(j) += particle_mx_(i, j) * weight_vec_(i);
@@ -759,6 +751,7 @@ namespace OPF {
 
 
         std::cout << "Neff:" << 1 / weight_vec_.norm() / weight_vec_.norm() << std::endl;
+
         while (1 / weight_vec_.norm() / weight_vec_.norm() < particle_num_ / 100.0) {
             ReSample();
             std::cout << "Neff:" << 1 / weight_vec_.norm() / weight_vec_.norm() << std::endl;
