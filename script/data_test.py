@@ -61,7 +61,7 @@ if __name__ == '__main__':
     '''
     Load Data
     '''
-    gt = np.loadtxt("gt.csv", delimiter=',')
+    gt = np.loadtxt("../gt.csv", delimiter=',')
     # gt = gt[:, 1:4]
 
     # load beacon dataset
@@ -109,7 +109,7 @@ if __name__ == '__main__':
 
     sim_filter.setInput(beacon_info, beacon)
     # print("second beacon:", beacon)
-    sim_filter.initial_filter(16)
+    sim_filter.initial_filter(36000)
     self_out = sim_filter.filter()
 
 

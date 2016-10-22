@@ -217,9 +217,10 @@ class PFONE:
         self.last_state_vec[0:2] = 0.5 * self.last_state_vec[0:2] + 0.5 * the_pose
         self.last_sample_vector = self.sample_vector
 
-        self.sample_vector[:, 0:2] += np.random.normal(0.0, self.state_var[0],
+        self.sample_vector[:, 0:2] += np.random.normal(0.0, self.state_var[0]*3.0,
                                                        size=(self.sample_vector.shape[0], 2))
         self.currentRange = the_current_range
+
 
         # for i in range(self.sample_vector.shape[0]):
         #     self.last_state_vec = self.sample_vector[i, :]
@@ -292,9 +293,9 @@ class PFONE:
             dis[i] = np.linalg.norm(pose - self.beaconPose[i, :])
         dis_err = (dis - self.currentRange)
 
-        ret = 0.0
+        ret = 1.0
         for i in range(dis_err.shape[0]):
-            ret += self.normalpdf(dis_err[i], 0.0, 0.1)
+            ret *= self.normalpdf(dis_err[i], 0.0, 0.1)
         # print(ret)
         if ret < 1e-10:
             ret = 1e-10
