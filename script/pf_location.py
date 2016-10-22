@@ -10,11 +10,14 @@ from filter_fram import filter_frame
 
 from PFONE import PFONE
 
+from PFTWO import  PFTWO
+
 
 class RangPf(filter_frame):
     def __init__(self):
         filter_frame.__init__(self)
-        self.pfone = PFONE(2, 3, 100)
+        # self.pfone = PFONE(2, 3, 100)
+        self.pfone = PFTWO(2,3,100)
 
     def setInput(self, beacon_info, beacon_set):
         self.beacon_pose = beacon_info[:, 0:2]
