@@ -35,7 +35,7 @@ class triangle3d:
         '''
         self.beaconset = beaconset
         self.range = ranges
-        print(self.beaconset.shape,self.range.shape)
+        # print(self.beaconset.shape,self.range.shape)
         res = minimize(self.costfunction,
                             [0.0,0.0,0.0],
                             method='L-BFGS-B',
@@ -74,11 +74,20 @@ if __name__ == '__main__':
         if i % 10 == 0:
             print (i*1.0/data_range.shape[0])
 
-    plt.subplot(2,1,1)
-    # plt.plot(result_x[:,0],result_x[:,1],result_x[:,2],'r-+')
-    plt.plot(result_x[:,0],result_x[:,1],'r-+')
-    plt.subplot(2,1,2)
-    plt.plot(result_x[:,2],'r-+')
+    fig = plt.figure()
+    ax = fig.gca(projection='3d')
+
+    ax.plot(result_x[:,0],result_x[:,1],result_x[:,2],'r+-')
+    ax.legend()
+
+
+
+
+    # plt.subplot(2,1,1)
+    # # plt.plot(result_x[:,0],result_x[:,1],result_x[:,2],'r-+')
+    # plt.plot(result_x[:,0],result_x[:,1],'r-+')
+    # plt.subplot(2,1,2)
+    # plt.plot(result_x[:,2],'r-+')
     plt.grid(True)
 
 
