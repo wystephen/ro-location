@@ -37,8 +37,11 @@ class triangle3d:
         self.range = ranges
         # print(self.beaconset.shape,self.range.shape)
         res = minimize(self.costfunction,
-                            [0.0,0.0,0.0],
+                            [0.0,0.0,3.0],
                             method='L-BFGS-B',
+                       bounds=((-100, 100),
+                               (-100, 100),
+                               (0.0,10.0)),
                             jac=False)
         print(res.fun,res.x)
         return res.x
@@ -50,14 +53,16 @@ class triangle3d:
 if __name__ == '__main__':
     se = seq_process()
     # se.process_file(file_name='LOGBig/LOG_2016_10_19_16_1_18.data')
-    # se.process_file(file_name='LOGBig/LOG_2016_10_19_16_3_20.data')
-    # beacon_set = np.loadtxt("./LOGBig/beaconset")
+    se.process_file(file_name='LOGBig/LOG_2016_10_19_16_3_20.data')
+    # se.process_file(file_name='LOGBig/LOG_2016_10_19_16_6_14.data')
+    beacon_set = np.loadtxt("./LOGBig/beaconset")
 
     ###############################################
     # se.process_file("20161019log/LOG_2016_10_19_10_23_24.data")
-    se.process_file("20161019log/LOG_2016_10_19_10_42_28.data")
-
-    beacon_set = np.loadtxt("./20161019log/beaconset")
+    # se.process_file("20161019log/LOG_2016_10_19_10_42_28.data")
+    # se.process_file("20161019log/LOG_2016_10_19_10_31_0.data")
+    #
+    # beacon_set = np.loadtxt("./20161019log/beaconset")
 
 
     '''
