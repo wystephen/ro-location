@@ -49,9 +49,15 @@ class triangle3d:
 
 if __name__ == '__main__':
     se = seq_process()
-    se.process_file(file_name='LOGBig/LOG_2016_10_19_16_1_18.data')
+    # se.process_file(file_name='LOGBig/LOG_2016_10_19_16_1_18.data')
     # se.process_file(file_name='LOGBig/LOG_2016_10_19_16_3_20.data')
-    beacon_set = np.loadtxt("./LOGBig/beaconset")
+    # beacon_set = np.loadtxt("./LOGBig/beaconset")
+
+    ###############################################
+    # se.process_file("20161019log/LOG_2016_10_19_10_23_24.data")
+    se.process_file("20161019log/LOG_2016_10_19_10_42_28.data")
+
+    beacon_set = np.loadtxt("./20161019log/beaconset")
 
 
     '''
@@ -74,22 +80,22 @@ if __name__ == '__main__':
         if i % 10 == 0:
             print (i*1.0/data_range.shape[0])
 
+
+
+###############
     fig = plt.figure()
     ax = fig.gca(projection='3d')
 
     ax.plot(result_x[:,0],result_x[:,1],result_x[:,2],'r+-')
     ax.legend()
-
-
-
-
+###########
     # plt.subplot(2,1,1)
     # # plt.plot(result_x[:,0],result_x[:,1],result_x[:,2],'r-+')
     # plt.plot(result_x[:,0],result_x[:,1],'r-+')
     # plt.subplot(2,1,2)
     # plt.plot(result_x[:,2],'r-+')
+##############
+
     plt.grid(True)
-
-
     plt.show()
 
