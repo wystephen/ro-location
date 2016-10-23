@@ -25,6 +25,12 @@ class triangle:
 
         self.ign = 10000
 
+        self.z_offset = 1.12
+
+    def setz_Offset(self,zoff):
+        self.z_offset = zoff
+
+
     def setRealvar(self, ground_truth):
         self.gt = ground_truth
 
@@ -100,7 +106,7 @@ class triangle:
 
         t_pose = np.zeros(3)
         t_pose[0:2] = pose
-        t_pose[2] = 1.12
+        t_pose[2] = self.z_offset
         tmp_sum = np.sum(self.the_range)
 
         for i in range(self.beacon_set.shape[0]):
@@ -127,7 +133,7 @@ class triangle:
 
         t_pose = np.zeros(3)
         t_pose[0:2] = pose
-        t_pose[2] = 1.12
+        t_pose[2] = self.z_offset
 
         for i in range(self.beacon_set.shape[0]):
             dis[i] = np.linalg.norm(t_pose - self.beacon_set[i, :]) - self.the_range[i]

@@ -6,7 +6,8 @@ import numpy as np
 
 class seq_process:
     def __init__(self):
-        print("ini")
+        a=1
+        # print("ini")
         # self.aarange = open('aarange.txt', 'w')
         # self.atrange = open('atrange.txt', 'w')
         #
@@ -34,10 +35,10 @@ class seq_process:
             if ll[0] == 'I':
                 start = ll.find('{')
                 if start == -1:
-                    print("ll is :",ll,"can not found a {")
+                    # print("ll is :",ll,"can not found a {")
                     return True
                 ll = ll[start::]
-            print(ll)
+            # print(ll)
             jdata = demjson.decode(ll)
 
             if jdata['type'] == 'a':
