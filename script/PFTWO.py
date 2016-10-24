@@ -53,6 +53,9 @@ class PFTWO:
         self.position_num = position_num
         self.beacon_num = beacon_num
 
+        self.large_size = particle_num * 300.0
+        self.range_array = np.zeros(int(self.large_size))
+
     def setPFParameter(self, pose_var=0.5, beacon_var=0.5, z_offset=1.12):
         '''
 
@@ -127,36 +130,42 @@ class PFTWO:
         # print(np.linalg.norm(self.weight_vector))
         self.weight_vector = self.weight_vector / np.sum(self.weight_vector)
 
-        beta = np.zeros_like(self.weight_vector)
+        # print(np.std(self.sample_vector[:,0]),np.std(self.sample_vector[:,1]))
+
+        self.beta = np.zeros_like(self.weight_vector)
+
         for i in range(self.weight_vector.shape[0]):
             if i == 0:
-                beta[i] = self.weight_vector[i]
+                self.beta[i] = self.weight_vector[i]
             else:
-                beta[i] = beta[i - 1] + self.weight_vector[i]
+                self.beta[i] = self.beta[i - 1] + self.weight_vector[i]
+        # print("self.beta",self.beta)
 
         # TODO:Check the beta[last_index] is it similar to 1
+        self.tmp_sample_vector = np.zeros_like(self.sample_vector)
+        self.tmp_weight_vector = np.zeros_like(self.weight_vector)
+        self.rnd = np.random.uniform(size=self.sample_vector.shape[0])
+        '''
+        Resample way 1
+        '''
+        # DON'T FORGET TO DELETE SAMPLE_VECTOR
 
-        tmp_sample_vector = np.zeros_like(self.sample_vector)
-        tmp_weight_vector = np.zeros_like(self.weight_vector)
-        for i in range(tmp_sample_vector.shape[0]):
-            rnd = np.random.uniform()
-            # print(rnd)
 
-            for j in range(beta.shape[0]):
-                if rnd < beta[j]:
-                    # print("EE!")
-                    tmp_sample_vector[i, :] = self.sample_vector[j, :]
-                    tmp_weight_vector[i, :] = self.weight_vector[j, :]
-                elif j == beta.shape[0] - 1:
-                    # print("EE2")
-                    tmp_sample_vector[i, :] = self.sample_vector[j, :]
-                    tmp_weight_vector[i, :] = self.weight_vector[j, :]
-                else:
-                    # print("ERROR")
-                    tmp_sample_vector[i, :] = self.sample_vector[j, :]
-                    tmp_weight_vector[i, :] = self.weight_vector[j, :]
-        self.weight_vector = tmp_weight_vector
-        self.sample_vector = tmp_sample_vector
+        #
+        # print(self.beta)
+        for i in range(self.beta.shape[0] - 1):
+            # if self.beta[i + 1] - self.beta[i] < 1e-6:
+            #     break
+
+            self.range_array[int(self.beta[i] * self.large_size):int(self.beta[i + 1] * self.large_size)] = i
+
+        for i in range(self.tmp_sample_vector.shape[0]):
+            self.tmp_sample_vector[i, :] = self.sample_vector[self.range_array[(self.rnd[i] * self.large_size)], :]
+            self.tmp_weight_vector[i, :] = self.weight_vector[self.range_array[int(self.rnd[i] * self.large_size)], :]
+
+        self.weight_vector = self.tmp_weight_vector
+        self.sample_vector = self.tmp_sample_vector
+        # print(np.std(self.sample_vector[:, 0]), np.std(self.sample_vector[:, 1]))
 
     def StateEqu(self, delta_sample_vec, the_current_range):
         '''
@@ -170,8 +179,8 @@ class PFTWO:
         # self.sample_vector[i, j] += np.random.normal(0.0, self.state_var[j])
 
         self.currentRange = the_current_range
-        for i in range(self.sample_vector.shape[0]):
-            self.sample_vector[i, 0:2] = self.get_pose(self.sample_vector[i, 0:2])
+        # for i in range(self.sample_vector.shape[0]):
+        #     self.sample_vector[i, 0:2] = self.get_pose(self.sample_vector[i, 0:2])
             # + \
             # [np.random.normal(0.0,self.state_var[0] / 10.0),
             #  np.random.normal(0.0,self.state_var[1]/10.0)]
@@ -215,6 +224,25 @@ class PFTWO:
             # self.score[i] = self.GetScore(self.sample_vector[i, :], all_range)
             self.score[i] = self.GetComplexScore(self.sample_vector[i, :], all_range)
             self.weight_vector[i] = (self.weight_vector[i]) * (self.score[i])
+
+    def GetLikelihood(self, state_vec, all_range):
+        pose = np.zeros(3)
+        pose[2] = self.z_offset
+        pose[0:2] = state_vec[0:self.position_num]
+        the_range = state_vec[self.position_num:]
+
+        dis = np.zeros_like(the_range)
+        func_val = 1.0
+        for i in range(the_range.shape[0]):
+            dis[i] = np.linalg.norm(pose - self.beaconPose[i, :])
+            func_val *= self.NormalFunc(the_range[i], dis[i], 0.2)
+        return func_val
+
+    def NormalFunc(self, x, miu, sigma):
+        para1 = 1 / np.sqrt(2.0 * np.pi) / sigma
+        para2 = (x - miu) ** 2.0 / sigma / sigma
+        return para1 * np.exp(-para2)
+
 
     def GetScore(self, state_vec, all_range):
         '''
