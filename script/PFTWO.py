@@ -53,7 +53,7 @@ class PFTWO:
         self.position_num = position_num
         self.beacon_num = beacon_num
 
-        self.large_size = particle_num * 300.0
+        self.large_size = particle_num * 100.0
         self.range_array = np.zeros(int(self.large_size))
 
     def setPFParameter(self, pose_var=0.5, beacon_var=0.5, z_offset=1.12):
