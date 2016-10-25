@@ -28,7 +28,7 @@ namespace plt = matplotlibcpp;
  */
 
 int main() {
-    bool is_view_likelihood(true);
+    bool is_view_likelihood(false);
     bool is_view_particle(false);
     bool is_out_cnn_img(false);
     CSVReader gt("gt.csv"), beacon_set("beacon_set.csv"), uwb_range("uwb_range.csv");
@@ -88,7 +88,7 @@ int main() {
      */
 
     std::default_random_engine re;
-    std::normal_distribution<> normal_d(0, 0.08);
+    std::normal_distribution<> normal_d(0, 0.18);
     for (int i(0); i < uwb_range_vec.size(); ++i) {
 //        opf.Sample(last_dx,last_dy);
 
@@ -296,7 +296,7 @@ int main() {
          * ReSample
          * Needn't resample in every time steps.
          */
-//        opf.ReSample();
+        opf.ReSample();
 
 
     }

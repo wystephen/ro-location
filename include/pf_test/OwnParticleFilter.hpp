@@ -612,7 +612,7 @@ namespace OPF {
          */
         std::cout << "min weight : " << weight_vec_.minCoeff() << "max weight:" << weight_vec_.maxCoeff() << std::endl;
         for (int i(0); i < weight_vec_.size(); ++i) {
-            weight_vec_(i) *= (Score(i));
+            weight_vec_(i) = (Score(i));
         }
         std::cout << "min weight : " << weight_vec_.minCoeff() << "max weight:" << weight_vec_.maxCoeff() << std::endl;
 
@@ -707,7 +707,7 @@ namespace OPF {
                 return 0.1 * (1.01 - std::exp(-0.17 * dis(i)));
             };
 
-            ret *= (NormalPDF(range_vec(i), dis(i) /*+ f() /*+ guess_state(2 + i)/*+ n(e_)*/, 0.2) + 1e-59);
+            ret += (NormalPDF(range_vec(i), dis(i) + f() /*+ guess_state(2 + i)/*+ n(e_)*/, 0.15) + 1e-159);
 
 
         }
@@ -792,6 +792,7 @@ namespace OPF {
 
         std::uniform_real_distribution<double> uuu(0, 1);
         double tmp_rnd(0.0);
+
         for (int i(0); i < particle_mx_.rows(); ++i) {
             tmp_rnd = uuu(e_);
             for (int j(0); j < Beta.rows(); ++j) {
