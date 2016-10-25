@@ -399,7 +399,7 @@ namespace OPF {
          * Sample Methon 4
          */
 //        std::normal_distribution<> nor_get(0.0, 0.1615);
-        std::normal_distribution<> nor_get(0.0, 0.6815);
+        std::normal_distribution<> nor_get(0.0, 0.2815);
         std::uniform_real_distribution<double> angle_get(0.0, M_PI);
 
         for (int i(0); i < weight_vec_.rows(); ++i) {
@@ -707,7 +707,7 @@ namespace OPF {
                 return 0.1 * (1.01 - std::exp(-0.17 * dis(i)));
             };
 
-            ret *= (NormalPDF(range_vec(i), dis(i) + f() /*+ guess_state(2 + i)/*+ n(e_)*/, 0.1) + 1e-159);
+            ret *= (NormalPDF(range_vec(i), dis(i) /*+ f() /*+ guess_state(2 + i)/*+ n(e_)*/, 0.1) /*+ 1e-159*/);
 
 
         }
@@ -754,10 +754,10 @@ namespace OPF {
 
         std::cout << "Neff:" << 1 / weight_vec_.norm() / weight_vec_.norm() << std::endl;
 
-        while (1 / weight_vec_.norm() / weight_vec_.norm() < particle_num_ / 100.0) {
-            ReSample();
-            std::cout << "Neff:" << 1 / weight_vec_.norm() / weight_vec_.norm() << std::endl;
-        }
+//        while (1 / weight_vec_.norm() / weight_vec_.norm() < particle_num_ / 100.0) {
+//            ReSample();
+//            std::cout << "Neff:" << 1 / weight_vec_.norm() / weight_vec_.norm() << std::endl;
+//        }
 
 //        int max_index(0);
 //        weight_vec_.maxCoeff(&max_index);
@@ -847,7 +847,6 @@ namespace OPF {
 
 
         for (int i(1); i < Beta.rows(); ++i) {
-
             Beta(i) = Beta(i - 1) + tmp_weight(i);
         }
         if (Beta.maxCoeff() < 1.0) {
@@ -855,7 +854,7 @@ namespace OPF {
 //            std::cout << Beta << std::endl;
         }
 
-        std::uniform_real_distribution<double> uuu(0, 0.9999999999);
+        std::uniform_real_distribution<double> uuu(0.0, 1.0);
         double tmp_rnd(0.0);
         for (int i(0); i < 2100; ++i) {
             tmp_rnd = uuu(e_);
