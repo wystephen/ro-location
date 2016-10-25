@@ -88,7 +88,7 @@ int main() {
      */
 
     std::default_random_engine re;
-    std::normal_distribution<> normal_d(0, 0.18);
+    std::normal_distribution<> normal_d(0, 0.08);
     for (int i(0); i < uwb_range_vec.size(); ++i) {
 //        opf.Sample(last_dx,last_dy);
 
