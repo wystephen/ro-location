@@ -399,7 +399,7 @@ namespace OPF {
          * Sample Methon 4
          */
 //        std::normal_distribution<> nor_get(0.0, 0.1615);
-        std::normal_distribution<> nor_get(0.0, 0.1815);
+        std::normal_distribution<> nor_get(0.0, 0.6815);
         std::uniform_real_distribution<double> angle_get(0.0, M_PI);
 
         for (int i(0); i < weight_vec_.rows(); ++i) {
@@ -707,7 +707,7 @@ namespace OPF {
                 return 0.1 * (1.01 - std::exp(-0.17 * dis(i)));
             };
 
-            ret += (NormalPDF(range_vec(i), dis(i) + f() /*+ guess_state(2 + i)/*+ n(e_)*/, 0.15) + 1e-159);
+            ret *= (NormalPDF(range_vec(i), dis(i) + f() /*+ guess_state(2 + i)/*+ n(e_)*/, 0.1) + 1e-159);
 
 
         }

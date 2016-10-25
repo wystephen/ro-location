@@ -97,12 +97,12 @@ int main() {
         /*
          * SAMPLE
          */
-        if (i < 4)
-            opf.Sample();
-        else {
-
-            opf.Sample((gt_x[i] - gt_x[i - 1]) / 1.0 + normal_d(re), (gt_y[i] - gt_y[i - 1]) / 1.0 + normal_d(re));
-        }
+//        if (i < 4)
+//            opf.Sample();
+//        else {
+//
+//            opf.Sample((gt_x[i] - gt_x[i - 1]) / 1.0 + normal_d(re), (gt_y[i] - gt_y[i - 1]) / 1.0 + normal_d(re));
+//        }
 //        if(i<3)
 //        {
 //            opf.Sample();
@@ -116,19 +116,19 @@ int main() {
 //            opf.Sample();
 //        }
 
-//        opf.Sample();
-/*
-        if (i < 4)
-            opf.Sample();
-        else {
+        opf.Sample();
 
-            //opf.Sample((gt_x[i] - gt_x[i - 1]) / 1.0 + normal_d(re), (gt_y[i] - gt_y[i - 1]) / 1.0 + normal_d(re));
-//            Eigen::Vector2d
-            Eigen::VectorXd tmp_odo_val = odom.odometry(Eigen::VectorXd(Eigen::Vector2d(f_x[i - 1], f_y[i - 1])),
-                                                        Eigen::VectorXd(uwb_range_vec[i]));
-            opf.Sample(tmp_odo_val(0), tmp_odo_val(1));
-        }
-*/
+//        if (i < 4)
+//            opf.Sample();
+//        else {
+//
+//            //opf.Sample((gt_x[i] - gt_x[i - 1]) / 1.0 + normal_d(re), (gt_y[i] - gt_y[i - 1]) / 1.0 + normal_d(re));
+////            Eigen::Vector2d
+//            Eigen::VectorXd tmp_odo_val = odom.odometry(Eigen::VectorXd(Eigen::Vector2d(f_x[i - 1], f_y[i - 1])),
+//                                                        Eigen::VectorXd(uwb_range_vec[i]));
+//            opf.Sample(tmp_odo_val(0), tmp_odo_val(1));
+//        }
+
 
 
 
@@ -269,8 +269,10 @@ int main() {
         }
 
 
+        opf.ReSample();
 
         Eigen::VectorXd p(opf.GetResult());
+
 
         result_score.push_back(opf.Likelihood(Eigen::VectorXd(Eigen::Vector3d(p(0), p(1), 1.12)),
                                               Eigen::VectorXd(uwb_range_vec[i])));
@@ -296,7 +298,7 @@ int main() {
          * ReSample
          * Needn't resample in every time steps.
          */
-        opf.ReSample();
+//        opf.ReSample();
 
 
     }
