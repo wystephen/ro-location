@@ -399,7 +399,7 @@ namespace OPF {
          * Sample Methon 4
          */
 //        std::normal_distribution<> nor_get(0.0, 0.1615);
-        std::normal_distribution<> nor_get(0.0, 0.2815);
+        std::normal_distribution<> nor_get(0.0, 0.9815);
         std::uniform_real_distribution<double> angle_get(0.0, M_PI);
 
         for (int i(0); i < weight_vec_.rows(); ++i) {
@@ -612,7 +612,7 @@ namespace OPF {
          */
         std::cout << "min weight : " << weight_vec_.minCoeff() << "max weight:" << weight_vec_.maxCoeff() << std::endl;
         for (int i(0); i < weight_vec_.size(); ++i) {
-            weight_vec_(i) = (Score(i));
+            weight_vec_(i) *= (Score(i));
         }
         std::cout << "min weight : " << weight_vec_.minCoeff() << "max weight:" << weight_vec_.maxCoeff() << std::endl;
 
@@ -685,7 +685,7 @@ namespace OPF {
          */
         std::normal_distribution<> n(0, 0.012);
 
-        double ret(1.0);
+        double ret(0.0);
         Eigen::Vector3d dis;
         for (int j(0); j < 3; ++j) {
             sigma_(j + 2) = 1.0;
@@ -707,7 +707,7 @@ namespace OPF {
                 return 0.1 * (1.01 - std::exp(-0.17 * dis(i)));
             };
 
-            ret *= (NormalPDF(range_vec(i), dis(i) /*+ f() /*+ guess_state(2 + i)/*+ n(e_)*/, 0.1) /*+ 1e-159*/);
+            ret += (NormalPDF(range_vec(i), dis(i) + f() /*+ guess_state(2 + i)/*+ n(e_)*/, 2.1) /*+ 1e-159*/);
 
 
         }
@@ -775,55 +775,80 @@ namespace OPF {
         /*
          * RESAMPLE METHON 1
          */
+//        weight_vec_ /= weight_vec_.sum();
+//        Eigen::MatrixXd tmp_matrix(particle_mx_);
+//        Eigen::VectorXd tmp_weight(weight_vec_);
+//
+//        Eigen::VectorXd Beta(weight_vec_);
+//
+//        for (int i(1); i < Beta.rows(); ++i) {
+//
+//            Beta(i) = Beta(i - 1) + weight_vec_(i);
+//        }
+//        if (Beta.maxCoeff() < 1.0) {
+//            Beta(Beta.rows() - 1) = 1.0;
+////            std::cout << Beta << std::endl;
+//        }
+//
+//        std::uniform_real_distribution<double> uuu(0, 1);
+//        double tmp_rnd(0.0);
+//
+//        for (int i(0); i < particle_mx_.rows(); ++i) {
+//            tmp_rnd = uuu(e_);
+//            for (int j(0); j < Beta.rows(); ++j) {
+//                if (tmp_rnd < Beta(j)) {
+//                    for (int k(0); k < particle_mx_.cols(); ++k) {
+//                        particle_mx_(i, k) = tmp_matrix(j, k);
+//                    }
+////                    particle_mx_.block(i, 0, 1, particle_mx_.cols()) = tmp_matrix.block(j, 0, 1, tmp_matrix.cols());
+//                    weight_vec_(i) = tmp_weight(j);
+//                    break;
+//                }
+//                if (j == Beta.rows() - 1) {
+//
+//                    std::cout << "rnd:" << tmp_rnd << "  beta:" << Beta(j) << std::endl;
+////                    weight_vec_.setOnes();
+////                    particle_mx_ = tmp_matrix;
+//                    MYERROR("Unexpected run fork.")
+//                    return true;
+//                }
+//            }
+//        }
+//
+//        std::cout << "min weight after resample:" << weight_vec_.minCoeff() << std::endl;
+
+//        weight_vec_.setOnes();
+//        weight_vec_ /= weight_vec_.sum();
+
+        /*
+         * RESAMPLE METHON2
+         *
+         */
+
         weight_vec_ /= weight_vec_.sum();
         Eigen::MatrixXd tmp_matrix(particle_mx_);
         Eigen::VectorXd tmp_weight(weight_vec_);
 
-        Eigen::VectorXd Beta(weight_vec_);
-
-        for (int i(1); i < Beta.rows(); ++i) {
-
-            Beta(i) = Beta(i - 1) + weight_vec_(i);
-        }
-        if (Beta.maxCoeff() < 1.0) {
-            Beta(Beta.rows() - 1) = 1.0;
-//            std::cout << Beta << std::endl;
-        }
-
         std::uniform_real_distribution<double> uuu(0, 1);
         double tmp_rnd(0.0);
 
-        for (int i(0); i < particle_mx_.rows(); ++i) {
+        for (int i = 0; i < particle_mx_.rows(); ++i) {
             tmp_rnd = uuu(e_);
-            for (int j(0); j < Beta.rows(); ++j) {
-                if (tmp_rnd < Beta(j)) {
-                    for (int k(0); k < particle_mx_.cols(); ++k) {
-                        particle_mx_(i, k) = tmp_matrix(j, k);
-                    }
-//                    particle_mx_.block(i, 0, 1, particle_mx_.cols()) = tmp_matrix.block(j, 0, 1, tmp_matrix.cols());
-                    weight_vec_(i) = tmp_weight(j);
-                    break;
-                }
-                if (j == Beta.rows() - 1) {
+            int index = -1;
 
-                    std::cout << "rnd:" << tmp_rnd << "  beta:" << Beta(j) << std::endl;
-//                    weight_vec_.setOnes();
-//                    particle_mx_ = tmp_matrix;
-                    MYERROR("Unexpected run fork.")
-                    return true;
-                }
+            do {
+                index++;
+                tmp_rnd -= tmp_weight(index);
+            } while (tmp_rnd > 0.0);
+
+            weight_vec_(i) = tmp_weight(index);
+            for (int k(0); k < particle_mx_.cols(); ++k) {
+                particle_mx_(i, k) = tmp_matrix(index, k);
             }
+
         }
 
-        std::cout << "min weight after resample:" << weight_vec_.minCoeff() << std::endl;
 
-        weight_vec_.setOnes();
-        weight_vec_ /= weight_vec_.sum();
-
-        /*
-         * RESAMPLE METHON2
-         * TODO:ACHIEVE THIS METHOND.
-         */
 
 
         return true;
