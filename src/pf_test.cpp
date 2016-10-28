@@ -28,7 +28,7 @@ namespace plt = matplotlibcpp;
  */
 
 int main() {
-    bool is_view_likelihood(false);
+    bool is_view_likelihood(true);
     bool is_view_particle(false);
     bool is_out_cnn_img(false);
     CSVReader gt("gt.csv"), beacon_set("beacon_set.csv"), uwb_range("uwb_range.csv");
@@ -67,7 +67,7 @@ int main() {
         uwb_range_vec.push_back(Eigen::Vector3d(*range(i, 0), *range(i, 1), *range(i, 2)));
     }
 
-    OPF::OwnParticleFilter opf(10000, apose, 1.12, 10);
+    OPF::OwnParticleFilter opf(900, apose, 1.12, 10);
     opf.InitialState(Eigen::Vector2d(gt_x[0], gt_y[0]));
 
     OPF::VirtualOdometry odom(apose, 1.12);
@@ -148,6 +148,7 @@ int main() {
          * EVALUATE
          */
         opf.Evaluate(Eigen::VectorXd(uwb_range_vec[i]));
+
         /*
          * End EVALUATE
          */
