@@ -53,9 +53,11 @@ class triangle3d:
 if __name__ == '__main__':
     se = seq_process()
     # se.process_file(file_name='LOGBig/LOG_2016_10_19_16_1_18.data')
-    se.process_file(file_name='LOGBig/LOG_2016_10_19_16_3_20.data')
+    # se.process_file(file_name='LOGBig/LOG_2016_10_19_16_3_20.data')
+    se.process_file(file_name='log/LOG_2016_10_26_14_3_26.txt')
     # se.process_file(file_name='LOGBig/LOG_2016_10_19_16_6_14.data')
-    beacon_set = np.loadtxt("./LOGBig/beaconset")
+    # beacon_set = np.loadtxt("./LOGBig/beaconset")
+    beacon_set = np.loadtxt("./log/beaconset")
 
     ###############################################
     # se.process_file("20161019log/LOG_2016_10_19_10_23_24.data")
