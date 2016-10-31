@@ -54,7 +54,6 @@ int main() {
 
     std::cout.precision(20);
 
-//
 
 
     for (int i(0); i < gtm.GetRows(); ++i) {
