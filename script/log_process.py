@@ -32,13 +32,13 @@ class seq_process:
         logf_all = logf.readlines()
 
         for ll in logf_all:
-            if ll[0] == 'I':
+            if ll[0] == 'I' or  True:
                 start = ll.find('{')
                 if start == -1:
                     # print("ll is :",ll,"can not found a {")
                     return True
                 ll = ll[start::]
-            # print(ll)
+            print(ll)
             jdata = demjson.decode(ll)
 
             if jdata['type'] == 'a':
